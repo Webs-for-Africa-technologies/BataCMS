@@ -1,0 +1,14 @@
+﻿@model CheckoutViewModel;
+
+
+@if (Model.Checkout.CheckoutItems.Count > 0)
+{
+    <li>
+        <a asp-controller="Checkout">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span id="cart-status">
+                @Model.Checkout.CheckoutItems.Count
+            </span>
+        </a>
+    </li>
+}

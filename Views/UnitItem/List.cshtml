@@ -1,0 +1,17 @@
+﻿@model BataCMS.Data.ViewModels.UnitItemListViewModel;
+
+@{
+    ViewData["Title"] = "List";
+}
+
+    <h1> @Html.DisplayNameFor(model => model.CurrentCategory)</h1>
+
+
+
+@foreach (var item in Model.UnitItems) {
+
+    @await Html.PartialAsync("UnitItemSummary", item);
+
+}
+
+

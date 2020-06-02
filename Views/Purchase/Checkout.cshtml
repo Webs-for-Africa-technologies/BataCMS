@@ -1,0 +1,25 @@
+﻿@model Purchase
+
+<div class="row orderForm ">
+    <h3 class="text-center">You are just one step away from ordering your drinks.</h3>
+
+    <div asp-validation-summary="All"></div>
+
+    <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+            <label asp-for="ServerName" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="ServerName" class="form-control" />
+                <span asp-validation-for="ServerName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="btn-group col-md-offset-2 col-md-8">
+                <input class="btn btn-success" type="submit" value="Complete order" />
+                @*<input class="btn btn-default" type="submit" value="Return " />*@
+            </div>
+        </div>
+
+    </form>
+</div>
