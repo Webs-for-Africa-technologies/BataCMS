@@ -21,6 +21,9 @@ namespace BataCMS.Data.Models
 
         public virtual Category Category { get; set; }
 
+        public string ImageUrl { get; set; }
+
+
     }
 }
     
