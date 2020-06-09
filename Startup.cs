@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Westwind.AspNetCore.LiveReload;
 
 namespace BataCMS
 {
@@ -26,7 +27,7 @@ namespace BataCMS
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
-        IConfigurationRoot _configurationRoot;
+        readonly IConfigurationRoot _configurationRoot;
 
         public Startup( IHostEnvironment hostEnvironment)
         {
@@ -53,6 +54,7 @@ namespace BataCMS
 
             services.AddHttpContextAccessor();
             services.AddSession();
+            services.AddLiveReload();
 
 
         }
@@ -62,6 +64,7 @@ namespace BataCMS
         {
             if (env.IsDevelopment())
             {
+                app.UseLiveReload();
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
                 app.UseStaticFiles();
