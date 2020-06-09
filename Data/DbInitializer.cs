@@ -28,6 +28,7 @@ namespace BataCMS.Data
                         Price = 7.95M,
                         Category = Categories["Alcoholic"],
                         InStock = true,
+                        ImageUrl = "/Content/Images/beer.PNG",
                     },
                     new unitItem
                     {
@@ -35,6 +36,7 @@ namespace BataCMS.Data
                         Price = 12.95M,
                         Category = Categories["Alcoholic"],
                         InStock = true,
+                        ImageUrl = "/Content/Images/rum and coke.PNG",
                     },
                     new unitItem
                     {
@@ -42,6 +44,8 @@ namespace BataCMS.Data
                         Price = 12.95M,
                         Category = Categories["Alcoholic"],
                         InStock = true,
+                        ImageUrl = "~/Content/Images/tequila.PNG",
+
                     },
                     new unitItem
                     {
@@ -49,6 +53,7 @@ namespace BataCMS.Data
                         Price = 16.75M,
                         Category = Categories["Alcoholic"],
                         InStock = true,
+                        ImageUrl = "~/Content/Images/wine.PNG",
                     },
                     new unitItem
                     {
@@ -56,6 +61,8 @@ namespace BataCMS.Data
                         Price = 17.95M,
                         Category = Categories["Food"],
                         InStock = true,
+                        ImageUrl = "~/Content/Images/burger and chips.PNG",
+
                     },
                     new unitItem
                     {
@@ -63,6 +70,8 @@ namespace BataCMS.Data
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
+                        ImageUrl = "~/Content/Images/whiskey with ice.PNG",
+
                     },
                     new unitItem
                     {
@@ -70,6 +79,8 @@ namespace BataCMS.Data
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
+                        ImageUrl = "~/Content/Images/jag.PNG",
+
                     },
                     new unitItem
                     {
@@ -77,6 +88,8 @@ namespace BataCMS.Data
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
+                        ImageUrl = "~/Content/Images/champagne.PNG",
+
                     },
                     new unitItem
                     {
@@ -84,6 +97,8 @@ namespace BataCMS.Data
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
+                        ImageUrl = "~/Content/Images/pina colada.PNG",
+
                     },
                     new unitItem
                     {
@@ -91,6 +106,8 @@ namespace BataCMS.Data
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
+                        ImageUrl = "~/Content/Images/white russian.PNG",
+
                     },
                     new unitItem
                     {
@@ -98,6 +115,8 @@ namespace BataCMS.Data
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
+                        ImageUrl = "~/Content/Images/long island.PNG",
+
                     },
                     new unitItem
                     {
