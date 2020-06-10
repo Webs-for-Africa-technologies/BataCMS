@@ -21,6 +21,7 @@ namespace BataCMS.Data
         public DbSet<CheckoutItem> CheckoutItems { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<PurchasedItem> PurchasedItems { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
 
     }

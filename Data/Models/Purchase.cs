@@ -24,5 +24,7 @@ namespace BataCMS.Data.Models
         public DateTime PurchaseDate { get; set; }
 
         public List<PurchasedItem> PurchasedItems { get; set; } 
+
+        public virtual PaymentMethod PaymentMethod { get; set; }
     }
 }

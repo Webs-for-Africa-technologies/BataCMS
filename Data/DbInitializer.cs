@@ -18,6 +18,12 @@ namespace BataCMS.Data
                 context.Categories.AddRange(Categories.Select(c => c.Value));
             }
 
+
+            if (!context.PaymentMethods.Any())
+            {
+                context.PaymentMethods.AddRange(PaymentMethods.Select(c => c.Value));
+            }
+
             if (!context.UnitItems.Any())
             {
                 context.AddRange
@@ -198,5 +204,33 @@ namespace BataCMS.Data
                 return categories;
             }
         }
+
+        private static Dictionary<string, PaymentMethod> paymentMethods;
+        public static Dictionary<string, PaymentMethod> PaymentMethods
+        {
+            get
+            {
+                if (paymentMethods == null)
+                {
+                    var genresList = new PaymentMethod[]
+                    {
+                        new PaymentMethod { PaymentMethodName = "EcoCash"},
+                        new PaymentMethod { PaymentMethodName = "Cash"},
+                        new PaymentMethod { PaymentMethodName = "Cash(Forex)"},
+                        new PaymentMethod { PaymentMethodName = "Debit/Credit Card"},
+                    };
+
+                    paymentMethods = new Dictionary<string, PaymentMethod>();
+
+                    foreach (PaymentMethod genre in genresList)
+                    {
+                        paymentMethods.Add(genre.PaymentMethodName, genre);
+                    }
+                }
+                return paymentMethods;
+
+            }
+        }
+
     }
 }
