@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200610130453_Adding paymentMethod Model")]
+    partial class AddingpaymentMethodModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,33 +62,12 @@ namespace BataCMS.Migrations
                     b.ToTable("CheckoutItems");
                 });
 
-            modelBuilder.Entity("BataCMS.Data.Models.PaymentMethod", b =>
-                {
-                    b.Property<int>("PaymentMethodId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("AmountPaid")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentMethodName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PaymentMethodId");
-
-                    b.ToTable("PaymentMethods");
-                });
-
             modelBuilder.Entity("BataCMS.Data.Models.Purchase", b =>
                 {
                     b.Property<int>("PurchaseID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("PaymentMethodId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("datetime2");
@@ -100,8 +81,6 @@ namespace BataCMS.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("PurchaseID");
-
-                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("Purchases");
                 });
@@ -367,13 +346,6 @@ namespace BataCMS.Migrations
                     b.HasOne("BataCMS.Data.Models.unitItem", "unitItem")
                         .WithMany()
                         .HasForeignKey("unitItemId");
-                });
-
-            modelBuilder.Entity("BataCMS.Data.Models.Purchase", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.PaymentMethod", "PaymentMethod")
-                        .WithMany()
-                        .HasForeignKey("PaymentMethodId");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.PurchasedItem", b =>

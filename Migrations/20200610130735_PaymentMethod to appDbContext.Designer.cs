@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200610130735_PaymentMethod to appDbContext")]
+    partial class PaymentMethodtoappDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,9 +87,6 @@ namespace BataCMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("PaymentMethodId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("datetime2");
 
@@ -100,8 +99,6 @@ namespace BataCMS.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("PurchaseID");
-
-                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("Purchases");
                 });
@@ -367,13 +364,6 @@ namespace BataCMS.Migrations
                     b.HasOne("BataCMS.Data.Models.unitItem", "unitItem")
                         .WithMany()
                         .HasForeignKey("unitItemId");
-                });
-
-            modelBuilder.Entity("BataCMS.Data.Models.Purchase", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.PaymentMethod", "PaymentMethod")
-                        .WithMany()
-                        .HasForeignKey("PaymentMethodId");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.PurchasedItem", b =>
