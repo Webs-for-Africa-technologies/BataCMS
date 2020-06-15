@@ -19,20 +19,25 @@ namespace BataCMS.Data.Repositories
         {
             purchase.PurchaseDate = DateTime.Now;
             _appDbContext.Add(purchase);
+            _appDbContext.SaveChanges();
 
             var checkoutItems = _checkkout.CheckoutItems;
+
+            decimal purchaseTotal = 0M;
 
             foreach (var item in checkoutItems)
             {
                 var purchasedItem = new PurchasedItem {
                     Amount = item.Amount,
                     unitItemId = item.unitItem.unitItemId,
-                    PurchaseId = purchase.PurchaseID,
+                    PurchaseId = purchase.PurchaseId,
                     Price = item.unitItem.Price,
-                
                 };
+                purchaseTotal += item.unitItem.Price;
+
                 _appDbContext.PurchasedItems.Add(purchasedItem);
             }
+            purchase.PurchasesTotal = purchaseTotal;
 
             _appDbContext.SaveChanges();
         }

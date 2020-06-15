@@ -30,7 +30,7 @@ namespace BataCMS.Controllers
         [Authorize] 
         public IActionResult Checkout(Purchase purchase)
         {
-            var items = _checkout.CheckoutItems;
+            var items = _checkout.GetCheckoutItems();
             _checkout.CheckoutItems = items;
 
             if (_checkout.CheckoutItems.Count == 0)

@@ -9,9 +9,12 @@ namespace BataCMS.Data.Models
 {
     public class Purchase
     {
-        public int PurchaseID { get; set; }
-        
+        public int PurchaseId { get; set; }
+
+        [BindNever]
+        [ScaffoldColumn(false)]
         public decimal PurchasesTotal { get; set; }
+
 
 
         [Required(ErrorMessage = "Please enter your first name")]
@@ -22,6 +25,7 @@ namespace BataCMS.Data.Models
         [BindNever]
         [ScaffoldColumn(false)]
         public DateTime PurchaseDate { get; set; }
+
 
         public List<PurchasedItem> PurchasedItems { get; set; } 
 
