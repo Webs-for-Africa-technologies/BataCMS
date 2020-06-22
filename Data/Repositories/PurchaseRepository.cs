@@ -19,6 +19,8 @@ namespace BataCMS.Data.Repositories
         {
             purchase.PurchaseDate = DateTime.Now;
             _appDbContext.Add(purchase);
+
+            //Add a purchase to Db to make reference to the FK. 
             _appDbContext.SaveChanges();
 
             var checkoutItems = _checkkout.CheckoutItems;
