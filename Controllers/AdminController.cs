@@ -2,17 +2,24 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BataCMS.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<Microsoft.AspNetCore.Identity.IdentityUser> _userManager;
 
-        public AdminController(RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> roleManager)
+
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<Microsoft.AspNetCore.Identity.IdentityUser> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -34,7 +41,7 @@ namespace BataCMS.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home"); 
+                    return RedirectToAction("ListRoles", "Admin"); 
                 }
                 foreach (IdentityError error in result.Errors)
                 {
@@ -44,5 +51,98 @@ namespace BataCMS.Controllers
             }           
             return View(model);
         }
-    }
+
+        [HttpGet]
+        public IActionResult ListRoles()
+        {
+            var roles = _roleManager.Roles;
+            return View(roles);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddOrRemoveUsers(string roleId)
+        {
+            ViewBag.roleId = roleId;
+
+            var role = _roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"The Role with roleId = {roleId} cannot be found";
+                return View("Not found");
+            }
+
+            var model = new List<UserRoleViewModel>();
+
+            var AllUser = _userManager.Users;
+            var UserInThisRole = await _userManager.GetUsersInRoleAsync(role.Result.Name);
+
+            foreach (var user in AllUser)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                { 
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    IsSelected = false
+
+                };
+                if (UserInThisRole.Any(p=>p.Id == userRoleViewModel.UserId))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                model.Add(userRoleViewModel);
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOrRemoveUsers(List<UserRoleViewModel> model, string roleId) 
+        {
+            var role = _roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"The Role with roleId = {roleId} cannot be found";
+                return View("Not found");
+            }
+
+            for (int i = 0; i < model.Count; i++)
+            {
+                var user = await _userManager.FindByIdAsync(model[i].UserId);
+
+                IdentityResult result = null;
+
+                if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Result.Name)))
+                {
+                    result = await _userManager.AddToRoleAsync(user, role.Result.Name);
+                }
+                else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Result.Name))
+                {
+                    result = await _userManager.RemoveFromRoleAsync(user, role.Result.Name);
+
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return RedirectToAction("ListRoles");   
+                    }
+                }
+
+            }
+
+            return RedirectToAction("ListRoles");
+
+            }
+    } 
 }
