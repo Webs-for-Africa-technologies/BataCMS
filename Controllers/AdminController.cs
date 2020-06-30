@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace BataCMS.Controllers
         {
             _roleManager = roleManager;
             _userManager = userManager;
-        }
+        }   
 
         [HttpGet]
         [Authorize]
