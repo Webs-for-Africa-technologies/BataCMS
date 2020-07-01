@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BataCMS.Data.Models;
 using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,19 +12,21 @@ namespace BataCMS.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             
         }
+
+        [HttpGet]
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginViewModel { 
-                returnUrl = returnUrl   
+                ReturnUrl = returnUrl   
             });
         }
 
@@ -43,18 +46,27 @@ namespace BataCMS.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded )
                 {
-                    if (string.IsNullOrEmpty(loginViewModel.returnUrl))
+                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl))
                     {
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        return RedirectToAction(loginViewModel.returnUrl);
+                        var parsedString = loginViewModel.ReturnUrl.Split('/');
+                        string controller = parsedString[1];
+                        string action = parsedString[2];
+                        return RedirectToAction( action, controller);
                     }
                 }
             }
             ModelState.AddModelError("", "Username/Password was not found");
             return View(loginViewModel);
+        }
+
+        //implement the AccessDenied that redirect to the ReturnUrl and displays Access denied error. 
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
 
         public ActionResult Register()
@@ -67,7 +79,7 @@ namespace BataCMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = loginViewModel.UserName };
+                var user = new ApplicationUser { UserName = loginViewModel.UserName };
 
                 var result = await _userManager.CreateAsync(user, loginViewModel.Password);
 

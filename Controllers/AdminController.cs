@@ -1,4 +1,5 @@
-﻿using BataCMS.ViewModels;
+﻿using BataCMS.Data.Models;
+using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace BataCMS.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<Microsoft.AspNetCore.Identity.IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<Microsoft.AspNetCore.Identity.IdentityUser> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
         }   
 
         [HttpGet]
-        [Authorize]
         public IActionResult CreateRole()
         {
             return View();
