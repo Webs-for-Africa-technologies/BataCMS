@@ -3,18 +3,10 @@
 
 @if (Model.Checkout.CheckoutItems.Count > 0)
 {
-
-    <ul nav navbar-nav navbar-right>
-        <li nav-item>
-            <a class="nav-link" asp-controller="Checkout">
-                <span id="cart-status">
-                    @Model.Checkout.CheckoutItems.Count
-                </span>
-            </a>
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-
-        </li>
-
-    </ul>
-
+    <a class="nav-link" asp-controller="Checkout">
+        <span id="cart-status">
+            @Model.Checkout.CheckoutItems.Count
+        </span>
+    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+    </a>
 }
