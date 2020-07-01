@@ -1,5 +1,5 @@
 ﻿using BataCMS.Data.Models;
-using Microsoft.AspNetCore.Builder;
+using BataCMS.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,8 +12,7 @@ namespace BataCMS.Data
         public static void Seed(IServiceProvider applicationBuilder)
         {
             AppDbContext context = applicationBuilder.GetRequiredService<AppDbContext>();
-
-            if (!context.Categories.Any())
+                if (!context.Categories.Any())
             {
                 context.Categories.AddRange(Categories.Select(c => c.Value));
             }
