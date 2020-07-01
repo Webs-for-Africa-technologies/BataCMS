@@ -63,19 +63,21 @@ namespace BataCMS.Controllers
             return View(loginViewModel);
         }
 
-        //implement the AccessDenied that redirect to the ReturnUrl and displays Access denied error. 
+        //implement the AccessDenied that redirect to the ReturnUrl and displays Access denied error. Comment#0001 
         public ActionResult AccessDenied()
         {
             return View();
         }
 
+        [Authorize(Roles ="Admin")]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        public  async Task<IActionResult> Register(LoginViewModel loginViewModel)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Register(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid)
             {
