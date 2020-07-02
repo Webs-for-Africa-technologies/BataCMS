@@ -1,4 +1,8 @@
-﻿#cartButton {
+﻿.img-thumbnail img{
+    max-height: 480px;
+    max-width: 480px;
+}
+#cartButton {
     margin-right: 8px;
 }
 
@@ -11,7 +15,7 @@ nav {
 }
 
 .checkoutForm {
-    margin-top: 5%;
+    margin: 5%;
 }
 
 .orderForm {
