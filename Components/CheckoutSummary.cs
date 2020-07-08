@@ -25,7 +25,6 @@ namespace BataCMS.Components
             {
                 Checkout = _checkout,
                 CheckoutTotal = _checkout.GetCheckoutTotal()
-
             };
 
             return View(checkoutViewModel);

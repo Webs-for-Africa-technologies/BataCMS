@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using BataCMS.Components;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,8 +28,11 @@ namespace BataCMS.Data.Models
         public DateTime PurchaseDate { get; set; }
 
 
-        public List<PurchasedItem> PurchasedItems { get; set; } 
+        public List<PurchasedItem> PurchasedItems { get; set; }
 
-        public virtual PaymentMethod PaymentMethod { get; set; }
+        public List<PaymentMethod> PaymentMethods { get; set; }
+
+
+
     }
 }

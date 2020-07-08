@@ -12,6 +12,5 @@ namespace BataCMS.ViewModels
 
         public decimal CheckoutTotal { get; set; }
 
-
     }
 }

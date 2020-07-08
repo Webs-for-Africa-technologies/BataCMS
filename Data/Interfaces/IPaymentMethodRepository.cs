@@ -8,6 +8,7 @@ namespace BataCMS.Data.Interfaces
 {
     public interface IPaymentMethodRepository
     {
-        IEnumerable<PaymentMethod> PaymentMethods { get; }
+        void CreatePaymentMethod(PaymentMethod paymentMethod);
+
     }
 }
