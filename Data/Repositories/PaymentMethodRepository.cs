@@ -7,14 +7,43 @@ using System.Threading.Tasks;
 
 namespace BataCMS.Data.Repositories
 {
-    public class PaymentMethodRepository :IPaymentMethodRepository
+    public class PaymentMethodRepository : IPaymentMethodRepository
     {
         private readonly AppDbContext _appDbContext;
-        public PaymentMethodRepository(AppDbContext appDbContext)
+        private readonly Checkout _checkout;
+
+        public PaymentMethodRepository(AppDbContext appDbContext, Checkout checkout )
         {
             _appDbContext = appDbContext;
+            _checkout = checkout;
         }
 
-        public IEnumerable<PaymentMethod> PaymentMethods => _appDbContext.PaymentMethods;
+        public void CreatePaymentMethod(PaymentMethod paymentMethod)
+        {
+
+            var checkoutItems = _checkout.CheckoutItems;
+
+
+
+            decimal purchaseTotal = 0M;
+
+            foreach (var item in checkoutItems)
+            {
+                purchaseTotal += item.unitItem.Price;
+            }
+
+            // if the amount paid is less than the total purchase, add another payment method comment#0002
+            if (purchaseTotal <= paymentMethod.AmountPaid)
+            {
+                //addPurchase Payment method
+                _appDbContext.Add(paymentMethod);
+            }
+
+            _appDbContext.SaveChanges();
+
+
+
+            _appDbContext.SaveChanges();
+        }
     }
 }

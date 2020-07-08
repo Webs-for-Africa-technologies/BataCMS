@@ -1,11 +1,6 @@
 ﻿using BataCMS.Data.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BataCMS.Data
 {
@@ -22,7 +17,7 @@ namespace BataCMS.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<PurchasedItem> PurchasedItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-
+        public DbSet<PurchasePaymentMethod> PurchasePaymentMethod { get; set; }
 
     }
 }

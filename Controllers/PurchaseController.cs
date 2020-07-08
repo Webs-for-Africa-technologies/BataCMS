@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BataCMS.Data;
 using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +14,15 @@ namespace BataCMS.Controllers
     {
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly Checkout _checkout;
+        private readonly IPaymentMethodRepository _paymentMethodRepository;
+        private readonly AppDbContext _appDbContext;
 
-        public PurchaseController(IPurchaseRepository purchaseRepository, Checkout checkout)
+        public PurchaseController(IPurchaseRepository purchaseRepository, Checkout checkout, IPaymentMethodRepository paymentMethodRepository, AppDbContext appDbContext)
         {
             _purchaseRepository = purchaseRepository;
             _checkout = checkout;
+            _paymentMethodRepository = paymentMethodRepository;
+            _appDbContext = appDbContext; 
         }
 
         [Authorize]
@@ -28,7 +33,7 @@ namespace BataCMS.Controllers
 
         [HttpPost]
         [Authorize] 
-        public IActionResult Checkout(Purchase purchase)
+        public IActionResult Checkout(Purchase purchase, PaymentMethod paymentMethod)
         {
             var items = _checkout.GetCheckoutItems();
             _checkout.CheckoutItems = items;
@@ -40,6 +45,16 @@ namespace BataCMS.Controllers
             if (ModelState.IsValid)
             {
                 _purchaseRepository.CreatePurchase(purchase);
+                _paymentMethodRepository.CreatePaymentMethod(paymentMethod);
+
+                var purchasePaymentMethod = new PurchasePaymentMethod
+                {
+                    PaymentMethodId = paymentMethod.PaymentMethodId,
+                    PurchaseId =  purchase.PurchaseId
+                };
+
+                _appDbContext.Add(purchasePaymentMethod);
+                _appDbContext.SaveChanges();
                 _checkout.ClearCheckout();
                 return RedirectToAction("CheckoutComplete"); 
             }

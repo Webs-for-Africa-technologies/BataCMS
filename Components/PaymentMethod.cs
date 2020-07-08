@@ -20,15 +20,9 @@ namespace BataCMS.Components
 
         public IViewComponentResult Invoke()
         {
-            var paymentMethods = _paymentMethodRepository.PaymentMethods.OrderBy(p => p.PaymentMethodName);
+            return View();
 
-
-            var PaymentMethodViewModel = new PaymentMethodViewModel
-            {
-                PaymentMethods = paymentMethods,
-
-            };
-            return View(PaymentMethodViewModel);
         }
+
     }
 }

@@ -36,7 +36,6 @@ namespace BataCMS.Data.Repositories
                     Price = item.unitItem.Price,
                 };
                 purchaseTotal += item.unitItem.Price;
-
                 _appDbContext.PurchasedItems.Add(purchasedItem);
             }
             purchase.PurchasesTotal = purchaseTotal;
