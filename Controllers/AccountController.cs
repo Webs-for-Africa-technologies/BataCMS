@@ -96,11 +96,14 @@ namespace BataCMS.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
-                /*else
+                else
                 {
-                    value["ErrorMessage"] = result.Errors;
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
 
-                }*/
+                }
             }
             return View(loginViewModel);
         }
