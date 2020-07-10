@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ApplicationUser>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListUsers</title>
+</head>
+<body>
+    <h1>All Users</h1>
+
+    @if (Model.Any())
+    {
+        <a class="btn btn-primary" asp-controller="Account" asp-action="Register"> Add a new user</a>
+
+        foreach (var user in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    User: @user.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"> Username: @user.UserName</h5>
+                </div>
+
+                <div class="card-footer">
+                    <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post">
+                        <a asp-action="EditUser" asp-controller="Admin" asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the user: @user.UserName')">Delete</button>
+                    </form>
+
+
+                </div>
+            </div>
+
+        }
+
+    }else
+    {
+        <div class="card">
+            <div class="header">
+                No Users Created Yet!!
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to create a new user
+                </h5>
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Add a New User</a>
+
+            </div>
+        </div>
+    }
+</body>
+</html>
