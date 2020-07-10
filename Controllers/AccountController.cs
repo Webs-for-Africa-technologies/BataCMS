@@ -79,6 +79,7 @@ namespace BataCMS.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(LoginViewModel loginViewModel)
         {
+            IDictionary<string, object> value = new Dictionary<string, object>();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = loginViewModel.UserName };
@@ -87,8 +88,19 @@ namespace BataCMS.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers","Admin"); 
+                    }
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
+                /*else
+                {
+                    value["ErrorMessage"] = result.Errors;
+
+                }*/
             }
             return View(loginViewModel);
         }

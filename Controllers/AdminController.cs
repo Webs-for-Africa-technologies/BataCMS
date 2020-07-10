@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,11 +54,71 @@ namespace BataCMS.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
+        }
+
+
+        [HttpGet]
         public IActionResult ListRoles()
         {
             var roles = _roleManager.Roles;
             return View(roles);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUserAsync(EditUserViewModel model)
+        {
+            var user = _userManager.FindByIdAsync(model.Id);
+
+            if (user == null )
+            {
+                ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                user.Result.UserName = model.UserName;
+
+                var result = await _userManager.UpdateAsync(user.Result);
+
+                if (result.Succeeded)
+                {
+                    RedirectToAction("ListUsers");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUserAsync(string id)
+        {
+            var user = _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+
+            var userRoles = await _userManager.GetRolesAsync(user.Result);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Result.Id,
+                UserName = user.Result.UserName,
+                Roles = userRoles
+            };
+            return View(model);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> AddOrRemoveUsers(string roleId)
@@ -144,5 +205,33 @@ namespace BataCMS.Controllers
             return RedirectToAction("ListRoles");
 
             }
+
+        
+        public async Task<IActionResult> DeleteUserAsync(string id)
+        {
+            var user = _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user.Result);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }            
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                
+                return View("ListUsers");
+
+            }
+        }
+        }
     } 
-}
