@@ -1,14 +1,20 @@
-﻿@model BataCMS.Data.ViewModels.UnitItemListViewModel;
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@model BataCMS.Data.ViewModels.UnitItemListViewModel;
 
 @{
     ViewData["Title"] = "List";
 }
 
-    <h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
+<h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
 
 
+@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <a asp-action="AddItem" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
+}
 
-@foreach (var item in Model.UnitItems) {
+@foreach (var item in Model.UnitItems)
+{
 
     @await Html.PartialAsync("UnitItemSummary", item);
 

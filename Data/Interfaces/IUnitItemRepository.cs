@@ -11,5 +11,9 @@ namespace BataCMS.Data.Interfaces
         IEnumerable<unitItem> unitItems { get; }
 
         unitItem GetItemById(int itemId);
+
+        Task<int> DeleteItem(int itemId);
+
+        unitItem Add (unitItem item);
     }
 }
