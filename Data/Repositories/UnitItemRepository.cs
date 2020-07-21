@@ -40,5 +40,12 @@ namespace BataCMS.Data.Repositories
             return item;
 
         }
+
+        public unitItem EditItem(unitItem updatedItem)
+        {
+            // only save the changes to the repository
+            _appDbContext.SaveChanges();
+            return  updatedItem;
+        }
     }
 }

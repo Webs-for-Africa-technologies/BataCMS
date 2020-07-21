@@ -15,7 +15,7 @@
                 <a class="btn btn-success" id="cartButton" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@Model.unitItemId">Add to cart</a>
                 @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                 {
-                    <a asp-action="EditItem" asp-controller="unitItem" asp-route-id="@Model.unitItemId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Edit" asp-controller="unitItem" asp-route-id="@Model.unitItemId" class="btn btn-primary">Edit</a>
                     
                     }
             </p>

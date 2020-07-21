@@ -69,20 +69,10 @@ namespace BataCMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-
-                if (model.Image != null)
-                {
-                    string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath ,"images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
-                    string filePath = Path.Combine(uploadFolder, uniqueFileName);
-                    model.Image.CopyTo(new FileStream(filePath, FileMode.Create));
-
-                }
+                
+                string photoPath = ProcessUploadedImage(model);
 
                 var category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == model.Category);
-
-                string photoPath = "/images/" + uniqueFileName;
 
                 unitItem newUnitItem = new unitItem
                 {
@@ -100,28 +90,86 @@ namespace BataCMS.Controllers
             }
             return View();
         }
+        
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            this.ViewData["categories"] = _categoryRepository.Categories.Select(x => new SelectListItem
+            {
+                Value = x.CategoryName,
+                Text = x.CategoryName
+            }).ToList();
 
-        /*        [HttpGet]
-                public async Task<IActionResult> EditUserAsync(int id)
+            unitItem unitItem = _unitItemRepository.GetItemById(id);
+            Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryId == unitItem.CategoryId);
+
+            EditUnitItemViewModel editUnitItemViewModel = new EditUnitItemViewModel
+            {
+                unitItemId = unitItem.unitItemId,
+                Name = unitItem.Name,
+                Price = unitItem.Price,
+                InStock = unitItem.InStock,
+                Category = category.CategoryName,
+                ExistingImagePath = unitItem.ImageUrl
+            };
+            return View(editUnitItemViewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(EditUnitItemViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                unitItem unitItem = _unitItemRepository.GetItemById(model.unitItemId);
+                Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == model.Category);
+
+
+                unitItem.Name = model.Name;
+                unitItem.Price = model.Price;
+                unitItem.CategoryId = category.CategoryId;
+                unitItem.InStock = model.InStock;
+                unitItem.DateModified = DateTime.Today;
+
+                if (model.Image != null)
                 {
-                    var unitItem = _unitItemRepository.GetItemById(id);
-
-                    if (unitItem == null)
+                    if (model.ExistingImagePath != null)
                     {
-                        ViewBag.ErrorMessage = $"Item with id ={id} cannot be found";
-                        return View("NotFound");
+                        string filePath = Path.Combine(_webHostEnvironment.WebRootPath + model.ExistingImagePath);
+                        System.IO.File.Delete(filePath);
                     }
 
-                    var userRoles = await _userManager.GetRolesAsync(user.Result);
+                    unitItem.ImageUrl = ProcessUploadedImage(model);
 
-                    var model = new EditUserViewModel
-                    {
-                        Id = user.Result.Id,
-                        UserName = user.Result.UserName,
-                        Roles = userRoles
-                    };
-                    return View(model);
-                }*/
+                }
+
+                _unitItemRepository.EditItem(unitItem);
+                return RedirectToAction("List");
+
+            }
+            return View();
+        }
+
+        private string ProcessUploadedImage(CreateUnitItemViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.Image != null)
+            {
+                string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Image.CopyTo(fileStream);
+                }
+
+            }
+
+            string photoPath = "/images/" + uniqueFileName;
+            return photoPath;
+        }
 
         public ViewResult List(string category)
         {

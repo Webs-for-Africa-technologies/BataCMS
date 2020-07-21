@@ -15,5 +15,7 @@ namespace BataCMS.Data.Interfaces
         Task<int> DeleteItem(int itemId);
 
         unitItem Add (unitItem item);
+
+        unitItem EditItem(unitItem updatedItem);
     }
 }
