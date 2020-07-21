@@ -64,6 +64,21 @@ namespace BataCMS.Data.Mocks
             set { }  
         }
 
+        public unitItem Add(unitItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DeleteItem(int itemId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public unitItem EditItem(unitItem updatedItem)
+        {
+            throw new NotImplementedException();
+        }
+
         public unitItem GetItemById(int itemId)
         {
             throw new NotImplementedException(); 

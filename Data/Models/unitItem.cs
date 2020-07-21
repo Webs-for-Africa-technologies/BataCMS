@@ -9,6 +9,7 @@ namespace BataCMS.Data.Models
         [Required]
         public int unitItemId { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public decimal Price { get; set; }
@@ -19,6 +20,7 @@ namespace BataCMS.Data.Models
 
         public int CategoryId { get; set; }
 
+        [Required]
         public virtual Category Category { get; set; }
 
         public string ImageUrl { get; set; }

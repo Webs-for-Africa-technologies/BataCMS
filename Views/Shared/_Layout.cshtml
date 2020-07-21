@@ -36,18 +36,18 @@
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href ="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Options</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Options</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a asp-action="ListUsers" asp-controller="Admin" class="dropdown-item">List All Users</a>
-                                <a  asp-action="ListRoles" asp-controller="Admin" class="dropdown-item">List All Roles</a>
+                                <a asp-action="ListRoles" asp-controller="Admin" class="dropdown-item">List All Roles</a>
 
                             </div>
                         </li>
 
                     }
                 </ul>
-                    @await Component.InvokeAsync("CheckoutSummary")
-                    @await Html.PartialAsync("LoginPartial")
+                @await Component.InvokeAsync("CheckoutSummary")
+                @await Html.PartialAsync("LoginPartial")
                 <form class="form-inline mt-2 mt-md-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -58,6 +58,10 @@
     <div>
         @RenderBody()
     </div>
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", required: true)
+    }
     <script src="~/vendor.min.js"></script>
 </body>
 </html>

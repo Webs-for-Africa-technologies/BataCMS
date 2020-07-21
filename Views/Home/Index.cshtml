@@ -1,7 +1,8 @@
-﻿@model HomeViewModel
-    <head>
-        <link href="~/Content/carousel.css" rel="stylesheet" />
-    </head>
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@model HomeViewModel
+<head>
+    <link href="~/Content/carousel.css" rel="stylesheet" />
+</head>
 
 <main role="main">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -16,7 +17,7 @@
                 <div class="container">
                     <div class="carousel-caption text-left">
                         <h1>We are here for you</h1>
-                        
+
                     </div>
                 </div>
             </div>
@@ -50,15 +51,28 @@
     </div>
 
 
-    <div class="row">
-        @foreach (var item in Model.AlcoholItems)
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
+    }
+
+<div class="row">
+
+    @foreach (var item in Model.AlcoholItems)
+    {
+        if (item.InStock == true)
         {
-            @await Html.PartialAsync("UnitItemSummary", item)
+            @await Html.PartialAsync("UnitItemSummary", item);
         }
-    </div>
+        else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            @await Html.PartialAsync("UnitItemSummary", item);
+
+        }
+    }
+</div>
 
 </main>
 
 <style>
-
 </style>

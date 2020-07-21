@@ -1,20 +1,24 @@
-﻿@model unitItem
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@model unitItem
 
-    <div class="col-sm-4 col-lg-4 col-md-4">
-        <div class="thumbnail">
-            <div class="img-thumbnail">
-                <img src="@Model.ImageUrl" alt="" />
-                <div class="figure-caption">
-                    <h3 class="pull-right">@Model.Price.ToString("c")</h3>
-                    <h3><a href="#">@Model.Name</a></h3>
-                </div>
-            </div>
-            <div class="addToCart text-right">
-                <p class="button ">
-                    <a class="btn btn-success" id="cartButton" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@Model.unitItemId">
-                        Add to cart
-                    </a>
-                </p>
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="thumbnail">
+        <div class="img-thumbnail">
+            <img src="@Model.ImageUrl" alt="" />
+            <div class="figure-caption">
+                <h3 class="pull-right">@Model.Price.ToString("c")</h3>
+                <h3><a href="#">@Model.Name</a></h3>
             </div>
         </div>
+        <div class="addToCart text-right">
+            <p class="button ">
+                <a class="btn btn-success" id="cartButton" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@Model.unitItemId">Add to cart</a>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit" asp-controller="unitItem" asp-route-id="@Model.unitItemId" class="btn btn-primary">Edit</a>
+                    
+                 }
+            </p>
+        </div>
     </div>
+</div>
