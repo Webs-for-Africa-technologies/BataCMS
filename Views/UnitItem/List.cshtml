@@ -15,8 +15,15 @@
 
 @foreach (var item in Model.UnitItems)
 {
+    if (item.InStock == true)
+    {
+        @await Html.PartialAsync("UnitItemSummary", item);
+    }
+    else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        @await Html.PartialAsync("UnitItemSummary", item);
 
-    @await Html.PartialAsync("UnitItemSummary", item);
+    }
 
 }
 
