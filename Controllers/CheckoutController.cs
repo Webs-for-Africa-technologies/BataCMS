@@ -47,9 +47,9 @@ namespace BataCMS.Controllers
             return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult RemoveFromCheckout(int itemId)
+        public RedirectToActionResult RemoveFromCheckout(int unitItemId)
         {
-            var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == itemId);
+            var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == unitItemId);
 
             if (selectedItem != null)
             {
