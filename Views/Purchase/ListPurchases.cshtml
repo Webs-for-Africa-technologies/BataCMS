@@ -1,0 +1,43 @@
+﻿@model BataCMS.ViewModels.ListPurchaseViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListPurchases</title>
+</head>
+<body>
+
+    <div class="row checkoutForm">
+        <h2>The Purchases Made</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Purchase ID</th>
+                    <th>Server Name</th>
+                    <th class="text-right">Purchase Total</th>
+                    <th class="text-right">Purchase Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.Purchases)
+                {
+                    <tr>
+                        <td class="text-center">@line.PurchaseId</td>
+                        <td class="text-left">@line.ServerName</td>
+                        <td class="text-right">@line.PurchasesTotal.ToString("c")</td>
+                        <td class="text-right">
+                            @line.PurchaseDate)
+                        </td>
+                        <td class="text-center"><a class="btn btn-primary" asp-controller="Purchase" asp-action="PurchaseDetail" asp-route-purchaseId="@line.PurchaseId">Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

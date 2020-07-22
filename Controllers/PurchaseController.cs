@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BataCMS.Data;
 using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,6 +67,53 @@ namespace BataCMS.Controllers
         {
             ViewBag.CheckkoutComplete = "The purchase has been made";
             return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult ListPurchases()
+        {
+            IEnumerable<Purchase> purchases = _appDbContext.Purchases.OrderBy(p => p.PurchaseDate);
+            var vm = new ListPurchaseViewModel
+            { 
+                Purchases = purchases
+            };
+            return View(vm);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult PurchaseDetail(int purchaseId)
+        {
+            var purchaseObjects = new List<PurchaseObject>();
+
+            Purchase purchase = _appDbContext.Purchases.FirstOrDefault(p => p.PurchaseId == purchaseId);
+            IEnumerable<PurchasedItem> purchasedItems = _appDbContext.PurchasedItems.Where(p => p.PurchaseId == purchaseId);
+
+            foreach (var item in purchasedItems)
+            {
+                unitItem unit = _appDbContext.UnitItems.FirstOrDefault(p => p.unitItemId == item.unitItemId);
+
+                var purchaseObject = new PurchaseObject { 
+                    PurchaseAmount = item.Amount,
+                    Price = item.Price,
+                    ItemName = unit.Name
+                };
+
+                purchaseObjects.Add(purchaseObject);
+            }
+     
+
+            PurchasePaymentMethod purchasePaymentMethod = _appDbContext.PurchasePaymentMethod.FirstOrDefault(p => p.PurchaseId == purchaseId);
+            PaymentMethod paymentMethod = _appDbContext.PaymentMethods.FirstOrDefault(p => p.PaymentMethodId == purchasePaymentMethod.PaymentMethodId);
+
+            var vm = new PurchaseDetailViewModel
+            {
+                PurchaseId = purchase.PurchaseId,
+                PurchasedItems = purchaseObjects,
+                PaymentMethod = paymentMethod,
+                Purchase = purchase
+            }; 
+
+            return View(vm);
         }
     }
 }

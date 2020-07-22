@@ -1,0 +1,73 @@
+﻿@model PurchaseDetailViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PurchaseDetail</title>
+</head>
+<body>
+    <div class="row checkoutForm">
+        <h2>The Purchases Made</h2>
+        <br />
+        <h3>Purchase No: @Model.PurchaseId</h3>
+        <br />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Selected amount</th>
+                    <th>Items</th>
+                    <th class="text-right">Price</th>
+                    <th class="text-right">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.PurchasedItems)
+                {
+                    <tr>
+                        <td class="text-center">@line.PurchaseAmount</td>
+                        <td class="text-left">@line.ItemName</td>
+                        <td class="text-right">@line.Price.ToString("c")</td>
+                        <td class="text-right">
+                            @((line.PurchaseAmount * line.Price).ToString("c"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">Purchase Payment Method</div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.PaymentMethod.PaymentMethodName</h5>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">Purchase Total</div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Purchase.PurchasesTotal</h5>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">Server Name</div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Purchase.ServerName</h5>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">Purchase Date</div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Purchase.PurchaseDate</h5>
+        </div>
+    </div>
+
+
+ 
+
+</body>
+</html>
