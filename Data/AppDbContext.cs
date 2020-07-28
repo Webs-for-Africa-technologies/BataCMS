@@ -1,6 +1,8 @@
 ﻿using BataCMS.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BataCMS.Data
 {
@@ -9,10 +11,20 @@ namespace BataCMS.Data
 
          public AppDbContext(DbContextOptions<AppDbContext>options) : base(options)
         {        
+            
         }
 
-        public DbSet<unitItem> UnitItems { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Category>()
+                .HasIndex(b => b.CategoryName).IsUnique(true);
+        }
+
         public DbSet<Category> Categories { get; set; }
+
+
+        public DbSet<unitItem> UnitItems { get; set; }
         public DbSet<CheckoutItem> CheckoutItems { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<PurchasedItem> PurchasedItems { get; set; }

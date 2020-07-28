@@ -23,7 +23,7 @@ namespace BataCMS.Controllers
         {
             var homeViewModel = new HomeViewModel
             {
-                AlcoholItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Alcoholic")
+                HomeItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Food")
             };
 
             return View(homeViewModel);

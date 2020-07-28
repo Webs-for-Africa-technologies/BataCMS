@@ -16,5 +16,14 @@ namespace BataCMS.Data.Repositories
         }
 
         public IEnumerable<Category> Categories => _appDbContext.Categories;
+
+
+        Category ICategoryRepository.AddCategory(Category category)
+        {
+            _appDbContext.Categories.Add(category);
+            _appDbContext.SaveChanges();
+            return category;
+        }
+
     }
 }

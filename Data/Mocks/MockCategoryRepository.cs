@@ -19,5 +19,11 @@ namespace BataCMS.Data.Mocks
                 };
             } 
         }
+
+        public Category AddCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

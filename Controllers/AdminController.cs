@@ -1,4 +1,6 @@
-﻿using BataCMS.Data.Models;
+﻿using BataCMS.Data;
+using BataCMS.Data.Interfaces;
+using BataCMS.Data.Models;
 using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +18,14 @@ namespace BataCMS.Controllers
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICategoryRepository _categoryRepository;
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _categoryRepository = categoryRepository;
         }   
 
         [HttpGet]
@@ -30,6 +34,39 @@ namespace BataCMS.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddCategory(AddCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Category category = new Category
+                {
+                    CategoryName = model.CategoryName,
+                    Description = model.Description
+                };
+
+                var existingCategory = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == category.CategoryName);
+
+                if (existingCategory == null)
+                {
+                    _categoryRepository.AddCategory(category);
+                    return RedirectToAction("Index", "Home");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The Category already exists");
+                }
+
+            }
+            return View(model);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
@@ -234,4 +271,5 @@ namespace BataCMS.Controllers
             }
         }
         }
-    } 
+
+}

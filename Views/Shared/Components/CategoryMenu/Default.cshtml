@@ -1,4 +1,5 @@
-﻿<li class="nav-item dropdown">
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+<li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" asp-controller="UnitItem"
        asp-action="Index" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
     <ul class="dropdown-menu">
@@ -13,5 +14,13 @@
         <li>
             <a class="dropdown-item" asp-controller="UnitItem" asp-action="List" asp-route-category="">Show all Items</a>
         </li>
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <li class="divider"></li>
+            <li>
+                <a class="dropdown-item" asp-controller="Admin" asp-action="AddCategory" asp-route-category="">Add Category</a>
+            </li>
+
+        }
     </ul>
 </li>

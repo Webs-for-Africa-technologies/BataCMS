@@ -8,6 +8,6 @@ namespace BataCMS.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<unitItem> AlcoholItems { get; set; }    
+        public IEnumerable<unitItem> HomeItems { get; set; }    
     }
 }

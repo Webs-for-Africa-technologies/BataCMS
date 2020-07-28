@@ -9,5 +9,7 @@ namespace BataCMS.Data.Interfaces
     public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get;}
+
+        Category AddCategory(Category category);
     }
 }

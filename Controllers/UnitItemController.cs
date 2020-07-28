@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BataCMS.Data;
 
 namespace BataCMS.Controllers
 {
@@ -185,15 +186,7 @@ namespace BataCMS.Controllers
             }
             else
             {
-                if (string.Equals("Alcoholic",_category,StringComparison.OrdinalIgnoreCase))
-                {
-                    unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals("Alcoholic"));
-                }
-                else
-                {
-                    unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals("Food"));
-                }
-
+                unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals(_category));
                 currentCategory = _category;
             }
 
