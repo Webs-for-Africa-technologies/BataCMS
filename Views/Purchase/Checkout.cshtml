@@ -1,28 +1,39 @@
-﻿@model Purchase
+﻿
+@model Purchase
 
-<div class="row orderForm ">
-    <h3 class="text-center">You are just one step away from placing your order</h3>
-
-    <div asp-validation-summary="All"></div>
-
+<div class="orderForm container">
+    <h3 class="text-center">Just one more step</h3>
     <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
         <div class="form-group">
             <label asp-for="ServerName" class="col-md-2 control-label"></label>
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <input asp-for="ServerName" class="form-control" />
                 <span asp-validation-for="ServerName" class="text-danger"></span>
             </div>
         </div>
 
-        @await Component.InvokeAsync("PaymentMethod")
+        <div class="col-md-3">
+            <label for="lastName">Last name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+            <div class="invalid-feedback">
+                Valid last name is required.
+            </div>
+        </div>
+
+        <div class="row">
+            @await Component.InvokeAsync("PaymentMethod")
+        </div>
+        @await Component.InvokeAsync("CheckoutSummary", new { viewName = "CheckoutDetails" })       
 
 
         <div class="form-group">
             <div class="btn-group col-md-offset-2 col-md-8">
                 <input class="btn btn-success" type="submit" value="Complete order" />
-                @*<input class="btn btn-default" type="submit" value="Return " />*@
+                <input class="btn btn-primary-outline" value="Return " />
             </div>
         </div>
 
+        <div asp-validation-summary="All" class="text-danger"></div>
     </form>
+
 </div>

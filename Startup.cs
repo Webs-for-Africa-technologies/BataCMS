@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Westwind.AspNetCore.LiveReload;
 using Microsoft.AspNetCore.Identity;
+using BataCMS.ViewModels;
 
 namespace BataCMS
 {
@@ -41,7 +42,6 @@ namespace BataCMS
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPurchaseRepository, PurchaseRepository>();
             services.AddTransient<IPaymentMethodRepository, PaymentMethodRepository>();
-
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMemoryCache();

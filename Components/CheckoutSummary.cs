@@ -16,7 +16,7 @@ namespace BataCMS.Components
             _checkout = checkout;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string viewName = null)
         {
             var items = _checkout.GetCheckoutItems();
             _checkout.CheckoutItems = items;
@@ -26,6 +26,11 @@ namespace BataCMS.Components
                 Checkout = _checkout,
                 CheckoutTotal = _checkout.GetCheckoutTotal()
             };
+
+            if (!string.IsNullOrEmpty(viewName))
+            {
+                return View(viewName, checkoutViewModel);
+            }
 
             return View(checkoutViewModel);
         }
