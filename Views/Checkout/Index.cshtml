@@ -40,17 +40,7 @@
     <div class="text-right">
         <div class="btn-group ">
             <a class="btn btn-success" asp-controller="Purchase" asp-action="Checkout">Check out</a>
-            <a class="btn-group">
-                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Add more drinks<span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a asp-controller="UnitItem" asp-action="List" asp-route-category="Alcoholic">Alcoholic</a></li>
-                    <li><a asp-controller="UnitItem" asp-action="List" asp-route-category="Non-alcoholic">Non Alcoholic</a></li>
-                    <li><a asp-controller="UnitItem" asp-action="List" asp-route-category="Food">Food</a></li>
-
-                </ul>
-            </a>
+            <a class="btn btn-outline-success" asp-controller="unitItem" asp-action="List">Add More </a>
         </div>
     </div>
 </div>
