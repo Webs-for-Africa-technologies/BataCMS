@@ -31,7 +31,7 @@ namespace BataCMS.Controllers
             _webHostEnvironment = webHostEnvironment; 
         }
 
-        public async Task<IActionResult> DeleteItemAsync(int id)
+/*        public async Task<IActionResult> DeleteItemAsync(int id)
         {
             var unitItem = _unitItemRepository.GetItemById(id);
 
@@ -52,7 +52,7 @@ namespace BataCMS.Controllers
                 return View("List");
 
             }
-        }
+        }*/
 
         [HttpGet]
         public IActionResult Create()

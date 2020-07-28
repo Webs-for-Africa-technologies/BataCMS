@@ -34,6 +34,28 @@ namespace BataCMS.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityRole identityRole = new IdentityRole { Name = model.RoleName };
+
+                IdentityResult result = await _roleManager.CreateAsync(identityRole);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles", "Admin");
+                }
+                foreach (IdentityError error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult AddCategory()
         {
@@ -68,27 +90,7 @@ namespace BataCMS.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                IdentityRole identityRole = new IdentityRole{Name = model.RoleName};
-
-                IdentityResult result = await _roleManager.CreateAsync(identityRole);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListRoles", "Admin"); 
-                }
-                foreach (IdentityError error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);    
-                }
-
-            }           
-            return View(model);
-        }
+       
 
         [HttpGet]
         public IActionResult ListUsers()

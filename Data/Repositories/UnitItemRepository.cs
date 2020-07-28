@@ -22,7 +22,9 @@ namespace BataCMS.Data.Repositories
 
         public unitItem GetItemById(int unitItemId) => _appDbContext.UnitItems.FirstOrDefault(p => p.unitItemId == unitItemId);
 
-        public async Task<int> DeleteItem(int itemId)
+        //Remove user should not be able to remove unit item to maintain integrity of purchasedItems. 
+
+/*        public async Task<int> DeleteItem(int itemId)
         {
             var unitItem = await _appDbContext.UnitItems.FindAsync(itemId);
 
@@ -31,11 +33,11 @@ namespace BataCMS.Data.Repositories
                 var result = await _appDbContext.SaveChangesAsync();
                 return result;
 
-        }
+        }*/
 
         public  unitItem Add(unitItem item)
         {
-            _appDbContext.UnitItems.Add(item);
+            _appDbContext.UnitItems.AddAsync(item);
             _appDbContext.SaveChanges();
             return item;
 

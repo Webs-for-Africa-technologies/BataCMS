@@ -54,8 +54,8 @@ namespace BataCMS.Controllers
                     PurchaseId =  purchase.PurchaseId
                 };
 
-                _appDbContext.Add(purchasePaymentMethod);
-                _appDbContext.SaveChanges();
+                _appDbContext.AddAsync(purchasePaymentMethod);
+                _appDbContext.SaveChangesAsync();
                 _checkout.ClearCheckout();
                 return RedirectToAction("CheckoutComplete"); 
             }

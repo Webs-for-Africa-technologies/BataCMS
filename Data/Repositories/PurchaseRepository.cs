@@ -18,7 +18,7 @@ namespace BataCMS.Data.Repositories
         public void CreatePurchase(Purchase purchase)
         {
             purchase.PurchaseDate = DateTime.Now;
-            _appDbContext.Add(purchase);
+            _appDbContext.AddAsync(purchase);
 
             //Add a purchase to Db to make reference to the FK. 
             _appDbContext.SaveChanges();
@@ -36,7 +36,7 @@ namespace BataCMS.Data.Repositories
                     Price = item.unitItem.Price,
                 };
                 purchaseTotal += item.unitItem.Price;
-                _appDbContext.PurchasedItems.Add(purchasedItem);
+                _appDbContext.PurchasedItems.AddAsync(purchasedItem);
             }
             purchase.PurchasesTotal = purchaseTotal;
 

@@ -36,13 +36,8 @@ namespace BataCMS.Data.Repositories
             if (purchaseTotal <= paymentMethod.AmountPaid)
             {
                 //addPurchase Payment method
-                _appDbContext.Add(paymentMethod);
+                _appDbContext.AddAsync(paymentMethod);
             }
-
-            _appDbContext.SaveChanges();
-
-
-
             _appDbContext.SaveChanges();
         }
     }

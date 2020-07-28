@@ -12,7 +12,7 @@ namespace BataCMS.Data.Interfaces
 
         unitItem GetItemById(int itemId);
 
-        Task<int> DeleteItem(int itemId);
+        /*Task<int> DeleteItem(int itemId);*/
 
         unitItem Add (unitItem item);
 

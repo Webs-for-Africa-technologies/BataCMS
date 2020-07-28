@@ -47,7 +47,7 @@ namespace BataCMS.Data.Models
                     Amount = 1
                 };
 
-                _appDbContext.CheckoutItems.Add(checkoutItem);
+                _appDbContext.CheckoutItems.AddAsync(checkoutItem);
             }else
             {
                 checkoutItem.Amount++;

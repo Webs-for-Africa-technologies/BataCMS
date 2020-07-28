@@ -20,7 +20,7 @@ namespace BataCMS.Data.Repositories
 
         Category ICategoryRepository.AddCategory(Category category)
         {
-            _appDbContext.Categories.Add(category);
+            _appDbContext.Categories.AddAsync(category);
             _appDbContext.SaveChanges();
             return category;
         }
