@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using BataCMS.Data;
 using BataCMS.Data.Interfaces;
@@ -14,14 +15,14 @@ namespace BataCMS.Controllers
     public class PurchaseController : Controller
     {
         private readonly IPurchaseRepository _purchaseRepository;
-        private readonly Checkout _checkout;
+        private readonly ICheckoutRepository _checkoutRepository;
         private readonly IPaymentMethodRepository _paymentMethodRepository;
         private readonly AppDbContext _appDbContext;
 
-        public PurchaseController(IPurchaseRepository purchaseRepository, Checkout checkout, IPaymentMethodRepository paymentMethodRepository, AppDbContext appDbContext)
+        public PurchaseController(IPurchaseRepository purchaseRepository, ICheckoutRepository checkoutRepository, IPaymentMethodRepository paymentMethodRepository, AppDbContext appDbContext)
         {
             _purchaseRepository = purchaseRepository;
-            _checkout = checkout;
+            _checkoutRepository = checkoutRepository;
             _paymentMethodRepository = paymentMethodRepository;
             _appDbContext = appDbContext; 
         }
@@ -36,10 +37,11 @@ namespace BataCMS.Controllers
         [Authorize] 
         public IActionResult Checkout(Purchase purchase, PaymentMethod paymentMethod)
         {
-            var items = _checkout.GetCheckoutItems();
-            _checkout.CheckoutItems = items;
+            var items = _checkoutRepository.GetCheckoutItems();
 
-            if (_checkout.CheckoutItems.Count == 0)
+            Checkout checkout = new Checkout { CheckoutItems = items };
+
+            if (checkout.CheckoutItems.Count == 0)
             {
                 ModelState.AddModelError("", "Your cart is empty");
             }
@@ -55,8 +57,8 @@ namespace BataCMS.Controllers
                 };
 
                 _appDbContext.AddAsync(purchasePaymentMethod);
-                _appDbContext.SaveChangesAsync();
-                _checkout.ClearCheckout();
+                _appDbContext.SaveChanges();
+                _checkoutRepository.ClearCheckout();
                 return RedirectToAction("CheckoutComplete"); 
             }
 

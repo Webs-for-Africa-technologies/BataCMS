@@ -10,18 +10,18 @@ namespace BataCMS.Data.Repositories
     public class PaymentMethodRepository : IPaymentMethodRepository
     {
         private readonly AppDbContext _appDbContext;
-        private readonly Checkout _checkout;
+        private readonly ICheckoutRepository _checkoutRepository;
 
-        public PaymentMethodRepository(AppDbContext appDbContext, Checkout checkout )
+        public PaymentMethodRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository )
         {
             _appDbContext = appDbContext;
-            _checkout = checkout;
+            _checkoutRepository = checkoutRepository;
         }
 
         public void CreatePaymentMethod(PaymentMethod paymentMethod)
         {
 
-            var checkoutItems = _checkout.CheckoutItems;
+            var checkoutItems = _checkoutRepository.GetCheckoutItems();
 
 
 

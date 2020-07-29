@@ -1,18 +1,18 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
 using System;
-
+using System.Collections.Generic;
 
 namespace BataCMS.Data.Repositories
 {
     public class PurchaseRepository : IPurchaseRepository
     {
         private readonly AppDbContext _appDbContext;
-        private readonly Checkout _checkkout;
-        public PurchaseRepository(AppDbContext appDbContext, Checkout checkout)
+        private readonly ICheckoutRepository _checkoutRepository;
+        public PurchaseRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository)
         {
             _appDbContext = appDbContext;
-            _checkkout = checkout;
+            _checkoutRepository = checkoutRepository;
         }
 
         public void CreatePurchase(Purchase purchase)
@@ -23,7 +23,7 @@ namespace BataCMS.Data.Repositories
             //Add a purchase to Db to make reference to the FK. 
             _appDbContext.SaveChanges();
 
-            var checkoutItems = _checkkout.CheckoutItems;
+            var checkoutItems = _checkoutRepository.GetCheckoutItems();
 
             decimal purchaseTotal = 0M;
 

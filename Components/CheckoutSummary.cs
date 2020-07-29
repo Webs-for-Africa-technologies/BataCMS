@@ -1,4 +1,5 @@
-﻿using BataCMS.Data.Models;
+﻿using BataCMS.Data.Interfaces;
+using BataCMS.Data.Models;
 using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,21 +11,22 @@ namespace BataCMS.Components
 {
     public class CheckoutSummary : ViewComponent
     {
-        private readonly Checkout _checkout;
-        public CheckoutSummary(Checkout checkout)
+        private readonly ICheckoutRepository _checkoutRepository;
+        public CheckoutSummary(Checkout checkout, ICheckoutRepository checkoutRepository)
         {
-            _checkout = checkout;
+            _checkoutRepository = checkoutRepository;
         }
 
         public IViewComponentResult Invoke(string viewName = null)
         {
-            var items = _checkout.GetCheckoutItems();
-            _checkout.CheckoutItems = items;
+            var items = _checkoutRepository.GetCheckoutItems();
+
+            Checkout checkout = new Checkout { CheckoutItems = items };
 
             var checkoutViewModel = new CheckoutViewModel
             {
-                Checkout = _checkout,
-                CheckoutTotal = _checkout.GetCheckoutTotal()
+                Checkout = checkout,
+                CheckoutTotal = _checkoutRepository.GetCheckoutTotal()
             };
 
             if (!string.IsNullOrEmpty(viewName))

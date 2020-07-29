@@ -13,23 +13,23 @@ namespace BataCMS.Controllers
     public class CheckoutController : Controller
     {
         private readonly IUnitItemRepository _unitItemRepository;
-        private readonly Checkout _checkout;
+        private readonly ICheckoutRepository _checkoutRepository;
 
-        public CheckoutController(IUnitItemRepository unitItemRepository, Checkout checkout)
+        public CheckoutController(IUnitItemRepository unitItemRepository, ICheckoutRepository checkoutRepository)
         {
             _unitItemRepository = unitItemRepository;
-            _checkout = checkout;
-            
+            _checkoutRepository = checkoutRepository;
         }
         public ViewResult Index()
         {
-            var items = _checkout.GetCheckoutItems();
-            _checkout.CheckoutItems = items;
+            var items = _checkoutRepository.GetCheckoutItems();
+
+            Checkout checkout = new Checkout { CheckoutItems = items };
 
             var cVM = new CheckoutViewModel
             {
-                Checkout = _checkout,
-                CheckoutTotal = _checkout.GetCheckoutTotal()
+                Checkout = checkout,
+                CheckoutTotal = _checkoutRepository.GetCheckoutTotal()
           
             };
             return View(cVM);  
@@ -41,9 +41,8 @@ namespace BataCMS.Controllers
 
             if(selectedItem != null)
             {
-                _checkout.AddItem(selectedItem, 1);
+                _checkoutRepository.AddItem(selectedItem, 1);
             }
-
             return RedirectToAction("Index");
         }
 
@@ -53,7 +52,7 @@ namespace BataCMS.Controllers
 
             if (selectedItem != null)
             {
-                _checkout.RemoveItem(selectedItem);
+                _checkoutRepository.RemoveItem(selectedItem);
             }
 
             return RedirectToAction("Index");

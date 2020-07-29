@@ -22,8 +22,6 @@ namespace BataCMS.Data
         }
 
         public DbSet<Category> Categories { get; set; }
-
-
         public DbSet<unitItem> UnitItems { get; set; }
         public DbSet<CheckoutItem> CheckoutItems { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
