@@ -40,5 +40,10 @@ namespace BataCMS.Data.Repositories
             }
             _appDbContext.SaveChanges();
         }
+
+        public PaymentMethod GetPaymentMethodById(int paymentMethodId)
+        {
+           return _appDbContext.PaymentMethods.FirstOrDefault(p => p.PaymentMethodId == paymentMethodId);
+        }
     }
 }

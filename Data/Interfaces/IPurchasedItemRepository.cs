@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace BataCMS.Data.Interfaces
 {
-    public interface IPaymentMethodRepository
+    public interface IPurchasedItemRepository
     {
-        void CreatePaymentMethod(PaymentMethod paymentMethod);
-
-        PaymentMethod GetPaymentMethodById(int paymentMethodId);
-
-
+        IEnumerable<PurchasedItem> GetPurchasedItemsById(int purchaseId);
     }
 }

@@ -17,14 +17,19 @@ namespace BataCMS.Controllers
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly ICheckoutRepository _checkoutRepository;
         private readonly IPaymentMethodRepository _paymentMethodRepository;
-        private readonly AppDbContext _appDbContext;
+        private readonly IUnitItemRepository _unitItemRepository;
+        private readonly IPurchasePayementMethodRepository _purchasePaymentMethodRepository;
+        private readonly IPurchasedItemRepository _purchasedItemRepository;
 
-        public PurchaseController(IPurchaseRepository purchaseRepository, ICheckoutRepository checkoutRepository, IPaymentMethodRepository paymentMethodRepository, AppDbContext appDbContext)
+        public PurchaseController(IPurchaseRepository purchaseRepository, ICheckoutRepository checkoutRepository, IPaymentMethodRepository paymentMethodRepository,IUnitItemRepository unitItemRepository,IPurchasePayementMethodRepository purchasePayementMethod, IPurchasedItemRepository purchasedItemRepository, AppDbContext appDbContext)
         {
             _purchaseRepository = purchaseRepository;
             _checkoutRepository = checkoutRepository;
             _paymentMethodRepository = paymentMethodRepository;
-            _appDbContext = appDbContext; 
+            _unitItemRepository = unitItemRepository;
+            _purchasePaymentMethodRepository = purchasePayementMethod;
+            _purchasedItemRepository = purchasedItemRepository;
+
         }
 
         [Authorize]
@@ -56,8 +61,7 @@ namespace BataCMS.Controllers
                     PurchaseId =  purchase.PurchaseId
                 };
 
-                _appDbContext.AddAsync(purchasePaymentMethod);
-                _appDbContext.SaveChanges();
+                _purchasePaymentMethodRepository.AddPurchasePaymentMethod(purchasePaymentMethod);;
                 _checkoutRepository.ClearCheckout();
                 return RedirectToAction("CheckoutComplete"); 
             }
@@ -74,7 +78,7 @@ namespace BataCMS.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ListPurchases()
         {
-            IEnumerable<Purchase> purchases = _appDbContext.Purchases.OrderBy(p => p.PurchaseDate);
+            IEnumerable<Purchase> purchases = _purchaseRepository.Purchases;
             var vm = new ListPurchaseViewModel
             { 
                 Purchases = purchases
@@ -87,12 +91,13 @@ namespace BataCMS.Controllers
         {
             var purchaseObjects = new List<PurchaseObject>();
 
-            Purchase purchase = _appDbContext.Purchases.FirstOrDefault(p => p.PurchaseId == purchaseId);
-            IEnumerable<PurchasedItem> purchasedItems = _appDbContext.PurchasedItems.Where(p => p.PurchaseId == purchaseId);
+            Purchase purchase = _purchaseRepository.GetPurchaseById(purchaseId);
+
+            IEnumerable<PurchasedItem> purchasedItems = _purchasedItemRepository.GetPurchasedItemsById(purchaseId);
 
             foreach (var item in purchasedItems)
             {
-                unitItem unit = _appDbContext.UnitItems.FirstOrDefault(p => p.unitItemId == item.unitItemId);
+                unitItem unit = _unitItemRepository.GetItemById(item.unitItemId);
 
                 var purchaseObject = new PurchaseObject { 
                     PurchaseAmount = item.Amount,
@@ -104,8 +109,8 @@ namespace BataCMS.Controllers
             }
      
 
-            PurchasePaymentMethod purchasePaymentMethod = _appDbContext.PurchasePaymentMethod.FirstOrDefault(p => p.PurchaseId == purchaseId);
-            PaymentMethod paymentMethod = _appDbContext.PaymentMethods.FirstOrDefault(p => p.PaymentMethodId == purchasePaymentMethod.PaymentMethodId);
+            PurchasePaymentMethod purchasePaymentMethod = _purchasePaymentMethodRepository.GetPurchasePaymentMethodByPurchaseId(purchaseId);
+            PaymentMethod paymentMethod = _paymentMethodRepository.GetPaymentMethodById(purchasePaymentMethod.PaymentMethodId);
 
             var vm = new PurchaseDetailViewModel
             {

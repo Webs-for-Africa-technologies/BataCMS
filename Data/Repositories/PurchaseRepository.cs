@@ -2,6 +2,7 @@
 using BataCMS.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BataCMS.Data.Repositories
 {
@@ -14,6 +15,8 @@ namespace BataCMS.Data.Repositories
             _appDbContext = appDbContext;
             _checkoutRepository = checkoutRepository;
         }
+
+        public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.OrderBy(p => p.PurchaseDate);
 
         public void CreatePurchase(Purchase purchase)
         {
@@ -41,6 +44,11 @@ namespace BataCMS.Data.Repositories
             purchase.PurchasesTotal = purchaseTotal;
 
             _appDbContext.SaveChanges();
+        }
+
+        public Purchase GetPurchaseById(int purchaseId)
+        {
+            return _appDbContext.Purchases.FirstOrDefault(p => p.PurchaseId == purchaseId);
         }
     }
 }

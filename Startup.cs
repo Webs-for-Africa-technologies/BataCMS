@@ -45,6 +45,10 @@ namespace BataCMS
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPurchaseRepository, PurchaseRepository>();
             services.AddTransient<IPaymentMethodRepository, PaymentMethodRepository>();
+            services.AddTransient<IPurchasePayementMethodRepository, PurchasePaymentMethodRepository>();
+            services.AddTransient<IPurchasedItemRepository, PurchasedItemRepository>();
+
+
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMemoryCache();
