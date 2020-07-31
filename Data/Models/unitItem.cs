@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BataCMS.Data.Interfaces;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,6 +13,7 @@ namespace BataCMS.Data.Models
         [Required]
         public string Name { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:n2}")]
         public decimal Price { get; set; }
 
         public bool InStock { get; set; }

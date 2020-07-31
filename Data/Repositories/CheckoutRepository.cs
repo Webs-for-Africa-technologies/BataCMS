@@ -14,11 +14,13 @@ namespace BataCMS.Data.Repositories
     {
         private readonly AppDbContext _appDbContext;
         private readonly Checkout _checkout;
+        private readonly ICurrencyRepository _currencyRepository;
 
-        public CheckoutRepository(AppDbContext appDbContext, Checkout checkout)
+        public CheckoutRepository(AppDbContext appDbContext, Checkout checkout, ICurrencyRepository currencyRepository)
         {
             _appDbContext = appDbContext;
             _checkout = checkout;
+            _currencyRepository = currencyRepository;
 
         }
 
@@ -35,7 +37,7 @@ namespace BataCMS.Data.Repositories
                     Amount = 1
                 };
 
-                _appDbContext.CheckoutItems.Add(checkoutItem);
+                _appDbContext.CheckoutItems.AddAsync(checkoutItem);
             }
             else
             {
@@ -76,7 +78,7 @@ namespace BataCMS.Data.Repositories
         {
             var total = _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Select(c => c.unitItem.Price * c.Amount).Sum();
 
-            return total;
+            return total * _currencyRepository.GetCurrentCurrency().Rate;
         }
 
         public decimal RemoveItem(unitItem item)

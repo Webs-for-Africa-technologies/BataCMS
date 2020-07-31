@@ -1,0 +1,13 @@
+﻿
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Show Prices in ...
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+            @foreach (var currency in Model)
+            {
+                <a class="dropdown-item" asp-action="SetCurrency" asp-controller="Home" asp-route-currencyId="@currency.CurrencyId">@currency.CurrencyName</a>
+            }
+        </div>
+    </div>
