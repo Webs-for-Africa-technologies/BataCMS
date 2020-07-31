@@ -19,13 +19,15 @@ namespace BataCMS.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICurrencyRepository _currencyRepository;
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, ICurrencyRepository currencyRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _categoryRepository = categoryRepository;
+            _currencyRepository = currencyRepository;
         }   
 
         [HttpGet]
@@ -272,6 +274,49 @@ namespace BataCMS.Controllers
 
             }
         }
+
+        [HttpGet]
+        public IActionResult AddCurrency()
+        {
+            return View();
         }
+
+        [HttpPost]
+        public IActionResult AddCurrency(AddCurrencyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Currency currency = new Currency
+                {
+                    CurrencyName = model.CurrencyName,
+                    Rate = model.Rate
+                };
+
+                var existingCurrency = _currencyRepository.GetCurrencyByName(model.CurrencyName);
+
+                if (existingCurrency == null)
+                {
+                    _currencyRepository.AddCurrency(currency);
+                    return RedirectToAction("Index", "Home");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The Currency already exists");
+                }
+
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ListCurrencies()
+        {
+            var users = _userManager.Users;
+            return View(users);
+        }
+
+
+    }
 
 }

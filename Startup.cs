@@ -38,9 +38,8 @@ namespace BataCMS
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
             services.AddTransient<Checkout>();
 
+            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
             services.AddTransient<ICheckoutRepository, CheckoutRepository>();
-
-
             services.AddTransient<IUnitItemRepository, UnitItemRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPurchaseRepository, PurchaseRepository>();
@@ -54,7 +53,9 @@ namespace BataCMS
             services.AddMemoryCache();
 
             services.AddHttpContextAccessor();
+
             services.AddSession();
+
             services.AddLiveReload();
 
 

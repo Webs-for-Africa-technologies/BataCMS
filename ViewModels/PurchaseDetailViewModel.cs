@@ -13,6 +13,7 @@ namespace BataCMS.ViewModels
         public List<PurchaseObject> PurchasedItems { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public Purchase Purchase { get; set; }
+        public Currency Currency { get; set; }
         
 
     }

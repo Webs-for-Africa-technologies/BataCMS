@@ -28,6 +28,8 @@ namespace BataCMS.Data
         public DbSet<PurchasedItem> PurchasedItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<PurchasePaymentMethod> PurchasePaymentMethod { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+
 
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BataCMS.Data;
 using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using BataCMS.Migrations;
 using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,11 @@ namespace BataCMS.Controllers
         private readonly IUnitItemRepository _unitItemRepository;
         private readonly IPurchasePayementMethodRepository _purchasePaymentMethodRepository;
         private readonly IPurchasedItemRepository _purchasedItemRepository;
+        private readonly ICurrencyRepository _currencyRepository;
 
-        public PurchaseController(IPurchaseRepository purchaseRepository, ICheckoutRepository checkoutRepository, IPaymentMethodRepository paymentMethodRepository,IUnitItemRepository unitItemRepository,IPurchasePayementMethodRepository purchasePayementMethod, IPurchasedItemRepository purchasedItemRepository, AppDbContext appDbContext)
+
+
+        public PurchaseController(IPurchaseRepository purchaseRepository, ICheckoutRepository checkoutRepository, IPaymentMethodRepository paymentMethodRepository,IUnitItemRepository unitItemRepository,IPurchasePayementMethodRepository purchasePayementMethod, IPurchasedItemRepository purchasedItemRepository, ICurrencyRepository currencyRepository)
         {
             _purchaseRepository = purchaseRepository;
             _checkoutRepository = checkoutRepository;
@@ -29,7 +33,7 @@ namespace BataCMS.Controllers
             _unitItemRepository = unitItemRepository;
             _purchasePaymentMethodRepository = purchasePayementMethod;
             _purchasedItemRepository = purchasedItemRepository;
-
+            _currencyRepository = currencyRepository; 
         }
 
         [Authorize]
@@ -111,13 +115,17 @@ namespace BataCMS.Controllers
 
             PurchasePaymentMethod purchasePaymentMethod = _purchasePaymentMethodRepository.GetPurchasePaymentMethodByPurchaseId(purchaseId);
             PaymentMethod paymentMethod = _paymentMethodRepository.GetPaymentMethodById(purchasePaymentMethod.PaymentMethodId);
+            Currency currency = _currencyRepository.GetCurrencyByName(paymentMethod.PaymentMethodName);
+
 
             var vm = new PurchaseDetailViewModel
             {
                 PurchaseId = purchase.PurchaseId,
                 PurchasedItems = purchaseObjects,
                 PaymentMethod = paymentMethod,
-                Purchase = purchase
+                Purchase = purchase,
+                Currency = currency
+                
             }; 
 
             return View(vm);

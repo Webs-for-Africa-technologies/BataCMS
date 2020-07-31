@@ -28,9 +28,9 @@
                     <tr>
                         <td class="text-center">@line.PurchaseAmount</td>
                         <td class="text-left">@line.ItemName</td>
-                        <td class="text-right">@line.Price.ToString("c")</td>
+                        <td class="text-right">@Model.Currency.CurrencyName @Math.Round((line.Price * Model.Currency.Rate),2)</td>
                         <td class="text-right">
-                            @((line.PurchaseAmount * line.Price).ToString("c"))
+                            @Model.Currency.CurrencyName @(Math.Round((line.PurchaseAmount * (line.Price * Model.Currency.Rate)),2))
                         </td>
                     </tr>
                 }
@@ -48,7 +48,7 @@
     <div class="card mb-3">
         <div class="card-header">Purchase Total</div>
         <div class="card-body">
-            <h5 class="card-title">@Model.Purchase.PurchasesTotal</h5>
+            <h5 class="card-title">@Math.Round((Model.Purchase.PurchasesTotal* Model.Currency.Rate),2)</h5>
         </div>
     </div>
 
