@@ -312,10 +312,86 @@ namespace BataCMS.Controllers
         [HttpGet]
         public IActionResult ListCurrencies()
         {
-            var users = _userManager.Users;
-            return View(users);
+            var currencies = _currencyRepository.Currencies;
+            return View(currencies);
         }
 
+        [HttpGet]
+        public IActionResult EditCurrency(int id)
+        {
+            var currency = _currencyRepository.GetCurrencyById(id);
+
+            if (currency == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+
+
+            var model = new EditCurrencyViewModel
+            {
+                Id = currency.CurrencyId,
+                CurrencyName = currency.CurrencyName,
+                Rate = currency.Rate
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditCurrency(EditCurrencyViewModel model)
+        {
+            var currency = _currencyRepository.GetCurrencyById(model.Id);
+
+            if (currency == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                currency.CurrencyName = model.CurrencyName;
+                currency.Rate = model.Rate;
+
+                var result  = _currencyRepository.UpdateCurrency(currency);
+
+
+                if (result != null)
+                {
+                    return RedirectToAction("ListCurrencies", "Admin");
+                }else
+                {
+                    ModelState.AddModelError("", "Error updating the Currency");
+                }
+                return View(model);
+            }
+        }
+
+        public  IActionResult DeleteCurrency(int id)
+        {
+            var currency = _currencyRepository.GetCurrencyById(id);
+
+            if (currency == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                if (currency.isCurrent == true)
+                {
+                    ViewBag.ErrorMessage = $"You cannot delete the currency {currency.CurrencyName}, the currency is currently active";
+                    return View("NotFound");
+
+                }
+                else
+                {
+                    _currencyRepository.DeleteCurrency(currency);
+                    return RedirectToAction("ListCurrencies");
+
+                }
+
+            }
+        }
 
     }
 

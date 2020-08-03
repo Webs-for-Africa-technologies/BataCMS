@@ -22,5 +22,6 @@ namespace BataCMS.Data.Interfaces
 
         Currency GetCurrencyByName(string CurrencyName);
 
+        void DeleteCurrency(Currency currency);
     }
 }

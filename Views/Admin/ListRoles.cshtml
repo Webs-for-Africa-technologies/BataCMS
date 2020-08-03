@@ -9,6 +9,8 @@
 @if (Model.Any())
 {
     <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateRole"> Create Role</a>
+    <a asp-action="ListUsers" asp-controller="Admin" class="btn btn-primary">Manage Users</a>
+
 
     foreach (var role in Model)
     {

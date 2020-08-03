@@ -67,5 +67,11 @@ namespace BataCMS.Data.Repositories
         {
             return _appDbContext.Currencies.FirstOrDefault(p => p.CurrencyName == CurrencyName);
         }
+
+        public void  DeleteCurrency(Currency currency)
+        {
+            _appDbContext.Currencies.Remove(currency);
+            _appDbContext.SaveChanges();
+        }
     }
 }
