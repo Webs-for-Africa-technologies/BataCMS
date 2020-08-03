@@ -17,6 +17,22 @@ namespace BataCMS.Data.Repositories
 
         public IEnumerable<Category> Categories => _appDbContext.Categories;
 
+        public void DeleteCategory(Category category)
+        {
+            _appDbContext.Categories.Remove(category);
+            _appDbContext.SaveChanges();
+        }
+
+        public Category GetCategoryById(int id)
+        {
+            return _appDbContext.Categories.FirstOrDefault(p => p.CategoryId == id);
+        }
+
+        public Category UpdateCategory(Category updatedCategory)
+        {
+            _appDbContext.SaveChanges();
+            return updatedCategory;
+        }
 
         Category ICategoryRepository.AddCategory(Category category)
         {

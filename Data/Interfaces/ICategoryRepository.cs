@@ -11,5 +11,12 @@ namespace BataCMS.Data.Interfaces
         IEnumerable<Category> Categories { get;}
 
         Category AddCategory(Category category);
+
+        Category GetCategoryById(int id);
+
+        Category UpdateCategory(Category updatedCategory);
+
+        void DeleteCategory(Category category);
+
     }
 }

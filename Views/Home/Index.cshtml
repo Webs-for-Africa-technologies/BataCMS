@@ -59,24 +59,36 @@
         <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
     }
 
+    @await Component.InvokeAsync("CategoryMenu")
+
     @await Component.InvokeAsync("CurrencySelectMenu");
 
+    @if (Model.HomeItems.Any())
+    {
+        <div class="row">
 
-    <div class="row">
-
-        @foreach (var item in Model.HomeItems)
-        {
-            if (item.InStock == true)
+            @foreach (var item in Model.HomeItems)
             {
-                @await Html.PartialAsync("UnitItemSummary", item);
-            }
-            else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-            {
-                @await Html.PartialAsync("UnitItemSummary", item);
+                if (item.InStock == true)
+                {
+                    @await Html.PartialAsync("UnitItemSummary", item);
+                }
+                else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    @await Html.PartialAsync("UnitItemSummary", item);
 
+                }
             }
-        }
-    </div>
+        </div>
+
+    }
+    else
+    {
+        <h1 class="cover-heading">Empty Category</h1>
+    <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
+
+    }
+
 
 </main>
 

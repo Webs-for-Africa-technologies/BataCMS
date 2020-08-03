@@ -1,26 +1,19 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" asp-controller="UnitItem"
-       asp-action="Index" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
-    <ul class="dropdown-menu">
+<div class="dropdown row">
+    <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>
+    <div class="dropdown-menu">
         @foreach (var category in Model)
         {
-            <li>
-                <a class="dropdown-item" asp-controller="UnitItem" asp-action="List"
-                   asp-route-category="@category.CategoryName">@category.CategoryName</a>
-            </li>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Index"asp-route-category="@category.CategoryName">@category.CategoryName</a>
+            
         }
-        <li class="divider"></li>
-        <li>
-            <a class="dropdown-item" asp-controller="UnitItem" asp-action="List" asp-route-category="">Show all Items</a>
-        </li>
+        <a class="divider"></a>
+        <a class="dropdown-item" asp-controller="UnitItem" asp-action="List" asp-route-category="">Show all Items</a>
+
         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
         {
-            <li class="divider"></li>
-            <li>
-                <a class="dropdown-item" asp-controller="Admin" asp-action="AddCategory" asp-route-category="">Add Category</a>
-            </li>
-
+            <a class="divider"></a>
+            <a class="dropdown-item" asp-controller="Admin" asp-action="AddCategory" asp-route-category="">Add Category</a>
         }
-    </ul>
-</li>
+    </div>
+</div>

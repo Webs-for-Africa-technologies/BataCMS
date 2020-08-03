@@ -22,11 +22,23 @@ namespace BataCMS.Controllers
             _categoryRepository = categoryRepository;
             _currencyRepository = currencyRepository; 
         }
-        public ViewResult Index()
+        public ViewResult Index(string category)
         {
+            string _category = category;
+            IEnumerable<unitItem> unitItems;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Food");
+            }
+            else
+            {
+                unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals(_category));
+            }
+
             var homeViewModel = new HomeViewModel
             {
-                HomeItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Food")
+                HomeItems = unitItems
             };
 
             return View(homeViewModel);

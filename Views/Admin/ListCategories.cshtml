@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Category>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage Categories</title>
+</head>
+<body>
+    <h1>Manage Categories</h1>
+
+    @if (Model.Any())
+    {
+        <a asp-action="AddCategory" asp-controller="Admin" class="btn btn-primary">Add a new category</a>
+
+
+        foreach (var item in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    Category Id: @item.CategoryId
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"> Category: @item.CategoryName</h5>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title"> Description: @item.Description</h5>
+                </div>
+
+                <div class="card-footer">
+                        <a asp-action="EditCategory" asp-controller="Admin" asp-route-id="@item.CategoryId" class="btn btn-primary">Manage Category</a>
+                </div>
+            </div>
+
+        }
+
+    }
+    else
+    {
+        <div class="card">
+            <div class="header">
+                No Categories Created Yet!!
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to create a new category
+                </h5>
+                <a class="btn btn-primary" asp-controller="Admin" asp-action="AddCategory">Add a New Category</a>
+
+            </div>
+        </div>
+    }
+</body>
+</html>

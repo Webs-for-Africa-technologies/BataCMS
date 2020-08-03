@@ -11,6 +11,8 @@
 @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
 {
     <a asp-action="AddItem" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
+    <a asp-action="ListCategories" asp-controller="Admin" asp-route-id="" class="btn btn-primary">Manage Categories </a>
+
 }
 
 @if (Model.UnitItems.Any())

@@ -29,10 +29,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    @await Component.InvokeAsync("CategoryMenu")
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Contact" action="Index">Contact</a>
-                    </li>
+
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
@@ -47,7 +44,14 @@
                             <a class="nav-link" asp-action="ListCurrencies" asp-controller="Admin">Currency Management</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="List" asp-controller="unitItem">Inventory Management</a>
+                        </li>
+
                     }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Contact" action="Index">Contact</a>
+                    </li>
                 </ul>
                 @await Component.InvokeAsync("CheckoutSummary")
                 @await Html.PartialAsync("LoginPartial")

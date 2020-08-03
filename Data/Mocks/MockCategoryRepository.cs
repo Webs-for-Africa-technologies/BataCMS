@@ -25,5 +25,19 @@ namespace BataCMS.Data.Mocks
             throw new NotImplementedException();
         }
 
+        public void DeleteCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetCategoryById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category UpdateCategory(Category updatedCategory)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

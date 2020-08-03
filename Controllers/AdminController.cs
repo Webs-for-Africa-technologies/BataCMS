@@ -20,14 +20,17 @@ namespace BataCMS.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICurrencyRepository _currencyRepository;
+        private readonly IUnitItemRepository _unitItemRepository;
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, ICurrencyRepository currencyRepository)
+
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, ICurrencyRepository currencyRepository, IUnitItemRepository unitItemRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _categoryRepository = categoryRepository;
             _currencyRepository = currencyRepository;
+            _unitItemRepository = unitItemRepository; 
         }   
 
         [HttpGet]
@@ -92,7 +95,83 @@ namespace BataCMS.Controllers
             return View(model);
         }
 
-       
+        [HttpGet]
+        public IActionResult ListCategories()
+        {
+            var categories = _categoryRepository.Categories;
+            return View(categories);
+        }
+
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+        {
+            var category = _categoryRepository.GetCategoryById(id);
+            int _categoryId = id;
+            if (category == null)
+            {
+                ViewBag.ErrorMessage = $"User with category id ={id} cannot be found";
+                return View("NotFound");
+            }
+
+            IEnumerable<unitItem> unitItems = _unitItemRepository.unitItems.Where(p => p.CategoryId == _categoryId);
+
+            var model = new EditCategoryViewModel
+            {
+                Id = category.CategoryId,
+                CategoryName = category.CategoryName,
+                Description = category.Description,
+                ItemList = unitItems
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditCategory(EditCategoryViewModel model)
+        {
+            var category = _categoryRepository.GetCategoryById(model.Id);
+
+            if (category == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                category.CategoryName = model.CategoryName;
+                category.Description = model.Description;
+
+                var result = _categoryRepository.UpdateCategory(category);
+
+
+                if (result != null)
+                {
+                    return RedirectToAction("ListCategories", "Admin");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Error updating the Currency");
+                }
+                return View(model);
+            }
+        }
+
+        public IActionResult DeleteCategory(int id)
+        {
+            var category = _categoryRepository.GetCategoryById(id);
+
+            if (category == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                _categoryRepository.DeleteCategory(category);
+                
+                return RedirectToAction("ListCategories");
+            }
+        }
+
 
         [HttpGet]
         public IActionResult ListUsers()
@@ -392,6 +471,8 @@ namespace BataCMS.Controllers
 
             }
         }
+
+
 
     }
 
