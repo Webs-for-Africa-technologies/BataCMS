@@ -4,21 +4,18 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/vendor.min.css" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
-
     <link rel="stylesheet" href="~/lib/font-awesome/css/solid.css" />
-
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+
 
     <title>@ViewBag.Title</title>
 </head>
 <body>
     <header>
+
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">Bata</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,10 +62,15 @@
     <div>
         @RenderBody()
     </div>
+    <script src="~/lib/jquery/jquery.js"></script>
+
     @if (IsSectionDefined("Scripts"))
     {
         @RenderSection("Scripts", required: true)
     }
-    <script src="~/vendor.min.js"></script>
+    <script src="~/lib/bootstrap/popper.min.js"></script>
+    <script src="~/lib/bootstrap/bootstrap.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>

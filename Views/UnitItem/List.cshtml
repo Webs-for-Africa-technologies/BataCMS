@@ -5,52 +5,56 @@
     ViewData["Title"] = "List";
 }
 
-<h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
 
 
-@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-{
-    <a asp-action="AddItem" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
-    <a asp-action="ListCategories" asp-controller="Admin" asp-route-id="" class="btn btn-primary">Manage Categories </a>
-
-}
-
-@if (Model.UnitItems.Any())
-{
-    <div class="row">
-        @foreach (var item in Model.UnitItems)
-        {
-            if (item.InStock == true)
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
-                @await Html.PartialAsync("UnitItemSummary", item);
-            }
-            else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-            {
-                @await Html.PartialAsync("UnitItemSummary", item);
+                <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
+                <a asp-action="ListCategories" asp-controller="Admin" asp-route-id="" class="btn btn-primary">Manage Categories </a>
 
             }
 
-        }
-    </div>
+            @if (Model.UnitItems.Any())
+            {
+                <div class="row">
+                    @foreach (var item in Model.UnitItems)
+                    {
+                        if (item.InStock == true)
+                        {
+                            @await Html.PartialAsync("UnitItemSummary", item);
+                        }
+                        else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            @await Html.PartialAsync("UnitItemSummary", item);
 
-}
-else
-{
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <main role="main" class="inner cover">
-            <h1 class="cover-heading">Empty Category</h1>
-            <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
-            <p class="lead">
-                <a asp-action="index" asp-controller="Home" class="btn btn-lg btn-secondary">Home</a>
-            </p>
-        </main>
+                        }
 
-        <footer class="mastfoot mt-auto">
-            <div class="inner">
-            </div>
-        </footer>
+                    }
+                </div>
+
+            }
+            else
+            {
+                <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                    <main role="main" class="inner cover">
+                        <h1 class="cover-heading">Empty Category</h1>
+                        <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
+                        <p class="lead">
+                            <a asp-action="index" asp-controller="Home" class="btn btn-lg btn-secondary">Home</a>
+                        </p>
+                    </main>
+
+                    <footer class="mastfoot mt-auto">
+                        <div class="inner">
+                        </div>
+                    </footer>
+                </div>
+            }
+        </div>
     </div>
-}
 
 
 

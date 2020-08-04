@@ -2,16 +2,19 @@
   {
     "outputFileName": "wwwroot/vendor.min.css",
     "inputFiles": [
-      "node_modules/bootstrap/dist/css/bootstrap.min.css"
+      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "node_modules/bootstrap/dist/css/bootstrap.min.css.map",
+      "node_modules/bootstrap/dist/css/bootstrap.css.map"
     ],
-    "minify": { "enabled": false }
+    "minify": { "enabled": true }
   },
   {
     "outputFileName": "wwwroot/vendor.min.js",
     "inputFiles": [
-      "node_modules/jquery/dist/jquery.min.js",
       "node_modules/popper.js/dist/umd/popper.min.js",
-      "node_modules/bootstrap/dist/js/bootstrap.min.js"
+      "node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map"
     ],
     "minify": { "enabled": false }
   }

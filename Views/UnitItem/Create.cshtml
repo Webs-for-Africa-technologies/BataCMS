@@ -12,65 +12,66 @@
     <title>Create New Item</title>
 </head>
 <body>
-
-    <form enctype="multipart/form-data" asp-controller="unitItem" asp-action="create" method="post" class="mt-3">
-        <div class="form-group row">
-            <label asp-for="Name" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" placeholder="Name" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="Price" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="Price" class="form-control" placeholder="Price" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-        </div>
-
-
-
-        <div class="form-group row">
-            <label asp-for="Category" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <select asp-for="Category" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["categories"])">
-                    <option value="">Select One</option>
-                </select>
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="Image" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <div class="custom-file">
-                    <input asp-for="Image" class="form-control custom-file-input" />
-                    <label class="custom-file-label">Choose image...</label>
+    <div class="container">
+        <form enctype="multipart/form-data" asp-controller="unitItem" asp-action="create" method="post" class="mt-3">
+            <div class="form-group row">
+                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label asp-for="InStock" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-1">
-                <input asp-for="InStock" class="form-control" placeholder="InStock" />
-                <span asp-validation-for="InStock" class="text-danger"></span>
+            <div class="form-group row">
+                <label asp-for="Price" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Price" class="form-control" placeholder="Price" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Create</button>
+
+
+            <div class="form-group row">
+                <label asp-for="Category" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="Category" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["categories"])">
+                        <option value="">Select One</option>
+                    </select>
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
             </div>
-        </div>
+
+            <div class="form-group row">
+                <label asp-for="Image" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="custom-file">
+                        <input asp-for="Image" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Choose image...</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="InStock" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-1">
+                    <input asp-for="InStock" class="form-control" placeholder="InStock" />
+                    <span asp-validation-for="InStock" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
 
 
-        <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
 
 
-    </form>
+        </form>
+    </div>
 </body>
 </html>
 
