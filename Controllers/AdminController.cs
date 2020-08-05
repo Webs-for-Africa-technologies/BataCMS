@@ -206,7 +206,7 @@ namespace BataCMS.Controllers
 
                 if (result.Succeeded)
                 {
-                    RedirectToAction("ListUsers");
+                    return RedirectToAction("ListUsers",  "Admin");
                 }
                 foreach (var error in result.Errors)
                 {
