@@ -50,19 +50,25 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-
-
-        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-        {
-            <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
-        }
-
-        @await Component.InvokeAsync("CategoryMenu")
-
-        @await Component.InvokeAsync("CurrencySelectMenu")
+      
 
         <div class="album py-5 bg-light">
             <div class="container">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        @await Component.InvokeAsync("CategoryMenu")
+                    </div>
+                    <div class="btn-group mr-2" role="group" aria-label="Second group">
+                        @await Component.InvokeAsync("CurrencySelectMenu")
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Third group">
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
+                        }
+                    </div>
+                </div>
+
                 @if (Model.HomeItems.Any())
                 {
                     <div class="row">
@@ -93,6 +99,3 @@
 
 
 </main>
-
-<style>
-</style>
