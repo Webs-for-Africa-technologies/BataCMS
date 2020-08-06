@@ -1,4 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
 
 <html>
@@ -26,7 +27,6 @@
                     <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
@@ -50,6 +50,7 @@
                         <a class="nav-link" asp-controller="Contact" action="Index">Contact</a>
                     </li>
                 </ul>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome @UserManager.GetUserName(User)</a>
                 @await Component.InvokeAsync("CheckoutSummary")
                 @await Html.PartialAsync("LoginPartial")
                 <form class="form-inline mt-2 mt-md-0">
