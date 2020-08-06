@@ -14,5 +14,7 @@ namespace BataCMS.ViewModels
         public string CurrencyName { get; set; }
 
         public decimal Rate { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

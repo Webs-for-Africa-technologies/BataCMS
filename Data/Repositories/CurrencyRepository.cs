@@ -11,13 +11,14 @@ namespace BataCMS.Data.Repositories
     {
 
         private readonly AppDbContext _appDbContext;
-
+        private readonly CurrentCurrency _currentCurrency;
 
         public IEnumerable<Currency> Currencies => _appDbContext.Currencies;
 
-        public CurrencyRepository(AppDbContext appDbContext)
+        public CurrencyRepository(AppDbContext appDbContext, CurrentCurrency currentCurrency)
         {
             _appDbContext = appDbContext;
+            _currentCurrency = currentCurrency; 
         }
         public Currency AddCurrency(Currency currency)
         {
@@ -28,7 +29,14 @@ namespace BataCMS.Data.Repositories
 
         public Currency GetCurrentCurrency()
         {
-            return _appDbContext.Currencies.SingleOrDefault(p => p.isCurrent == true);
+            int sessionCurrentCurrency = _currentCurrency.CurrencyId;
+
+            if (sessionCurrentCurrency == -1)
+            {
+                return _appDbContext.Currencies.SingleOrDefault(p => p.isCurrent == true);
+            }
+
+            return _appDbContext.Currencies.SingleOrDefault(p => p.CurrencyId == sessionCurrentCurrency);
         }
 
         public void SetCurrentCurrency(Currency currency)

@@ -431,6 +431,11 @@ namespace BataCMS.Controllers
                 currency.CurrencyName = model.CurrencyName;
                 currency.Rate = model.Rate;
 
+                if (model.IsActive == true)
+                {
+                    _currencyRepository.SetCurrentCurrency(currency);
+                }
+
                 var result  = _currencyRepository.UpdateCurrency(currency);
 
 

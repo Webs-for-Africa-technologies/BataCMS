@@ -6,7 +6,9 @@ using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
 using BataCMS.Data.Repositories;
 using BataCMS.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BataCMS.Controllers
 {
@@ -15,6 +17,7 @@ namespace BataCMS.Controllers
         private readonly IUnitItemRepository _unitItemRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICurrencyRepository _currencyRepository;
+
 
         public HomeController(IUnitItemRepository unitItem, ICategoryRepository categoryRepository, ICurrencyRepository currencyRepository)
         {
@@ -46,10 +49,7 @@ namespace BataCMS.Controllers
 
         public RedirectToActionResult SetCurrency(int currencyId) 
         {
-            Currency currency = _currencyRepository.GetCurrencyById(currencyId);
-
-            _currencyRepository.SetCurrentCurrency(currency);
-
+            HttpContext.Session.SetInt32("CurrencyId", currencyId);
             return RedirectToAction("Index");
         }
     }

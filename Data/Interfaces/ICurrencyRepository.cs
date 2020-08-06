@@ -12,7 +12,7 @@ namespace BataCMS.Data.Interfaces
          
         Currency GetCurrentCurrency();
 
-        void SetCurrentCurrency(Currency currency);
+        void SetCurrentCurrency(Currency currencyId);
 
         Currency AddCurrency(Currency currency);
 
