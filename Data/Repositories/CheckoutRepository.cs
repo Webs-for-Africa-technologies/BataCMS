@@ -56,17 +56,6 @@ namespace BataCMS.Data.Repositories
             _appDbContext.SaveChanges();
         }
 
-        public Checkout GetCart(IServiceProvider serviceProvider)
-        {
-            ISession session = serviceProvider.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-
-            var context = serviceProvider.GetService<AppDbContext>();
-            string checkoutId = session.GetString("CheckoutId") ?? Guid.NewGuid().ToString();
-
-            session.SetString("CheckoutId", checkoutId);
-
-            return new Checkout{ CheckoutId = checkoutId };
-        }
 
         public List<CheckoutItem> GetCheckoutItems()
         {

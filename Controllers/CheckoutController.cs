@@ -39,7 +39,7 @@ namespace BataCMS.Controllers
         {
             var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == itemId);
 
-            if(selectedItem != null)
+            if (selectedItem != null)
             {
                 _checkoutRepository.AddItem(selectedItem, 1);
             }
