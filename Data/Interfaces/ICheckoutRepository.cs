@@ -8,7 +8,6 @@ namespace BataCMS.Data.Interfaces
 {
     public interface ICheckoutRepository
     {
-         Checkout GetCart(IServiceProvider serviceProvider);
 
         void AddItem(unitItem item, int amount);
 

@@ -16,5 +16,17 @@ namespace BataCMS.Data.Models
 
         public List<CheckoutItem> CheckoutItems { get; set; }
 
+        public static Checkout GetCart(IServiceProvider serviceProvider)
+        {
+            ISession session = serviceProvider.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
+
+            var context = serviceProvider.GetService<AppDbContext>();
+            string checkoutId = session.GetString("CheckoutId") ?? Guid.NewGuid().ToString();
+
+            session.SetString("CheckoutId", checkoutId);
+
+            return new Checkout { CheckoutId = checkoutId };
+        }
+
     }
 }
