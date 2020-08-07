@@ -16,8 +16,11 @@
                 <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" src="~/Images/carousel1.jpg" alt="">
                 <div class="container">
                     <div class="carousel-caption text-left">
-                        <h1>We are here for you</h1>                      
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                        <h1>We are here for you</h1>
+                        @if (!signInManager.IsSignedIn(User))
+                        {
+                        <p><a class="btn btn-lg btn-primary" asp-action="Register" asp-controller="Account" role="button">Sign up Now</a></p>
+                        }
                     </div>
                 </div>
             </div>

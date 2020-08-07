@@ -19,7 +19,6 @@ namespace BataCMS.Data.Models
 
 
         [Required(ErrorMessage = "Please enter your first name")]
-        [Display(Name = "First name")]
         [StringLength(50)]
         public string ServerName { get; set; }
 

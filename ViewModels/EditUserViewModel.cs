@@ -19,6 +19,10 @@ namespace BataCMS.ViewModels
         [Required]
         public string UserName { get; set; }
 
+        public string Email { get; set; }
+
+        public string Number { get; set; }
+
         public IList<string> Roles { get; set; }
 
     }

@@ -189,7 +189,7 @@ namespace BataCMS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserAsync(EditUserViewModel model)
+        public async Task<IActionResult> ManageUserAsync(EditUserViewModel model)
         {
             var user = _userManager.FindByIdAsync(model.Id);
 
@@ -201,6 +201,7 @@ namespace BataCMS.Controllers
             else
             {
                 user.Result.UserName = model.UserName;
+                user.Result.PhoneNumber = model.Number;
 
                 var result = await _userManager.UpdateAsync(user.Result);
 
@@ -218,7 +219,7 @@ namespace BataCMS.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditUserAsync(string id)
+        public async Task<IActionResult> ManageUserAsync(string id)
         {
             var user = _userManager.FindByIdAsync(id);
 
@@ -234,6 +235,8 @@ namespace BataCMS.Controllers
             {
                 Id = user.Result.Id,
                 UserName = user.Result.UserName,
+                Email = user.Result.Email,
+                Number = user.Result.PhoneNumber,
                 Roles = userRoles
             };
             return View(model);

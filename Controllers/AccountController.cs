@@ -19,14 +19,14 @@ namespace BataCMS.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            
+
         }
 
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-            return View(new LoginViewModel { 
-                ReturnUrl = returnUrl   
+            return View(new LoginViewModel {
+                ReturnUrl = returnUrl
             });
         }
 
@@ -39,12 +39,12 @@ namespace BataCMS.Controllers
                 return View(loginViewModel);
             }
 
-            var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
+            var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
 
-            if (user != null )
+            if (user != null)
             {
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
-                if (result.Succeeded )
+                if (result.Succeeded)
                 {
                     if (string.IsNullOrEmpty(loginViewModel.ReturnUrl))
                     {
@@ -55,7 +55,7 @@ namespace BataCMS.Controllers
                         var parsedString = loginViewModel.ReturnUrl.Split('/');
                         string controller = parsedString[1];
                         string action = parsedString[2];
-                        return RedirectToAction( action, controller);
+                        return RedirectToAction(action, controller);
                     }
                 }
             }
@@ -69,22 +69,21 @@ namespace BataCMS.Controllers
             return View();
         }
 
-        [Authorize(Roles ="Admin")]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Register(LoginViewModel loginViewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             IDictionary<string, object> value = new Dictionary<string, object>();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = loginViewModel.UserName };
+                var user = new ApplicationUser { UserName = registerViewModel.UserName, Email = registerViewModel.Email, PhoneNumber = registerViewModel.Number };
 
-                var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
                 if (result.Succeeded)
                 {
@@ -105,7 +104,7 @@ namespace BataCMS.Controllers
 
                 }
             }
-            return View(loginViewModel);
+            return View(registerViewModel);
         }
 
         [HttpPost]
