@@ -23,22 +23,13 @@ namespace BataCMS.Data.Repositories
         {
 
             var checkoutItems = _checkoutRepository.GetCheckoutItems();
-
-
-
             decimal purchaseTotal = 0M;
 
             foreach (var item in checkoutItems)
             {
                 purchaseTotal += item.unitItem.Price;
             }
-
-            // if the amount paid is less than the total purchase, add another payment method comment#0002
-            if (purchaseTotal <= paymentMethod.AmountPaid)
-            {
-                //addPurchase Payment method
-                _appDbContext.AddAsync(paymentMethod);
-            }
+            _appDbContext.AddAsync(paymentMethod);
             _appDbContext.SaveChanges();
         }
 

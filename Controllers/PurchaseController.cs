@@ -47,12 +47,19 @@ namespace BataCMS.Controllers
         public IActionResult Checkout(Purchase purchase, PaymentMethod paymentMethod)
         {
             var items = _checkoutRepository.GetCheckoutItems();
+            decimal checkoutTotal = _checkoutRepository.GetCheckoutTotal();
 
             Checkout checkout = new Checkout { CheckoutItems = items };
 
             if (checkout.CheckoutItems.Count == 0)
             {
                 ModelState.AddModelError("", "Your cart is empty");
+            }
+
+            if (paymentMethod.AmountPaid < checkoutTotal)
+            {
+                ModelState.AddModelError("", "Please enter the amount equal or greater than your Purchase Total");
+                return View();
             }
             if (ModelState.IsValid)
             {
