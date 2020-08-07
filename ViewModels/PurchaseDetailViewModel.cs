@@ -15,6 +15,5 @@ namespace BataCMS.ViewModels
         public Purchase Purchase { get; set; }
         public Currency Currency { get; set; }
         
-
     }
 }

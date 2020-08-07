@@ -17,7 +17,6 @@ namespace BataCMS.Data.Models
         public decimal PurchasesTotal { get; set; }
 
 
-
         [Required(ErrorMessage = "Please enter your first name")]
         [StringLength(50)]
         public string ServerName { get; set; }
@@ -25,6 +24,14 @@ namespace BataCMS.Data.Models
         [BindNever]
         [ScaffoldColumn(false)]
         public DateTime PurchaseDate { get; set; }
+
+        [Display(Name = "Notes")]
+        [DataType(DataType.MultilineText)]
+        public string PurchaseNotes { get; set; }
+
+        [Required]
+        [Display(Name = "Table Numeber")]
+        public string DeliveryLocation { get; set; }
 
 
         public List<PurchasedItem> PurchasedItems { get; set; }

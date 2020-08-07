@@ -28,7 +28,7 @@
                     <tr>
                         <td class="text-center">@line.PurchaseAmount</td>
                         <td class="text-left">@line.ItemName</td>
-                        <td class="text-right">@Model.Currency.CurrencyName @Math.Round((line.Price * Model.Currency.Rate),2)</td>
+                        <td class="text-right">@Model.Currency.CurrencyName @Math.Round((line.Price * Model.Currency.Rate), 2)</td>
                         <td class="text-right">
                             @Model.Currency.CurrencyName @(Math.Round((line.PurchaseAmount * (line.Price * Model.Currency.Rate)),2))
                         </td>
@@ -39,16 +39,9 @@
     </div>
 
     <div class="card mb-3">
-        <div class="card-header">Purchase Payment Method</div>
+        <div class="card-header">Purchase Date</div>
         <div class="card-body">
-            <h5 class="card-title">@Model.PaymentMethod.PaymentMethodName</h5>
-        </div>
-    </div>
-
-    <div class="card mb-3">
-        <div class="card-header">Purchase Total</div>
-        <div class="card-body">
-            <h5 class="card-title">@Math.Round((Model.Purchase.PurchasesTotal* Model.Currency.Rate),2)</h5>
+            <h5 class="card-title">@Model.Purchase.PurchaseDate</h5>
         </div>
     </div>
 
@@ -60,14 +53,33 @@
     </div>
 
     <div class="card mb-3">
-        <div class="card-header">Purchase Date</div>
+        <div class="card-header">Purchase Payment Method</div>
         <div class="card-body">
-            <h5 class="card-title">@Model.Purchase.PurchaseDate</h5>
+            <h5 class="card-title">@Model.PaymentMethod.PaymentMethodName</h5>
         </div>
     </div>
 
+    <div class="card mb-3">
+        <div class="card-header">Table Number</div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Purchase.DeliveryLocation</h5>
+        </div>
+    </div>
 
- 
+    <div class="card mb-3">
+        <div class="card-header">Order Notes</div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Purchase.PurchaseNotes</h5>
+        </div>
+    </div
+>
+    <div class="card mb-3">
+        <div class="card-header">Purchase Total</div>
+        <div class="card-body">
+            <h5 class="card-title">@Math.Round((Model.Purchase.PurchasesTotal * Model.Currency.Rate), 2)</h5>
+        </div>
+    </div>
+
 
 </body>
 </html>

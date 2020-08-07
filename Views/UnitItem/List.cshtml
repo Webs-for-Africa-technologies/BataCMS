@@ -16,7 +16,7 @@
                 <a asp-action="ListCategories" asp-controller="Admin" asp-route-id="" class="btn btn-primary">Manage Categories </a>
 
             }
-
+            @await Component.InvokeAsync("CategoryMenu")
             @if (Model.UnitItems.Any())
             {
                 <div class="row">
