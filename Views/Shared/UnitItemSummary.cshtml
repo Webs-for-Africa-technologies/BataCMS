@@ -3,21 +3,58 @@
 @model unitItem
 
 
-<div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
-        <img class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" src="@Model.ImageUrl" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
-        <div class="card-body">
-            <p class="card-text">@Model.Name</p>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <a id="cartButton" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</a>
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {
-                        <a asp-action="Edit" asp-controller="unitItem" asp-route-id="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
-                    }
+<section data-id="6a85224" data-element_type="section" class="elementor-element section3-column1-section elementor-section elementor-inner-section elementor-section-boxed elementor-section-height-default elementor-section-content-middle elementor-reverse-tablet elementor-reverse-mobile" data-model-cid="c176">
+    <div class="elementor-background-overlay"></div>
+    <div class="elementor-shape elementor-shape-top"></div>
+    <div class="elementor-shape elementor-shape-bottom"></div>
+    <div class="elementor-container elementor-column-gap-default">
+        <div class="elementor-row">
+            <div data-id="3654df1f" data-element_type="column" class="elementor-element unitItem-item1-custom elementor-column elementor-inner-column" data-col="50" data-model-cid="c177">
+                <div class="elementor-column-wrap elementor-element-populated">
+                    <div class="elementor-background-overlay"></div>
+                    <div class="elementor-widget-wrap">
+                        <div data-id="1e6dee36" data-element_type="widget" class="elementor-element unitItem-item2-custom elementor-widget elementor-widget-heading" data-model-cid="c178" data-widget_type="heading.default">
+                            <div class="elementor-widget-container">
+                                <h3 class="elementor-heading-title elementor-size-default" data-elementor-setting-key="title">@Model.Name</h3>
+                            </div>
+                        </div>
+
+                        <div data-id="57c276f6" data-element_type="widget" class="elementor-element unitItem-item3-custom  elementor-widget elementor-widget-heading" data-model-cid="c181" data-widget_type="heading.default">
+                            <div class="elementor-widget-container">
+                                <h4 class="elementor-heading-title elementor-size-default elementor-inline-editing" data-elementor-setting-key="title">@currency.GetCurrentCurrency().CurrencyName @Math.Round((Model.Price * currency.GetCurrentCurrency().Rate), 2)</h4>
+                            </div>
+
+                        </div>
+                        
+                        <div data-id="347e72b6" data-element_type="widget" class="elementor-element unitItem-item4-custom elementor-widget " data-model-cid="c184" data-widget_type="text-editor.default">
+                            <div class="elementor-widget-container">
+                                <div class="elementor-text-editor elementor-clearfix" data-elementor-setting-key="editor" data-elementor-inline-editing-toolbar="advanced">
+                                    <a id="cartButton" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</a>                    
+                                   @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                    {
+                                        <br/><a asp-action="Edit" asp-controller="unitItem" asp-route-id="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <small class="text-muted">@currency.GetCurrentCurrency().CurrencyName @Math.Round((Model.Price * currency.GetCurrentCurrency().Rate), 2)</small>
+            </div>
+            
+            <div data-id="1515c318" data-element_type="column" class="elementor-element unitItem-item5-custom elementor-column elementor-inner-column" data-col="50" data-model-cid="c189">
+                <div class="elementor-column-wrap elementor-element-populated">
+                    <div class="elementor-background-overlay"></div>
+                    <div class="elementor-widget-wrap">
+                        <div data-id="1f00c99b" data-element_type="widget" class="elementor-element unitItem-item6-custom elementor-widget elementor-widget-image" data-model-cid="c190" data-widget_type="image.default">
+                            <div class="elementor-widget-container">
+                                <div class="elementor-image">
+                                    <img width="350" height="350" src="@Model.ImageUrl" class="attachment-full size-full" alt="" loading="lazy" srcset="@Model.ImageUrl 350w" sizes="(max-width: 350px) 100vw, 350px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>

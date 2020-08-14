@@ -1,104 +1,252 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
 @model HomeViewModel
 <head>
-    <link href="~/Content/carousel.css" rel="stylesheet" />
+    <link href="~/Content/elementor.css" rel="stylesheet" />
+    <link href="~/Content/animations.css" rel="stylesheet" />
+
 </head>
 
 <main role="main">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" src="~/Images/carousel1.jpg" alt="">
-                <div class="container">
-                    <div class="carousel-caption text-left">
-                        <h1>We are here for you</h1>
-                        @if (!signInManager.IsSignedIn(User))
-                        {
-                        <p><a class="btn btn-lg btn-primary" asp-action="Register" asp-controller="Account" role="button">Sign up Now</a></p>
-                        }
-                    </div>
-                </div>
-            </div>
 
-                <div class="carousel-item">
-                    <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" src="~/Images/carousel2.jpg" alt="">
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <p>We offer the Good in Good time</p>
+    <section data-id="3c635b68" data-element_type="section" class="elementor-element section-custom elementor-section elementor-top-section elementor-section-boxed elementor-section-height-min-height elementor-section-items-middle elementor-section-content-middle elementor-section--handles-inside" data-model-cid="c27">
+        <div class="elementor-background-overlay"></div>
+        <div class="elementor-shape elementor-shape-top"></div>
+        <div class="elementor-shape elementor-shape-bottom" data-shape="triangle" data-negative="false">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path class="elementor-shape-fill" d="M500,98.9L0,6.1V0h1000v6.1L500,98.9z"></path>
+            </svg>
+        </div>
+        <div class="elementor-container elementor-column-gap-extended">
+            <div class="elementor-row">
+                <div data-id="524b0677" data-element_type="column" class="elementor-element  column-item1-custom elementor-column elementor-top-column" data-col="16" data-model-cid="c28">
+                    <div class="elementor-column-wrap elementor-element-empty">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            <div class="elementor-empty-view">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" src="~/Images/carousel2.png" alt="">
-                    <div class="container">
-                        <div class="carousel-caption text-right">
-                            <h1>See what we have on offer</h1>
-                            <p>A variety of food and drink selection. See what we have on offer!</p>
-                            <p><a class="btn btn-lg btn-primary" asp-controller="UnitItem" asp-action="List" asp-route-category="All">Browse</a></p>
+
+                <div data-id="2f23f96" data-element_type="column" class="elementor-element column-item2-custom elementor-column elementor-top-column" data-col="66" data-model-cid="c31">
+
+                    <div class="elementor-column-wrap elementor-element-populated">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            <div data-id="459f92f3" data-element_type="widget" class="elementor-element column-item3-custom elementor-widget elementor-widget-image" data-model-cid="c32" data-widget_type="image.default" style="display: block;">
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-image">
+                                        <img width="200" height="35" src="~/Content/Images/divider-free-img-1.png" class="attachment-full size-full" alt="" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-id="2e85edff" data-element_type="widget" class="elementor-element column-item4-custom elementor-widget elementor-widget-heading animated fadeInDown" data-model-cid="c35" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h3 class="elementor-heading-title elementor-size-default" data-elementor-setting-key="title">Best in Baines, Hre</h3>
+                                </div>
+                            </div>
+
+                            <div data-id="25809d89" data-element_type="widget" class="elementor-element column-item5-custom elementor-widget elementor-widget-heading animated fadeInDown" data-model-cid="c38" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h1 class="elementor-heading-title elementor-size-default" data-elementor-setting-key="title">Steaks &amp; BBQ</h1>
+                                </div>
+                            </div>
+
+                            <section data-id="42eac2cd" data-element_type="section" class="elementor-element elementor-section elementor-inner-section elementor-section-boxed elementor-section-height-default animated fadeIn" data-model-cid="c44">
+                                <div class="elementor-background-overlay"></div>
+                                <div class="elementor-shape elementor-shape-top"></div>
+                                <div class="elementor-shape elementor-shape-bottom"></div>
+                                <div class="elementor-container elementor-column-gap-default">
+                                    <div class="elementor-row">
+                                        <div data-id="5b271dc0" data-element_type="column" class="elementor-element elementor-column elementor-inner-column" data-col="50" data-model-cid="c45">
+                                            <div class="elementor-column-wrap elementor-element-populated">
+                                                <div class="elementor-background-overlay"></div>
+                                                <div class="elementor-widget-wrap">
+                                                    <div data-id="56e9f79f" data-element_type="widget" class="elementor-element elementor-widget elementor-widget-button elementor-align-right elementor-mobile-align-center" data-model-cid="c46" data-widget_type="button.default">
+                                                        <div class="elementor-widget-container">
+                                                            <div class="elementor-button-wrapper">
+                                                                <a asp-action="Login" asp-controller="Account" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                                                                    <span class="elementor-button-content-wrapper">
+                                                                        <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Login</span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div data-id="4ebc0f1" data-element_type="column" class="elementor-element elementor-column elementor-inner-column" data-col="50" data-model-cid="c51">
+                                            <div class="elementor-column-wrap elementor-element-populated">
+                                                <div class="elementor-background-overlay"></div>
+                                                <div class="elementor-widget-wrap">
+                                                    <div data-id="6e3dc5c6" data-element_type="widget" class="elementor-element column-item7-custom elementor-widget elementor-widget-button elementor-align-left elementor-mobile-align-center" data-model-cid="c52" data-widget_type="button.default">
+                                                        <div class="elementor-widget-container">
+                                                            <div class="elementor-button-wrapper">
+                                                                <a href="#" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                                                                    <span class="elementor-button-content-wrapper">
+                                                                        <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Explore Menu</span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>>
+                        </div>
+                    </div>
+                </div><div data-id="652f3c83" data-element_type="column" class="elementor-element column-item8-custom elementor-column elementor-top-column" data-col="16" data-model-cid="c61">
+                    <div class="elementor-column-wrap elementor-element-empty">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            <div class="elementor-empty-view">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
-      
+    </section>
 
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
-                        @await Component.InvokeAsync("CategoryMenu")
+    <section data-id="14f1821f" data-element_type="section" class="elementor-element  section2-custom elementor-section elementor-top-section elementor-section-boxed elementor-section-height-default elementor-section-content-middle" data-model-cid="c66">
+        <div class="elementor-background-overlay"></div>
+        <div class="elementor-shape elementor-shape-top"></div>
+        <div class="elementor-shape elementor-shape-bottom"></div>
+        <div class="elementor-container elementor-column-gap-extended">
+            <div class="elementor-row">
+                <div data-id="8a0b65" data-element_type="column" class="elementor-element section2-item1-custom  elementor-column elementor-top-column" data-col="33" data-model-cid="c67">
+                    <div class="elementor-column-wrap elementor-element-populated">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            <div data-id="73a191dd" data-element_type="widget" class="elementor-element section2-item2-custom elementor-widget elementor-widget-image" data-model-cid="c68" data-widget_type="image.default">
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-image">
+                                        <img width="100" height="100" src="~/Content/Images/bbbq-free-img.png" class="attachment-full size-full" alt="" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-id="825bad8" data-element_type="widget" class="elementor-element  section2-item3-custom  elementor-widget elementor-widget-heading animated fadeInDown" data-model-cid="c71" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title elementor-size-default" data-elementor-setting-key="title">The BBQ Place.</h2>
+                                </div>
+                            </div>
+
+                            <div data-id="b7c6bcb" data-element_type="widget" class="elementor-element section2-item4-custom  elementor-widget elementor-widget-image" data-model-cid="c74" data-widget_type="image.default">
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-image">
+                                        <img width="200" height="35" src="~/Content/Images/divider-free-img-1.png" class="attachment-full size-full" alt="" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-id="2b32d2f" data-element_type="widget" class="elementor-element section2-item5-custom  elementor-widget elementor-widget-heading" data-model-cid="c77" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h6 class="elementor-heading-title elementor-size-default " data-elementor-setting-key="title">Our Delicious Story</h6>
+                                </div>
+                            </div>
+
+                            <div data-id="2411e63c" data-element_type="widget" class="elementor-element elementor-widget elementor-widget-button elementor-align-center elementor-mobile-align-center" data-model-cid="c86" data-widget_type="button.default">
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-button-wrapper">
+                                        <a asp-action="Login" asp-controller="Account" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                                            <span class="elementor-button-content-wrapper">
+                                                <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Sign In</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="btn-group mr-2" role="group" aria-label="Second group">
-                        @await Component.InvokeAsync("CurrencySelectMenu")
-                    </div>
-                    <div class="btn-group" role="group" aria-label="Third group">
-                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                        {
-                            <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
-                        }
+
+                </div>
+
+                <div data-id="6503f8ad" data-element_type="column" class="elementor-element section2-column2-item1-custom elementor-column elementor-top-column" data-col="33" data-model-cid="c91">
+                    <div class="elementor-column-wrap elementor-element-populated">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            <div data-id="592cd26e" data-element_type="widget" class="elementor-element  section2-column2-item2-custom elementor-widget elementor-widget-image" data-model-cid="c92" data-widget_type="image.default">
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-image">
+                                        <img width="300" height="600" src="~/Content/Images/barbecue-food-1.jpg" class="attachment-full size-full" alt="" loading="lazy" srcset="~/Content/Images/barbecue-food-1.jpg 300w, ~/Content/Images/barbecue-food-1-150x300.jpg 150w" sizes="(max-width: 300px) 100vw, 300px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                @if (Model.HomeItems.Any())
-                {
-                    <div class="row">
-
-                        @foreach (var item in Model.HomeItems)
-                        {
-                            if (item.InStock == true)
-                            {
-                                @await Html.PartialAsync("UnitItemSummary", item);
-                            }
-                            else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                            {
-                                @await Html.PartialAsync("UnitItemSummary", item);
-
-                            }
-                        }
+                <div data-id="3e82b1fe" data-element_type="column" class="elementor-element section2-column3-item1-custom elementor-column elementor-top-column" data-col="33" data-model-cid="c97">
+                    <div class="elementor-column-wrap elementor-element-populated">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            <div data-id="623f7a4c" data-element_type="widget" class="elementor-element section2-column3-item2-custom elementor-widget elementor-widget-image" data-model-cid="c98" data-widget_type="image.default">
+                                <div class="elementor-widget-container">
+                                    <div class="elementor-image">
+                                        <img width="300" height="600" src="~/Content/Images/barbecue-foods-2.jpg" class="attachment-full size-full" alt="" loading="lazy" srcset="~/Content/Images/barbecue-foods-2.jpg 300w, ~/Content/Images/barbecue-foods-2-150x300.jpg 150w" sizes="(max-width: 300px) 100vw, 300px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                }
-                else
-                {
-                    <h1 class="cover-heading">Empty Category</h1>
-                    <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
-
-                }
+                </div>
             </div>
         </div>
+    </section>
 
+    <section data-id="3f7e8350" data-element_type="section" class="elementor-element  section3-custom elementor-section elementor-top-section elementor-section-boxed elementor-section-height-default" data-model-cid="c174">
+        <div class="elementor-background-overlay"></div>
+        <div class="elementor-shape elementor-shape-top">
+            @await Component.InvokeAsync("CategoryMenu")
+            @await Component.InvokeAsync("CurrencySelectMenu")
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
+            }
+
+        </div>
+        <div class="elementor-shape elementor-shape-bottom"></div>
+        <div class="elementor-container elementor-column-gap-wider">
+            <div class="elementor-row">
+                <div data-id="59706ec0" data-element_type="column" class="elementor-element elementor-column elementor-top-column" data-col="50" data-model-cid="c175">
+                    <div class="elementor-column-wrap elementor-element-populated">
+                        <div class="elementor-background-overlay"></div>
+                        <div class="elementor-widget-wrap">
+                            @if (Model.HomeItems.Any())
+                            {
+
+                                @foreach (var item in Model.HomeItems)
+                                {
+                                    if (item.InStock == true)
+                                    {
+                                        @await Html.PartialAsync("UnitItemSummary", item);
+                                    }
+                                    else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                    {
+                                        @await Html.PartialAsync("UnitItemSummary", item);
+
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                <h1 class="cover-heading">Empty Category</h1>
+                                <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </main>
