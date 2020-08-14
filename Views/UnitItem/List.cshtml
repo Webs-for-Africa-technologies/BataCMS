@@ -1,60 +1,107 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
 @model BataCMS.Data.ViewModels.UnitItemListViewModel;
 
-@{
-    ViewData["Title"] = "List";
-}
+<head>
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/elementor.css" rel="stylesheet" />
+    <link href="~/Content/animations.css" rel="stylesheet" />
+</head>
 
-    <div class="album py-5 bg-light">
-        <div class="container">
-            <h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
 
+        <h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
+
+
+        <div data-id="56e9f79f" data-element_type="widget" class="elementor-element elementor-widget elementor-widget-button elementor-align-right elementor-mobile-align-center" data-model-cid="c46" data-widget_type="button.default">
+
+            <div class="elementor-widget-container">
+                <div class="elementor-button-wrapper">
+                    @await Component.InvokeAsync("CategoryMenu")
+                </div>
+            </div>
 
             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
-                <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="btn btn-primary">Add </a>
-                <a asp-action="ListCategories" asp-controller="Admin" asp-route-id="" class="btn btn-primary">Manage Categories </a>
-
-            }
-            @await Component.InvokeAsync("CategoryMenu")
-            @if (Model.UnitItems.Any())
-            {
-                <div class="row">
-                    @foreach (var item in Model.UnitItems)
-                    {
-                        if (item.InStock == true)
-                        {
-                            @await Html.PartialAsync("UnitItemSummary", item);
-                        }
-                        else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                        {
-                            @await Html.PartialAsync("UnitItemSummary", item);
-
-                        }
-
-                    }
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a asp-action="Create" asp-controller="unitItem" asp-route-id="" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Add</span>
+                            </span>
+                        </a>
+                    </div>
                 </div>
 
-            }
-            else
-            {
-                <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-                    <main role="main" class="inner cover">
-                        <h1 class="cover-heading">Empty Category</h1>
-                        <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
-                        <p class="lead">
-                            <a asp-action="index" asp-controller="Home" class="btn btn-lg btn-secondary">Home</a>
-                        </p>
-                    </main>
-
-                    <footer class="mastfoot mt-auto">
-                        <div class="inner">
-                        </div>
-                    </footer>
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a asp-action="ListCategories" asp-controller="Admin" asp-route-id="" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Manage Categories</span>
+                            </span>
+                        </a>
+                    </div>
                 </div>
             }
         </div>
-    </div>
+
+
+                <section data-id="3f7e8350" data-element_type="section" class="elementor-element  section3-custom elementor-section elementor-top-section elementor-section-boxed elementor-section-height-default" data-model-cid="c174">
+                    <div class="elementor-background-overlay"></div>
+                    <div class="elementor-shape elementor-shape-top">
+                    
+                    </div>
+                    <div class="elementor-shape elementor-shape-bottom"></div>
+                    <div class="elementor-container elementor-column-gap-wider">
+                        <div class="elementor-row">
+                            <div data-id="59706ec0" data-element_type="column" class="elementor-element elementor-column elementor-top-column" data-col="50" data-model-cid="c175">
+                                <div class="elementor-column-wrap elementor-element-populated">
+                                    <div class="elementor-background-overlay"></div>
+                                    <div class="elementor-widget-wrap">
+                                        @if (Model.UnitItems.Any())
+                                        {
+                                            <div class="row">
+                                                @foreach (var item in Model.UnitItems)
+                                                {
+                                                    if (item.InStock == true)
+                                                    {
+                                                        @await Html.PartialAsync("UnitItemSummary", item);
+                                                    }
+                                                    else if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                                    {
+                                                        @await Html.PartialAsync("UnitItemSummary", item);
+
+                                                    }
+
+                                                }
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                                                <main role="main" class="inner cover">
+                                                    <h1 class="cover-heading">Empty Category</h1>
+                                                    <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
+                                                    <p class="lead">
+                                                        <a asp-action="index" asp-controller="Home" class="btn btn-lg btn-secondary">Home</a>
+                                                    </p>
+                                                </main>
+
+                                                <footer class="mastfoot mt-auto">
+                                                    <div class="inner">
+                                                    </div>
+                                                </footer>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
 
 
 
