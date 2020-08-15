@@ -376,7 +376,7 @@
 
 @media(max-width:1024px) {
     .section3-column1-section {
-        margin-top: 0px;
+        margin-top: 20px;
         margin-bottom: 0px;
     }
 }
@@ -434,11 +434,13 @@
 @media(max-width:1024px) {
     .unitItem-item6-custom .elementor-image img {
         width: 175px;
+        height: 175px;
     }
 }
 
 @media(max-width:767px) {
     .unitItem-item6-custom .elementor-image img {
         width: 175px;
+        height: 175px;
     }
 }
