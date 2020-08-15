@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BataCMS.Data;
+using Microsoft.AspNetCore.Http;
+using System.Drawing;
 
 namespace BataCMS.Controllers
 {
@@ -91,7 +93,7 @@ namespace BataCMS.Controllers
             }
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
