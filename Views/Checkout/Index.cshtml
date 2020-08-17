@@ -18,13 +18,17 @@
                     @foreach (var line in Model.Checkout.CheckoutItems)
                     {
                         <tr>
-                            <td class="text-center">@line.Amount</td>
+
+                            <td class="text-center">
+                                <a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Checkout" asp-action="RemoveFromCheckout" asp-route-unitItemId="@line.unitItem.unitItemId"><i class="fas fa-minus" aria-hidden="true"></i></a>
+                                &nbsp @line.Amount	&nbsp
+                                <a class="glyphicon glyphicon-remove text-success add" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@line.unitItem.unitItemId"><i class="fas fa-plus" aria-hidden="true"></i></a>
+                            </td>
                             <td class="text-left">@line.unitItem.Name</td>
                             <td class="text-right">@Math.Round((line.unitItem.Price * currency.GetCurrentCurrency().Rate), 2)</td>
                             <td class="text-right">
                                 @((line.Amount * Math.Round((line.unitItem.Price * currency.GetCurrentCurrency().Rate), 2)))
                             </td>
-                            <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove" asp-controller="Checkout" asp-action="RemoveFromCheckout" asp-route-unitItemId="@line.unitItem.unitItemId"><i class="fas fa-times" aria-hidden="true"></i></a></td>
                         </tr>
                     }
                 </tbody>
