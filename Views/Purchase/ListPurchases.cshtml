@@ -10,6 +10,9 @@
     <main role="main">
         <div class="container">
             <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Orders from...</button>
+            <form method="post" asp-action="PostExportExcel">
+                <button class="btn btn btn-secondary order-button ">ExportExcel</button>
+            </form>
 
             <div class="dropdown-menu">
                 <a class="dropdown-item" asp-controller="Purchase" asp-action="ListPurchases" asp-route-filter="hour">Last hour</a>

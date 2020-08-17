@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using BataCMS.Migrations;
 using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 
 namespace BataCMS.Controllers
 {
@@ -114,6 +116,50 @@ namespace BataCMS.Controllers
                 Purchases = purchases
             };
             return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult PostExportExcel()
+        {
+            var myPurchases =  _purchaseRepository.Purchases.ToList();
+
+            var stream = new MemoryStream();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                workSheet.Cells[1, 1].Value = "PurchaseId";
+                workSheet.Cells[1, 2].Value = "PurchaseDate";
+                workSheet.Cells[1, 3].Value = "ServerName";
+                workSheet.Cells[1, 4].Value = "PurchasesTotal";
+                workSheet.Cells[1, 5].Value = "PaymentMethods";
+
+                workSheet.Cells["B2"].Style.Numberformat.Format = "yyyy-mm-dd";
+                workSheet.Cells["B2"].Formula = "=DATE(2014,10,5)";
+
+                for (int index = 1; index <= myPurchases.Count; index++)
+                {
+                    PurchasePaymentMethod purchasePaymentMethod = _purchasePaymentMethodRepository.GetPurchasePaymentMethodByPurchaseId(myPurchases[index - 1].PurchaseId);
+                    PaymentMethod paymentMethod = _paymentMethodRepository.GetPaymentMethodById(purchasePaymentMethod.PaymentMethodId);
+                    Currency currency = _currencyRepository.GetCurrencyByName(paymentMethod.PaymentMethodName);
+
+                        
+                    workSheet.Cells[index + 1, 1].Value = myPurchases[index - 1].PurchaseId;
+                    workSheet.Cells[index + 1, 2].Value = myPurchases[index - 1].PurchaseDate;
+                    workSheet.Cells[index + 1, 3].Value = myPurchases[index - 1].ServerName;
+                    workSheet.Cells[index + 1, 4].Value = myPurchases[index - 1].PurchasesTotal;
+                    workSheet.Cells[index + 1, 5].Value = currency.CurrencyName;
+                }
+                package.Save();
+            }
+            stream.Position = 0;
+
+            string excelName = $"Purchases-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            // above I define the name of the file using the current datetime.
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName); // this will be the actual export.
         }
 
         [Authorize(Roles = "Admin")]
