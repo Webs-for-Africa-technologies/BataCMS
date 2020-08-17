@@ -9,6 +9,17 @@
 
     <main role="main">
         <div class="container">
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Orders from...</button>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-controller="Purchase" asp-action="ListPurchases" asp-route-filter="hour">Last hour</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="Purchase" asp-action="ListPurchases" asp-route-filter="day">Last Day...</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="Purchase" asp-action="ListPurchases" asp-route-filter="week">Last Week...</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="Purchase" asp-action="ListPurchases" asp-route-filter="all">All</a>
+            </div>
 
             <table class="table table-bordered table-striped">
                 <thead>

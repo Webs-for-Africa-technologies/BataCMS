@@ -16,7 +16,7 @@ namespace BataCMS.Data.Repositories
             _checkoutRepository = checkoutRepository;
         }
 
-        public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.OrderBy(p => p.PurchaseDate);
+        public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.OrderByDescending(p => p.PurchaseDate);
 
         public void CreatePurchase(Purchase purchase)
         {

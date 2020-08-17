@@ -87,9 +87,28 @@ namespace BataCMS.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult ListPurchases()
+        public IActionResult ListPurchases(string filter)
         {
-            IEnumerable<Purchase> purchases = _purchaseRepository.Purchases;
+            IEnumerable<Purchase> purchases = null; 
+            if (String.IsNullOrEmpty(filter) || filter == "all")
+            {
+                purchases = _purchaseRepository.Purchases;
+            }
+            else
+            {
+                if (filter == "hour")
+                {
+                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)));  
+                }
+                if (filter == "day")
+                {
+                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddDays(-1)));
+                }
+                if (filter == "week")
+                {
+                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddDays(-7)));
+                }
+            }
             var vm = new ListPurchaseViewModel
             { 
                 Purchases = purchases
