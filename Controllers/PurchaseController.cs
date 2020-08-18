@@ -136,8 +136,16 @@ namespace BataCMS.Controllers
                 workSheet.Cells[1, 4].Value = "PurchasesTotal";
                 workSheet.Cells[1, 5].Value = "PaymentMethods";
 
-                workSheet.Cells["B2"].Style.Numberformat.Format = "yyyy-mm-dd";
-                workSheet.Cells["B2"].Formula = "=DATE(2014,10,5)";
+                workSheet.Row(1).Height = 20;
+                workSheet.Column(1).Width = 15;
+                workSheet.Column(2).Width = 15;
+                workSheet.Column(3).Width = 15;
+                workSheet.Column(4).Width = 15;
+                workSheet.Column(5).Width = 16;
+
+                workSheet.Row(1).Style.Font.Bold = true;
+
+                workSheet.Cells["B2:B" + (myPurchases.Count+1)].Style.Numberformat.Format = "yyyy-mm-dd";
 
                 for (int index = 1; index <= myPurchases.Count; index++)
                 {
