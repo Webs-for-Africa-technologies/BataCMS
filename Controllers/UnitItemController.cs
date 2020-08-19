@@ -174,22 +174,25 @@ namespace BataCMS.Controllers
             return photoPath;
         }
 
-        public ViewResult List(string category)
+        public ViewResult List(string category, string searchString)
         {
             string _category = category;
             IEnumerable<unitItem> unitItems;
 
             string currentCategory = string.Empty;
 
-            if (string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                unitItems = _unitItemRepository.unitItems.OrderBy(p => p.unitItemId);
-                currentCategory = "All Items";
-            }
-            else
+                unitItems = _unitItemRepository.unitItems.Where(p => p.Name.Contains(searchString));
+            } else if (!string.IsNullOrEmpty(category))
             {
                 unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals(_category));
                 currentCategory = _category;
+            }
+            else
+            {
+                unitItems = _unitItemRepository.unitItems.OrderBy(p => p.unitItemId);
+                currentCategory = "All Items";
             }
 
             var vm = new UnitItemListViewModel
