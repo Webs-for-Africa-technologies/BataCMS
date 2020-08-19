@@ -180,6 +180,21 @@ namespace BataCMS.Controllers
             return View(users);
         }
 
+        [HttpPost]
+        public IActionResult ListUsers(string SearchString)
+        {
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                var searchedUsers = _userManager.Users.Where(p => p.UserName.Contains(SearchString));
+                return View(searchedUsers);
+            }
+            else
+            {
+                var users = _userManager.Users;
+                return View(users);
+            }
+        }
+
 
         [HttpGet]
         public IActionResult ListRoles()

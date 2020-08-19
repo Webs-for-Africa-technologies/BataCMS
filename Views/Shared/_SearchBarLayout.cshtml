@@ -1,0 +1,82 @@
+﻿
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/solid.css" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+
+
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ListUsers" asp-controller="Admin">User Management</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ListPurchases" asp-controller="Purchase">Purchases</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="ListCurrencies" asp-controller="Admin">Currency Management</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="List" asp-controller="unitItem">Inventory Management</a>
+                        </li>
+
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Contact" action="Index">Contact</a>
+                    </li>
+                </ul>
+
+                @using (Html.BeginForm(new { style = "margin-right: 10px", @class = "form-inline my-2 my-lg-0" }))
+                {
+                    <p>
+                        Find by Username: @Html.TextBox("SearchString")
+                        <input type="submit" value="Search" class="form-control mr-sm-2" />
+                    </p>
+                }
+
+
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome @UserManager.GetUserName(User)</a>
+                @await Component.InvokeAsync("CheckoutSummary")
+                @await Html.PartialAsync("LoginPartial")
+            </div>
+        </nav>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/lib/jquery/jquery.js"></script>
+
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", required: true)
+    }
+    <script src="~/lib/bootstrap/popper.min.js"></script>
+    <script src="~/lib/bootstrap/bootstrap.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</body>
+</html>
+
