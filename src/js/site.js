@@ -2,10 +2,6 @@
 import 'bootstrap';
 import 'jquery';
 
-// Using the next two lines is like including partial view _ValidationScriptsPartial.cshtml
-import 'jquery-validation';
-import 'jquery-validation-unobtrusive';
-
 // CSS Dependencies: Bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css'

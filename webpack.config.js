@@ -2,9 +2,9 @@
 
 module.exports = {
     entry: {
-        site: './src/js/site.js'
+        site: './src/js/site.js',
         //bootstrap_js: './src/js/bootstrap_js.js',
-        //validation: './src/js/validation.js',
+        validation: './src/js/validation.js'
         //index: './src/js/index.js'
     },
     output: {
