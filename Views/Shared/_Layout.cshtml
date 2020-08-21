@@ -1,17 +1,12 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
-<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script type="module" src="~/dist/site.entry.js" defer></script>
+    <link rel="stylesheet" href="~/dist/site.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/solid.css" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/bootstrap.css" rel="stylesheet" />
-
-
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -56,15 +51,10 @@
     <div>
         @RenderBody()
     </div>
-    <script src="~/lib/jquery/jquery.js"></script>
 
     @if (IsSectionDefined("Scripts"))
     {
         @RenderSection("Scripts", required: true)
     }
-    <script src="~/lib/bootstrap/popper.min.js"></script>
-    <script src="~/lib/bootstrap/bootstrap.js"></script>
-    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </body>
 </html>

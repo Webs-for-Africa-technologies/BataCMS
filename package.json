@@ -1,16 +1,27 @@
 {
-  "version": "1.0.0",
-  "name": "asp.net",
+  "name": "batacms",
+  "description": "CMS for small businesses",
+  "repository": "https://github.com/Gudu4Real/BataCMS",
+  "license": "MIT",
+  "version": "0.6.0",
   "private": true,
-  "devDependencies": {
-    "bootstrap": "4.3.1",
-    "jquery": "3.5.0",
-    "popper.js": "1.12.9"
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "jquery-validation": "^1.19.1",
+    "jquery-validation-unobtrusive": "^3.2.11",
+    "bootstrap": "^4.4.1",
+    "popper.js": "^1.16.1"
   },
-  
-  "EPPlus": {
-      "ExcelPackage": {
-        "LicenseContext": "NonCommercial" 
-    }
-  
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "css-loader": "^3.4.2",
+    "file-loader": "^6.0.0",
+    "style-loader": "^1.1.3",
+    "url-loader": "^4.0.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
 }

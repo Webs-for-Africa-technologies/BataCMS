@@ -13,6 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="src\css\Home.css" />
+    <None Remove="src\css\site.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="src\css\site.css" />
+    <Content Include="src\Images\Barbecue-dish-item-2.jpg" />
+    <Content Include="src\Images\blackboard-bg-free-img.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="EPPlus" Version="5.2.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
@@ -35,8 +46,13 @@
 
   <ItemGroup>
     <Folder Include="Data\ViewModels\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\dist\" />
     <!-- extends watching group to include *.js files -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\animations.css" />
+    <None Include="wwwroot\Content\elementor.css" />
   </ItemGroup>
 
 
