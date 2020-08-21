@@ -10,10 +10,12 @@ namespace BataCMS.Data.Repositories
     {
         private readonly AppDbContext _appDbContext;
         private readonly ICheckoutRepository _checkoutRepository;
-        public PurchaseRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository)
+        private readonly ICurrencyRepository _currencyRepository;
+        public PurchaseRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository, ICurrencyRepository currencyRepository)
         {
             _appDbContext = appDbContext;
             _checkoutRepository = checkoutRepository;
+            _currencyRepository = currencyRepository;
         }
 
         public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.OrderByDescending(p => p.PurchaseDate);
@@ -38,7 +40,7 @@ namespace BataCMS.Data.Repositories
                     PurchaseId = purchase.PurchaseId,
                     Price = item.unitItem.Price,
                 };
-                purchaseTotal += (item.unitItem.Price*item.Amount);
+                purchaseTotal += (item.unitItem.Price*item.Amount) * _currencyRepository.GetCurrentCurrency().Rate;
                 _appDbContext.PurchasedItems.AddAsync(purchasedItem);
             }
             purchase.PurchasesTotal = purchaseTotal;
