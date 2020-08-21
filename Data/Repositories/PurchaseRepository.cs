@@ -38,7 +38,7 @@ namespace BataCMS.Data.Repositories
                     PurchaseId = purchase.PurchaseId,
                     Price = item.unitItem.Price,
                 };
-                purchaseTotal += item.unitItem.Price;
+                purchaseTotal += (item.unitItem.Price*item.Amount);
                 _appDbContext.PurchasedItems.AddAsync(purchasedItem);
             }
             purchase.PurchasesTotal = purchaseTotal;
