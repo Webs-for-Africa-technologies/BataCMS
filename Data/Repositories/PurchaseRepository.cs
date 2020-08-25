@@ -1,5 +1,6 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BataCMS.Data.Repositories
             _currencyRepository = currencyRepository;
         }
 
-        public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.OrderByDescending(p => p.PurchaseDate);
+        public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.Include(p => p.PaymentMethods).OrderByDescending(p => p.PurchaseDate);
 
         public void CreatePurchase(Purchase purchase)
         {
@@ -45,12 +46,19 @@ namespace BataCMS.Data.Repositories
             }
             purchase.PurchasesTotal = purchaseTotal;
 
+
+            PaymentMethod paymentMethod = new PaymentMethod { AmountPaid = purchaseTotal, PaymentMethodName = _currencyRepository.GetCurrentCurrency().CurrencyName };
+            
+            //initialize the list
+            purchase.PaymentMethods = new List<PaymentMethod>();
+
+            purchase.PaymentMethods.Add(paymentMethod);
             _appDbContext.SaveChanges();
         }
 
         public Purchase GetPurchaseById(int purchaseId)
         {
-            return _appDbContext.Purchases.FirstOrDefault(p => p.PurchaseId == purchaseId);
+            return _appDbContext.Purchases.Include(p => p.PaymentMethods).FirstOrDefault(p => p.PurchaseId == purchaseId);
         }
     }
 }

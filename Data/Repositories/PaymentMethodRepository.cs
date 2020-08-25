@@ -19,18 +19,17 @@ namespace BataCMS.Data.Repositories
             _checkoutRepository = checkoutRepository;
         }
 
-        public void CreatePaymentMethod(PaymentMethod paymentMethod)
+        public void CreatePaymentMethod(PaymentMethod paymentMethod, Purchase purchase)
         {
-
-            var checkoutItems = _checkoutRepository.GetCheckoutItems();
-            decimal purchaseTotal = 0M;
-
-            foreach (var item in checkoutItems)
-            {
-                purchaseTotal += item.unitItem.Price;
-            }
             _appDbContext.AddAsync(paymentMethod);
             _appDbContext.SaveChanges();
+        }
+
+        public PaymentMethod GetMethodByPurchaseId(int purchaseId)
+        {
+            Purchase purchase = _appDbContext.Purchases.Include(p => p.PaymentMethods).SingleOrDefault(p => p.PurchaseId == purchaseId);
+
+            return purchase.PaymentMethods.First();
         }
 
         public PaymentMethod GetPaymentMethodById(int paymentMethodId)
