@@ -24,9 +24,9 @@ namespace BataCMS.Data.Repositories
 
         }
 
-        public void AddItem(unitItem item, int amount)
+        public async Task AddItemAsync(unitItem item, int amount)
         {
-            var checkoutItem = _appDbContext.CheckoutItems.SingleOrDefault(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
+            var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
 
             if (checkoutItem == null)
             {
@@ -37,29 +37,29 @@ namespace BataCMS.Data.Repositories
                     Amount = 1
                 };
 
-                _appDbContext.CheckoutItems.AddAsync(checkoutItem);
+                await _appDbContext.CheckoutItems.AddAsync(checkoutItem);
             }
             else
             {
                 checkoutItem.Amount++;
             }
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public void ClearCheckout()
+        public async Task ClearCheckoutAsync()
         {
             var checkoutItems = _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId);
 
             _appDbContext.CheckoutItems.RemoveRange(checkoutItems);
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
 
-        public List<CheckoutItem> GetCheckoutItems()
+        public async Task<List<CheckoutItem>> GetCheckoutItemsAsync()
         {
-            return _checkout.CheckoutItems ?? (_checkout.CheckoutItems = _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Include(s => s.unitItem).ToList());
+            return _checkout.CheckoutItems ?? (_checkout.CheckoutItems = await _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Include(s => s.unitItem).ToListAsync());
 
         }
 
@@ -70,9 +70,9 @@ namespace BataCMS.Data.Repositories
             return total * _currencyRepository.GetCurrentCurrency().Rate;
         }
 
-        public decimal RemoveItem(unitItem item)
+        public async Task<decimal> RemoveItemAsync(unitItem item)
         {
-            var checkoutItem = _appDbContext.CheckoutItems.SingleOrDefault(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
+            var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
 
             var localAmount = 0;
 
@@ -88,7 +88,7 @@ namespace BataCMS.Data.Repositories
                     _appDbContext.CheckoutItems.Remove(checkoutItem);
                 }
             }
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
             return localAmount;
         }

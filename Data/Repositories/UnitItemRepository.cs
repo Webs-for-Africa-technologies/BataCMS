@@ -20,7 +20,7 @@ namespace BataCMS.Data.Repositories
 
         public IEnumerable<unitItem> unitItems => _appDbContext.UnitItems.Include(c => c.Category);
 
-        public unitItem GetItemById(int unitItemId) => _appDbContext.UnitItems.FirstOrDefault(p => p.unitItemId == unitItemId);
+        public async Task<unitItem> GetItemByIdAsync(int unitItemId) => await _appDbContext.UnitItems.FirstOrDefaultAsync(p => p.unitItemId == unitItemId);
 
         //Remove user should not be able to remove unit item to maintain integrity of purchasedItems. 
 
@@ -35,19 +35,17 @@ namespace BataCMS.Data.Repositories
 
         }*/
 
-        public  unitItem Add(unitItem item)
+        public async Task<unitItem> AddAsync(unitItem item)
         {
-            _appDbContext.UnitItems.AddAsync(item);
-            _appDbContext.SaveChanges();
+            await _appDbContext.UnitItems.AddAsync(item);
+            await _appDbContext.SaveChangesAsync();
             return item;
-
         }
 
-        public unitItem EditItem(unitItem updatedItem)
+        public async Task EditItemAsync(unitItem updatedItem)
         {
-            // only save the changes to the repository
-            _appDbContext.SaveChanges();
-            return  updatedItem;
+            _appDbContext.UnitItems.Update(updatedItem);
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

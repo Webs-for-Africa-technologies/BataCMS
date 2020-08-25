@@ -68,7 +68,7 @@ namespace BataCMS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateUnitItemViewModel model)
+        public async Task<IActionResult> CreateAsync(CreateUnitItemViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace BataCMS.Controllers
                     ImageUrl = photoPath
                 };
 
-                _unitItemRepository.Add(newUnitItem);
+                await _unitItemRepository.AddAsync(newUnitItem);
                 return RedirectToAction("List", new { id = newUnitItem.unitItemId });
 
             }
@@ -95,7 +95,7 @@ namespace BataCMS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> EditAsync(int id)
         {
             this.ViewData["categories"] = _categoryRepository.Categories.Select(x => new SelectListItem
             {
@@ -103,7 +103,7 @@ namespace BataCMS.Controllers
                 Text = x.CategoryName
             }).ToList();
 
-            unitItem unitItem = _unitItemRepository.GetItemById(id);
+            unitItem unitItem = await _unitItemRepository.GetItemByIdAsync(id);
             Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryId == unitItem.CategoryId);
 
             EditUnitItemViewModel editUnitItemViewModel = new EditUnitItemViewModel
@@ -120,11 +120,11 @@ namespace BataCMS.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(EditUnitItemViewModel model)
+        public async Task<IActionResult> EditAsync(EditUnitItemViewModel model)
         {
             if (ModelState.IsValid)
             {
-                unitItem unitItem = _unitItemRepository.GetItemById(model.unitItemId);
+                unitItem unitItem = await _unitItemRepository.GetItemByIdAsync(model.unitItemId);
                 Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == model.Category);
 
 
@@ -146,7 +146,7 @@ namespace BataCMS.Controllers
 
                 }
 
-                _unitItemRepository.EditItem(unitItem);
+                await _unitItemRepository.EditItemAsync(unitItem);
                 return RedirectToAction("List");
 
             }

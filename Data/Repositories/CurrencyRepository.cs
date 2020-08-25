@@ -1,5 +1,6 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace BataCMS.Data.Repositories
             _appDbContext = appDbContext;
             _currentCurrency = currentCurrency; 
         }
-        public Currency AddCurrency(Currency currency)
+        public async Task<Currency> AddCurrencyAsync(Currency currency)
         {
-            _appDbContext.Currencies.AddAsync(currency);
-            _appDbContext.SaveChanges();
+            await _appDbContext.Currencies.AddAsync(currency);
+            await _appDbContext.SaveChangesAsync();
             return currency;
         }
 
@@ -39,7 +40,7 @@ namespace BataCMS.Data.Repositories
             return _appDbContext.Currencies.SingleOrDefault(p => p.CurrencyId == sessionCurrentCurrency);
         }
 
-        public void SetCurrentCurrency(Currency currency)
+        public async Task SetCurrentCurrencyAsync(Currency currency)
         {
             var CurrentCurrency = _appDbContext.Currencies.Where(p => p.isCurrent == true);
 
@@ -48,38 +49,38 @@ namespace BataCMS.Data.Repositories
                 item.isCurrent = false;
             }
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
-            Currency newCurrent = _appDbContext.Currencies.SingleOrDefault(p => p.CurrencyId == currency.CurrencyId);
+            Currency newCurrent = await _appDbContext.Currencies.SingleOrDefaultAsync(p => p.CurrencyId == currency.CurrencyId);
 
             newCurrent.isCurrent = true;
 
             _appDbContext.Currencies.Update(newCurrent);
 
-            _appDbContext.SaveChanges(); 
+            await _appDbContext.SaveChangesAsync(); 
 
         }
 
-        public Currency UpdateCurrency(Currency updatedCurrency)
+        public async Task UpdateCurrencyAsync(Currency updatedCurrency)
         {
-            _appDbContext.SaveChanges();
-            return updatedCurrency;
+             _appDbContext.Currencies.Update(updatedCurrency);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Currency GetCurrencyById(int CurrencyId)
+        public async Task<Currency> GetCurrencyByIdAsync(int CurrencyId)
         {
-            return _appDbContext.Currencies.FirstOrDefault(p => p.CurrencyId == CurrencyId);
+            return await _appDbContext.Currencies.FirstOrDefaultAsync(p => p.CurrencyId == CurrencyId);
         }
 
-        public Currency GetCurrencyByName(string CurrencyName)
+        public async Task<Currency> GetCurrencyByNameAsync(string CurrencyName)
         {
-            return _appDbContext.Currencies.FirstOrDefault(p => p.CurrencyName == CurrencyName);
+            return await _appDbContext.Currencies.FirstOrDefaultAsync(p => p.CurrencyName == CurrencyName);
         }
 
-        public void  DeleteCurrency(Currency currency)
+        public async Task DeleteCurrencyAsync(Currency currency)
         {
             _appDbContext.Currencies.Remove(currency);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }

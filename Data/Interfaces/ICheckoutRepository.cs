@@ -9,13 +9,13 @@ namespace BataCMS.Data.Interfaces
     public interface ICheckoutRepository
     {
 
-        void AddItem(unitItem item, int amount);
+        Task AddItemAsync(unitItem item, int amount);
 
-        decimal RemoveItem(unitItem item);
+        Task<decimal> RemoveItemAsync(unitItem item);
 
-        List<CheckoutItem> GetCheckoutItems();
+        Task<List<CheckoutItem>> GetCheckoutItemsAsync();
 
-        void ClearCheckout();
+         Task ClearCheckoutAsync();
 
         decimal GetCheckoutTotal();
     }

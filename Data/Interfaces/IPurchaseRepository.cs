@@ -8,11 +8,11 @@ namespace BataCMS.Data.Interfaces
 {
     public interface IPurchaseRepository
     {
-        void CreatePurchase(Purchase purchase);
+        Task CreatePurchaseAsync(Purchase purchase);
 
         IEnumerable<Purchase> Purchases { get; }
 
-        Purchase GetPurchaseById(int purchaseId);
+        Task<Purchase> GetPurchaseByIdAsync(int purchaseId);
 
     }
 }

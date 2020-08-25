@@ -10,13 +10,13 @@ namespace BataCMS.Data.Interfaces
     {
         IEnumerable<Category> Categories { get;}
 
-        Category AddCategory(Category category);
+        public Task<Category> AddCategoryAsync(Category category);
 
-        Category GetCategoryById(int id);
+        Task<Category> GetCategoryByIdAsync(int id);
 
-        Category UpdateCategory(Category updatedCategory);
+        Task UpdateCategoryAsync(Category updatedCategory);
 
-        void DeleteCategory(Category category);
+        public Task DeleteCategoryAsync (Category category);
 
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BataCMS.Data.Repositories
 {
@@ -21,15 +22,15 @@ namespace BataCMS.Data.Repositories
 
         public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.Include(p => p.PaymentMethods).OrderByDescending(p => p.PurchaseDate);
 
-        public void CreatePurchase(Purchase purchase)
+        public async Task CreatePurchaseAsync(Purchase purchase)
         {
             purchase.PurchaseDate = DateTime.Now;
-            _appDbContext.AddAsync(purchase);
-
+            await _appDbContext.AddAsync(purchase);
+                
             //Add a purchase to Db to make reference to the FK. 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
-            var checkoutItems = _checkoutRepository.GetCheckoutItems();
+            var checkoutItems = await _checkoutRepository.GetCheckoutItemsAsync();
 
             decimal purchaseTotal = 0M;
 
@@ -42,7 +43,7 @@ namespace BataCMS.Data.Repositories
                     Price = item.unitItem.Price,
                 };
                 purchaseTotal += (item.unitItem.Price*item.Amount) * _currencyRepository.GetCurrentCurrency().Rate;
-                _appDbContext.PurchasedItems.AddAsync(purchasedItem);
+                await _appDbContext.PurchasedItems.AddAsync(purchasedItem);
             }
             purchase.PurchasesTotal = purchaseTotal;
 
@@ -53,12 +54,12 @@ namespace BataCMS.Data.Repositories
             purchase.PaymentMethods = new List<PaymentMethod>();
 
             purchase.PaymentMethods.Add(paymentMethod);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Purchase GetPurchaseById(int purchaseId)
+        public async Task<Purchase> GetPurchaseByIdAsync(int purchaseId)
         {
-            return _appDbContext.Purchases.Include(p => p.PaymentMethods).FirstOrDefault(p => p.PurchaseId == purchaseId);
+            return await _appDbContext.Purchases.Include(p => p.PaymentMethods).FirstOrDefaultAsync(p => p.PurchaseId == purchaseId);
         }
     }
 }

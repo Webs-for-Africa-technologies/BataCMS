@@ -20,9 +20,9 @@ namespace BataCMS.Controllers
             _unitItemRepository = unitItemRepository;
             _checkoutRepository = checkoutRepository;
         }
-        public ViewResult Index()
+        public async Task<ViewResult> IndexAsync()
         {
-            var items = _checkoutRepository.GetCheckoutItems();
+            var items = await _checkoutRepository.GetCheckoutItemsAsync();
 
             Checkout checkout = new Checkout { CheckoutItems = items };
 
@@ -35,24 +35,24 @@ namespace BataCMS.Controllers
             return View(cVM);  
         }
 
-        public RedirectToActionResult AddToCheckout(int itemId)
+        public async Task<RedirectToActionResult> AddToCheckoutAsync(int itemId)
         {
             var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == itemId);
 
             if (selectedItem != null)
             {
-                _checkoutRepository.AddItem(selectedItem, 1);
+                await _checkoutRepository.AddItemAsync(selectedItem, 1);
             }
             return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult RemoveFromCheckout(int unitItemId)
+        public async Task<RedirectToActionResult> RemoveFromCheckoutAsync(int unitItemId)
         {
             var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == unitItemId);
 
             if (selectedItem != null)
             {
-                _checkoutRepository.RemoveItem(selectedItem);
+                await _checkoutRepository.RemoveItemAsync(selectedItem);
             }
 
             return RedirectToAction("Index");

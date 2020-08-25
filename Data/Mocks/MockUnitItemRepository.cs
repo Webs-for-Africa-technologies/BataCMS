@@ -64,7 +64,7 @@ namespace BataCMS.Data.Mocks
             set { }  
         }
 
-        public unitItem Add(unitItem item)
+        public unitItem AddAsync(unitItem item)
         {
             throw new NotImplementedException();
         }
@@ -74,14 +74,29 @@ namespace BataCMS.Data.Mocks
             throw new NotImplementedException();
         }
 
-        public unitItem EditItem(unitItem updatedItem)
+        public unitItem EditItemAsync(unitItem updatedItem)
         {
             throw new NotImplementedException();
         }
 
-        public unitItem GetItemById(int itemId)
+        public unitItem GetItemByIdAsync(int itemId)
         {
             throw new NotImplementedException(); 
+        }
+
+        Task<unitItem> IUnitItemRepository.AddAsync(unitItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IUnitItemRepository.EditItemAsync(unitItem updatedItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<unitItem> IUnitItemRepository.GetItemByIdAsync(int itemId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

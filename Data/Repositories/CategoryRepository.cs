@@ -1,5 +1,6 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,27 +18,27 @@ namespace BataCMS.Data.Repositories
 
         public IEnumerable<Category> Categories => _appDbContext.Categories;
 
-        public void DeleteCategory(Category category)
+        public async Task DeleteCategoryAsync (Category category)
         {
             _appDbContext.Categories.Remove(category);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Category GetCategoryById(int id)
+        public async Task<Category> GetCategoryByIdAsync(int id)
         {
-            return _appDbContext.Categories.FirstOrDefault(p => p.CategoryId == id);
+            return await _appDbContext.Categories.FirstOrDefaultAsync(p => p.CategoryId == id);
         }
 
-        public Category UpdateCategory(Category updatedCategory)
+        public async Task UpdateCategoryAsync (Category updatedCategory)
         {
-            _appDbContext.SaveChanges();
-            return updatedCategory;
+            _appDbContext.Categories.Update(updatedCategory);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        Category ICategoryRepository.AddCategory(Category category)
+        public async Task<Category> AddCategoryAsync (Category category)
         {
-            _appDbContext.Categories.AddAsync(category);
-            _appDbContext.SaveChanges();
+             await _appDbContext.Categories.AddAsync(category);
+            await _appDbContext.SaveChangesAsync();
             return category;
         }
 

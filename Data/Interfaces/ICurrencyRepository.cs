@@ -12,16 +12,16 @@ namespace BataCMS.Data.Interfaces
          
         Currency GetCurrentCurrency();
 
-        void SetCurrentCurrency(Currency currencyId);
+        Task SetCurrentCurrencyAsync(Currency currencyId);
 
-        Currency AddCurrency(Currency currency);
+        Task<Currency> AddCurrencyAsync(Currency currency);
 
-        Currency UpdateCurrency(Currency updatedCurrency);
+        Task UpdateCurrencyAsync(Currency updatedCurrency);
 
-        Currency GetCurrencyById(int CurrencyId);
+        Task<Currency> GetCurrencyByIdAsync(int CurrencyId);
 
-        Currency GetCurrencyByName(string CurrencyName);
+        Task<Currency> GetCurrencyByNameAsync(string CurrencyName);
 
-        void DeleteCurrency(Currency currency);
+        Task DeleteCurrencyAsync(Currency currency);
     }
 }

@@ -68,7 +68,7 @@ namespace BataCMS.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCategory(AddCategoryViewModel model)
+        public async Task<IActionResult> AddCategoryAsync(AddCategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace BataCMS.Controllers
 
                 if (existingCategory == null)
                 {
-                    _categoryRepository.AddCategory(category);
+                    await _categoryRepository.AddCategoryAsync(category);
                     return RedirectToAction("Index", "Home");
 
                 }
@@ -103,9 +103,9 @@ namespace BataCMS.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditCategory(int id)
+        public async Task<IActionResult> EditCategoryAsync(int id)
         {
-            var category = _categoryRepository.GetCategoryById(id);
+            var category = await _categoryRepository.GetCategoryByIdAsync(id);
             int _categoryId = id;
             if (category == null)
             {
@@ -126,9 +126,9 @@ namespace BataCMS.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditCategory(EditCategoryViewModel model)
+        public async Task<IActionResult> EditCategoryAsync(EditCategoryViewModel model)
         {
-            var category = _categoryRepository.GetCategoryById(model.Id);
+            var category = await _categoryRepository.GetCategoryByIdAsync(model.Id);
 
             if (category == null)
             {
@@ -140,24 +140,15 @@ namespace BataCMS.Controllers
                 category.CategoryName = model.CategoryName;
                 category.Description = model.Description;
 
-                var result = _categoryRepository.UpdateCategory(category);
+                await _categoryRepository.UpdateCategoryAsync(category);
+                return RedirectToAction("ListCategories", "Admin");
 
-
-                if (result != null)
-                {
-                    return RedirectToAction("ListCategories", "Admin");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error updating the Currency");
-                }
-                return View(model);
             }
         }
 
-        public IActionResult DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
-            var category = _categoryRepository.GetCategoryById(id);
+            var category = await _categoryRepository.GetCategoryByIdAsync(id);
 
             if (category == null)
             {
@@ -166,7 +157,7 @@ namespace BataCMS.Controllers
             }
             else
             {
-                _categoryRepository.DeleteCategory(category);
+                await _categoryRepository.DeleteCategoryAsync(category);
                 
                 return RedirectToAction("ListCategories");
             }
@@ -379,7 +370,7 @@ namespace BataCMS.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCurrency(AddCurrencyViewModel model)
+        public async Task<IActionResult> AddCurrencyAsync(AddCurrencyViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -389,11 +380,11 @@ namespace BataCMS.Controllers
                     Rate = model.Rate
                 };
 
-                var existingCurrency = _currencyRepository.GetCurrencyByName(model.CurrencyName);
+                var existingCurrency = await _currencyRepository.GetCurrencyByNameAsync(model.CurrencyName);
 
                 if (existingCurrency == null)
                 {
-                    _currencyRepository.AddCurrency(currency);
+                    await _currencyRepository.AddCurrencyAsync(currency);
                     return RedirectToAction("Index", "Home");
 
                 }
@@ -414,9 +405,9 @@ namespace BataCMS.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditCurrency(int id)
+        public async Task<IActionResult> EditCurrencyAsync(int id)
         {
-            var currency = _currencyRepository.GetCurrencyById(id);
+            var currency = await _currencyRepository.GetCurrencyByIdAsync(id);
 
             if (currency == null)
             {
@@ -435,9 +426,9 @@ namespace BataCMS.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditCurrency(EditCurrencyViewModel model)
+        public async Task<IActionResult> EditCurrencyAsync(EditCurrencyViewModel model)
         {
-            var currency = _currencyRepository.GetCurrencyById(model.Id);
+            var currency = await _currencyRepository.GetCurrencyByIdAsync(model.Id);
 
             if (currency == null)
             {
@@ -451,26 +442,18 @@ namespace BataCMS.Controllers
 
                 if (model.IsActive == true)
                 {
-                    _currencyRepository.SetCurrentCurrency(currency);
+                    await _currencyRepository.SetCurrentCurrencyAsync(currency);
                 }
 
-                var result  = _currencyRepository.UpdateCurrency(currency);
+                await _currencyRepository.UpdateCurrencyAsync(currency);
 
-
-                if (result != null)
-                {
-                    return RedirectToAction("ListCurrencies", "Admin");
-                }else
-                {
-                    ModelState.AddModelError("", "Error updating the Currency");
-                }
-                return View(model);
+                return RedirectToAction("ListCurrencies", "Admin");
             }
         }
 
-        public  IActionResult DeleteCurrency(int id)
+        public async Task<IActionResult> DeleteCurrencyAsync(int id)
         {
-            var currency = _currencyRepository.GetCurrencyById(id);
+            var currency = await _currencyRepository.GetCurrencyByIdAsync(id);
 
             if (currency == null)
             {
@@ -487,7 +470,7 @@ namespace BataCMS.Controllers
                 }
                 else
                 {
-                    _currencyRepository.DeleteCurrency(currency);
+                    await _currencyRepository.DeleteCurrencyAsync(currency);
                     return RedirectToAction("ListCurrencies");
 
                 }

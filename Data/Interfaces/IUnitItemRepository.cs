@@ -10,12 +10,12 @@ namespace BataCMS.Data.Interfaces
     {
         IEnumerable<unitItem> unitItems { get; }
 
-        unitItem GetItemById(int itemId);
+        Task<unitItem> GetItemByIdAsync(int itemId);
 
         /*Task<int> DeleteItem(int itemId);*/
 
-        unitItem Add (unitItem item);
+        Task<unitItem> AddAsync (unitItem item);
 
-        unitItem EditItem(unitItem updatedItem);
+        Task EditItemAsync(unitItem updatedItem);
     }
 }

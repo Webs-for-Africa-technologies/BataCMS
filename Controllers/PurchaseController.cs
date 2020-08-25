@@ -42,9 +42,9 @@ namespace BataCMS.Controllers
 
         [HttpPost]
         [Authorize] 
-        public IActionResult Checkout(Purchase purchase, PaymentMethod paymentMethod)
+        public async Task<IActionResult> CheckoutAsync(Purchase purchase, PaymentMethod paymentMethod)
         {
-            var items = _checkoutRepository.GetCheckoutItems();
+            var items = await _checkoutRepository.GetCheckoutItemsAsync();
             decimal checkoutTotal = _checkoutRepository.GetCheckoutTotal();
 
             Checkout checkout = new Checkout { CheckoutItems = items };
@@ -61,8 +61,8 @@ namespace BataCMS.Controllers
             }
             if (ModelState.IsValid)
             {
-                _purchaseRepository.CreatePurchase(purchase);
-                _checkoutRepository.ClearCheckout();
+                await _purchaseRepository.CreatePurchaseAsync(purchase);
+                await _checkoutRepository.ClearCheckoutAsync();
                 return RedirectToAction("CheckoutComplete"); 
             }
 
@@ -153,17 +153,17 @@ namespace BataCMS.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult PurchaseDetail(int purchaseId)
+        public async Task<IActionResult> PurchaseDetailAsync(int purchaseId)
         {
             var purchaseObjects = new List<PurchaseObject>();
 
-            Purchase purchase = _purchaseRepository.GetPurchaseById(purchaseId);
+            Purchase purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
 
             IEnumerable<PurchasedItem> purchasedItems = _purchasedItemRepository.GetPurchasedItemsById(purchaseId);
 
             foreach (var item in purchasedItems)
             {
-                unitItem unit = _unitItemRepository.GetItemById(item.unitItemId);
+                unitItem unit = await _unitItemRepository.GetItemByIdAsync(item.unitItemId);
 
                 var purchaseObject = new PurchaseObject { 
                     PurchaseAmount = item.Amount,
@@ -174,7 +174,7 @@ namespace BataCMS.Controllers
                 purchaseObjects.Add(purchaseObject);
             }
 
-            Currency currency = _currencyRepository.GetCurrencyByName(purchase.PaymentMethods.First().PaymentMethodName);
+            Currency currency = await _currencyRepository.GetCurrencyByNameAsync(purchase.PaymentMethods.First().PaymentMethodName);
             PaymentMethod paymentMethod = purchase.PaymentMethods.First();
 
 

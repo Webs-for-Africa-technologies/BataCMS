@@ -17,9 +17,9 @@ namespace BataCMS.Components
             _checkoutRepository = checkoutRepository;
         }
 
-        public IViewComponentResult Invoke(string viewName = null)
+        public async Task<IViewComponentResult> InvokeAsync(string viewName = null)
         {
-            var items = _checkoutRepository.GetCheckoutItems();
+            var items = await _checkoutRepository.GetCheckoutItemsAsync();
 
             Checkout checkout = new Checkout { CheckoutItems = items };
 

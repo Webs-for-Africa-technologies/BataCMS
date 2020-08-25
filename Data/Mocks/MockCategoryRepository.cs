@@ -20,7 +20,13 @@ namespace BataCMS.Data.Mocks
             } 
         }
 
+
         public Category AddCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Category> AddCategoryAsync(Category category)
         {
             throw new NotImplementedException();
         }
@@ -30,12 +36,27 @@ namespace BataCMS.Data.Mocks
             throw new NotImplementedException();
         }
 
+        public Task DeleteCategoryAsync(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
         public Category GetCategoryById(int id)
         {
             throw new NotImplementedException();
         }
 
+        public Task<Category> GetCategoryByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Category UpdateCategory(Category updatedCategory)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateCategoryAsync(Category updatedCategory)
         {
             throw new NotImplementedException();
         }
