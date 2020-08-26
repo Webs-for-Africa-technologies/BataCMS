@@ -76,18 +76,48 @@ namespace BataCMS.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult ListPurchases(string filter)
+        public IActionResult ListOrders(string filter)
         {
             IEnumerable<Purchase> purchases = null; 
             if (String.IsNullOrEmpty(filter) || filter == "all")
             {
-                purchases = _purchaseRepository.Purchases;
+                purchases = _purchaseRepository.Purchases.Where(p => p.isDelivered == false);
             }
             else
             {
                 if (filter == "hour")
                 {
-                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)));  
+                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)) && p.isDelivered == false));  
+                }
+                if (filter == "day")
+                {
+                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-1)) && p.isDelivered == false));
+                }
+                if (filter == "week")
+                {
+                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-7)) && p.isDelivered == false));
+                }
+            }
+            var vm = new ListPurchaseViewModel
+            { 
+                Purchases = purchases
+            };
+            return View(vm);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult ListPurchases(string filter)
+        {
+            IEnumerable<Purchase> purchases = null;
+            if (String.IsNullOrEmpty(filter) || filter == "all")
+            {
+                purchases = _purchaseRepository.Purchases.Where(p => p.isDelivered == true);
+            }
+            else
+            {
+                if (filter == "hour")
+                {
+                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)));
                 }
                 if (filter == "day")
                 {
@@ -99,7 +129,7 @@ namespace BataCMS.Controllers
                 }
             }
             var vm = new ListPurchaseViewModel
-            { 
+            {
                 Purchases = purchases
             };
             return View(vm);
@@ -150,6 +180,15 @@ namespace BataCMS.Controllers
             // above I define the name of the file using the current datetime.
 
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName); // this will be the actual export.
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmDeliveryAsync(int purchaseId)
+        {
+            Purchase purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
+            purchase.isDelivered = true;
+           await _purchaseRepository.UpdatePurchaseAsync(purchase);
+            return RedirectToAction("ListOrders", "Purchase");
         }
 
         [Authorize(Roles = "Admin")]

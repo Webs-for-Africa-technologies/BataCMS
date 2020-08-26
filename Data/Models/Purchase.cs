@@ -33,6 +33,9 @@ namespace BataCMS.Data.Models
         [Display(Name = "Table Numeber")]
         public string DeliveryLocation { get; set; }
 
+        [Display(Name ="Confirm Delivery")]
+        public bool isDelivered { get; set; }
+
 
         public List<PurchasedItem> PurchasedItems { get; set; }
 

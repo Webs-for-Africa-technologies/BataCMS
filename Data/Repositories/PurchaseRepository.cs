@@ -61,5 +61,11 @@ namespace BataCMS.Data.Repositories
         {
             return await _appDbContext.Purchases.Include(p => p.PaymentMethods).FirstOrDefaultAsync(p => p.PurchaseId == purchaseId);
         }
+
+        public async Task UpdatePurchaseAsync(Purchase purchase)
+        {
+            _appDbContext.Purchases.Update(purchase);
+            await _appDbContext.SaveChangesAsync();
+        }
     }
 }

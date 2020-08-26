@@ -1,0 +1,57 @@
+﻿@model BataCMS.ViewModels.ListPurchaseViewModel
+
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Orders</title>
+</head>
+
+<main role="main">
+    <div class="container">
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Orders from...</button>
+
+        <div class="dropdown-menu">
+            <a class="dropdown-item" asp-controller="Purchase" asp-action="ListOrders" asp-route-filter="hour">Last hour</a>
+            <a class="divider"></a>
+            <a class="dropdown-item" asp-controller="Purchase" asp-action="ListOrders" asp-route-filter="day">Last Day...</a>
+            <a class="divider"></a>
+            <a class="dropdown-item" asp-controller="Purchase" asp-action="ListOrders" asp-route-filter="week">Last Week...</a>
+            <a class="divider"></a>
+            <a class="dropdown-item" asp-controller="Purchase" asp-action="ListOrders" asp-route-filter="all">All</a>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Purchase ID</th>
+                    <th>Server Name</th>
+                    <th class="text-right">Purchase Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Purchases.Any())
+                {
+                    @foreach (var line in Model.Purchases)
+                    {
+                        <tr>
+                            <td class="text-center">@line.PurchaseId</td>
+                            <td class="text-left">@line.ServerName</td>
+                            <td class="text-right">
+                                @line.PurchaseDate)
+                            </td>
+                            <td class="text-center"><a class="btn btn-primary" asp-controller="Purchase" asp-action="PurchaseDetail" asp-route-purchaseId="@line.PurchaseId">Order Details</a></td>
+                        </tr>
+                    }
+                }else
+                {
+                    <tr>
+                        <td class="text-center">No Orders Made Yet</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</main>

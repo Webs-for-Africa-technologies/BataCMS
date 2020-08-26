@@ -25,19 +25,25 @@
             <tbody>
                 @foreach (var line in Model.PurchasedItems)
                 {
-                <tr>
-                    <td class="text-center">@line.PurchaseAmount</td>
-                    <td class="text-left">@line.ItemName</td>
-                    <td class="text-right">@Model.Currency.CurrencyName @Math.Round((line.Price * Model.Currency.Rate), 2)</td>
-                    <td class="text-right">
-                        @Model.Currency.CurrencyName @(Math.Round((line.PurchaseAmount * (line.Price * Model.Currency.Rate)),2))
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="text-center">@line.PurchaseAmount</td>
+                        <td class="text-left">@line.ItemName</td>
+                        <td class="text-right">@Model.Currency.CurrencyName @Math.Round((line.Price * Model.Currency.Rate), 2)</td>
+                        <td class="text-right">
+                            @Model.Currency.CurrencyName @(Math.Round((line.PurchaseAmount * (line.Price * Model.Currency.Rate)),2))
+                        </td>
+                    </tr>
                 }
-            </tbody>    
+            </tbody>
         </table>
     </div>
+    @if (Model.Purchase.isDelivered == false)
+    {
+        <form method="post" asp-action="ConfirmDelivery" asp-route-purchaseId="@Model.Purchase.PurchaseId">
+            <button class="btn btn btn-secondary order-button ">Confirm Delivery</button>
+        </form>
 
+    }
     <div class="card mb-3">
         <div class="card-header">Purchase Date</div>
         <div class="card-body">
@@ -71,15 +77,12 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Purchase.PurchaseNotes</h5>
         </div>
-    </div
->
+    </div>
     <div class="card mb-3">
         <div class="card-header">Purchase Total</div>
         <div class="card-body">
             <h5 class="card-title">@Model.Currency.CurrencyName  @Model.Purchase.PurchasesTotal</h5>
         </div>
     </div>
-
-
 </body>
 </html>

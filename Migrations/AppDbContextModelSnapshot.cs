@@ -165,7 +165,7 @@ namespace BataCMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PurchaseId")
+                    b.Property<int?>("PurchaseId")
                         .HasColumnType("int");
 
                     b.HasKey("PaymentMethodId");
@@ -199,6 +199,9 @@ namespace BataCMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<bool>("isDelivered")
+                        .HasColumnType("bit");
 
                     b.HasKey("PurchaseId");
 
@@ -430,9 +433,7 @@ namespace BataCMS.Migrations
                 {
                     b.HasOne("BataCMS.Data.Models.Purchase", null)
                         .WithMany("PaymentMethods")
-                        .HasForeignKey("PurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PurchaseId");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.PurchasePaymentMethod", b =>

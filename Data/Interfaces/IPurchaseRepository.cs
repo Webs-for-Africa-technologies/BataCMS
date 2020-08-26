@@ -14,5 +14,6 @@ namespace BataCMS.Data.Interfaces
 
         Task<Purchase> GetPurchaseByIdAsync(int purchaseId);
 
+        Task UpdatePurchaseAsync(Purchase purchase);
     }
 }
