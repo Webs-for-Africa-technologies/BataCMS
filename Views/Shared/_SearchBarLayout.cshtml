@@ -47,11 +47,11 @@
                     </li>
                 </ul>
 
-                @using (Html.BeginForm(new { style = "margin-right: 10px", @class = "form-inline my-2 my-lg-0" }))
+                @using (Html.BeginForm())
                 {
-                    <p>
-                        Search by Name: @Html.TextBox("SearchString")
-                        <input type="submit" value="Search" class="form-control mr-sm-2" />
+                    <p class="form-inline my-2 my-md-0">
+                         @Html.TextBox("SearchString", "Search", new { @class = "form-control mr-sm-2" })
+                        <input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" />
                     </p>
                 }
 
