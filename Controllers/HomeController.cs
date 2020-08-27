@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
 using BataCMS.Data.Repositories;
+using BataCMS.Infrastructure;
 using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BataCMS.Controllers
@@ -16,14 +18,13 @@ namespace BataCMS.Controllers
     {
         private readonly IUnitItemRepository _unitItemRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly ICurrencyRepository _currencyRepository;
 
 
-        public HomeController(IUnitItemRepository unitItem, ICategoryRepository categoryRepository, ICurrencyRepository currencyRepository)
+
+        public HomeController(IUnitItemRepository unitItem, ICategoryRepository categoryRepository)
         {
             _unitItemRepository = unitItem;
             _categoryRepository = categoryRepository;
-            _currencyRepository = currencyRepository; 
         }
         public ViewResult Index(string category)
         {

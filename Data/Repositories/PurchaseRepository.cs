@@ -1,5 +1,7 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using BataCMS.Infrastructure;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,11 +15,14 @@ namespace BataCMS.Data.Repositories
         private readonly AppDbContext _appDbContext;
         private readonly ICheckoutRepository _checkoutRepository;
         private readonly ICurrencyRepository _currencyRepository;
-        public PurchaseRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository, ICurrencyRepository currencyRepository)
+        private readonly IHubContext<SignalServer> _hubContext;
+
+        public PurchaseRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository, ICurrencyRepository currencyRepository, IHubContext<SignalServer> hubContext)
         {
             _appDbContext = appDbContext;
             _checkoutRepository = checkoutRepository;
             _currencyRepository = currencyRepository;
+            _hubContext = hubContext;
         }
 
         public IEnumerable<Purchase> Purchases => _appDbContext.Purchases.Include(p => p.PaymentMethods).OrderByDescending(p => p.PurchaseDate);
@@ -55,6 +60,9 @@ namespace BataCMS.Data.Repositories
 
             purchase.PaymentMethods.Add(paymentMethod);
             await _appDbContext.SaveChangesAsync();
+
+            var OrderCount = (Purchases.Where(p => p.isDelivered == false)).Count();
+           await _hubContext.Clients.All.SendAsync("updatePurchase", OrderCount);
         }
 
         public async Task<Purchase> GetPurchaseByIdAsync(int purchaseId)
@@ -66,6 +74,9 @@ namespace BataCMS.Data.Repositories
         {
             _appDbContext.Purchases.Update(purchase);
             await _appDbContext.SaveChangesAsync();
+
+            var OrderCount = (Purchases.Where(p => p.isDelivered == false)).Count();
+            await _hubContext.Clients.All.SendAsync("updatePurchase", OrderCount);
         }
     }
 }

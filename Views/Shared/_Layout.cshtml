@@ -26,7 +26,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="ListOrders" asp-controller="Purchase">Orders</a>
+                            <a class="nav-link" asp-action="ListOrders" asp-controller="Purchase">Orders<span id="orderCount" class="badge badge-danger badge-pill"></span></a>
+
                         </li>
 
                         <li class="nav-item">
@@ -55,6 +56,19 @@
     <div>
         @RenderBody()
     </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/site.js"></script>
+
+    <script>
+        //an immediately invoked function that checks to see if the text is in local storage already
+        (function () {
+            //if the text is in local storage, set the html
+            if (localStorage.orderCount > 0) {
+                console.log(localStorage.orderCount);
+                document.getElementById('orderCount').innerHTML = localStorage.getItem("orderCount");
+            }
+        })();
+    </script>
 
     @if (IsSectionDefined("Scripts"))
     {

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Westwind.AspNetCore.LiveReload;
 using Microsoft.AspNetCore.Identity;
 using BataCMS.ViewModels;
+using BataCMS.Infrastructure;
 
 namespace BataCMS
 {
@@ -49,6 +50,7 @@ namespace BataCMS
             services.AddTransient<IPurchasePayementMethodRepository, PurchasePaymentMethodRepository>();
             services.AddTransient<IPurchasedItemRepository, PurchasedItemRepository>();
 
+            services.AddSignalR();
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
@@ -76,6 +78,8 @@ namespace BataCMS
                 app.UseStaticFiles();
                 app.UseSession();
                 app.UseAuthentication();
+
+
                 //app.UseMvcWithDefaultRoute();
                 DbInitializer.Seed(serviceProvider);
                 app.UseMvc(routes =>
@@ -83,7 +87,15 @@ namespace BataCMS
                     routes.MapRoute(name: "categoryFileter", template: "unitItem/{action}/{category?}", defaults: new { Controller = "unitItem", Action = "List" });
                     routes.MapRoute(name: "default", template: "{controller=Home}/{action=index}/{id?}");
                 });
+
             }
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<SignalServer>("/signalserver");
+            });
 
         }
     }
