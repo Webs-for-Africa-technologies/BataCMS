@@ -216,10 +216,12 @@ namespace BataCMS.Controllers
                     {
                         var selectedValue = string.Empty;
                         var userDataOption = string.Empty; 
+
                         var mainLabel = root[i].GetProperty("label").ToString();
                         var values = root[i].GetProperty("values");
 
                         bool isUserData = root[i].TryGetProperty("userData", out var jsonElement);
+
                         if (!isUserData)
                         {
                             selectedValue = "No";
@@ -231,18 +233,22 @@ namespace BataCMS.Controllers
                             if (values.GetArrayLength() == 1 /*checkbox */)
                             {
                                 selectedValue = "Yes";
+                            } else
+                            {
+                                for (int j = 0; j < values.GetArrayLength(); j++)
+                                {
+                                    var optionVal = values[j].GetProperty("value").ToString();
+                                    if (optionVal == userDataOption)
+                                    {
+                                        selectedValue = values[j].GetProperty("label").ToString();
+                                        break;
+                                    }
+                                }
+
                             }
                         }
                         
-                        for (int j = 0; j < values.GetArrayLength(); j++)
-                        {
-                            var optionVal = values[j].GetProperty("value").ToString();
-                            if (optionVal == userDataOption)
-                            {
-                                selectedValue = values[j].GetProperty("label").ToString();
-                                break;
-                            }
-                        }
+
 
                         var userOptionValue = new userOptionObject
                         {
@@ -251,7 +257,7 @@ namespace BataCMS.Controllers
                         };
                         userOptionValues.Add(userOptionValue); 
                     }
-                    //var userData = root.GetProperty("user-data");
+                    
                 }
 
                 
