@@ -12,6 +12,7 @@ using BataCMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
+using System.Text.Json;
 
 namespace BataCMS.Controllers
 {
@@ -204,10 +205,62 @@ namespace BataCMS.Controllers
             {
                 unitItem unit = await _unitItemRepository.GetItemByIdAsync(item.unitItemId);
 
+                List<userOptionObject> userOptionValues = new List<userOptionObject>();
+
+                if (item.selectedOptionData != null)
+                {
+                    using var jsonDoc = JsonDocument.Parse(item.selectedOptionData);
+                    var root = jsonDoc.RootElement;
+
+                    for (int i = 0; i < root.GetArrayLength(); i++)
+                    {
+                        var selectedValue = string.Empty;
+                        var userDataOption = string.Empty; 
+                        var mainLabel = root[i].GetProperty("label").ToString();
+                        var values = root[i].GetProperty("values");
+
+                        bool isUserData = root[i].TryGetProperty("userData", out var jsonElement);
+                        if (!isUserData)
+                        {
+                            selectedValue = "No";
+
+                        }
+                        else
+                        {
+                            userDataOption = root[i].GetProperty("userData")[0].ToString();
+                            if (values.GetArrayLength() == 1 /*checkbox */)
+                            {
+                                selectedValue = "Yes";
+                            }
+                        }
+                        
+                        for (int j = 0; j < values.GetArrayLength(); j++)
+                        {
+                            var optionVal = values[j].GetProperty("value").ToString();
+                            if (optionVal == userDataOption)
+                            {
+                                selectedValue = values[j].GetProperty("label").ToString();
+                                break;
+                            }
+                        }
+
+                        var userOptionValue = new userOptionObject
+                        {
+                            LabelName = mainLabel,
+                            SelectedValueName = selectedValue,
+                        };
+                        userOptionValues.Add(userOptionValue); 
+                    }
+                    //var userData = root.GetProperty("user-data");
+                }
+
+                
+
                 var purchaseObject = new PurchaseObject { 
                     PurchaseAmount = item.Amount,
                     Price = item.Price,
-                    ItemName = unit.Name
+                    ItemName = unit.Name,
+                    purchaseSelectedOptions = userOptionValues,
                 };
 
                 purchaseObjects.Add(purchaseObject);

@@ -24,7 +24,7 @@ namespace BataCMS.Data.Repositories
 
         }
 
-        public async Task AddItemAsync(unitItem item, int amount)
+        public async Task AddItemAsync(unitItem item, int amount, string selectedOptions)
         {
             var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
 
@@ -34,7 +34,8 @@ namespace BataCMS.Data.Repositories
                 {
                     CheckoutId = _checkout.CheckoutId,
                     unitItem = item,
-                    Amount = 1
+                    Amount = 1,
+                    selectedOptions = selectedOptions
                 };
 
                 await _appDbContext.CheckoutItems.AddAsync(checkoutItem);

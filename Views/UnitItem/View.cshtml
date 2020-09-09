@@ -1,0 +1,66 @@
+﻿@model unitItem
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add Item</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-5">
+                <img class="featurette-image img-fluid mx-auto" src="@Model.ImageUrl" alt="Generic placeholder image">
+            </div>
+            <div class="col-md-6 product_content">
+                <h4>@Model.Name</h4>
+                <div class="btn-ground">
+                    <a asp-action="AddToCheckout" asp-controller="Checkout" asp-route-itemId="@Model.unitItemId"  asp-route-selectedOptions="dummyData"  type="button" class="btn btn-primary" id="addToCartBtn"><span class="fa-shopping-cart"></span> Add To Cart</a>
+                    <button type="button" class="btn btn-primary"><span class="fa-heart"></span> Add To Wishlist</button>
+                </div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <h3 class="cost"><span class="glyphicon glyphicon-usd"></span>@Model.Price</h3>
+                <div class="space-ten"></div>
+                <div class="row">
+                    <div class="render-wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+</style>
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
+<script src="~/lib/formbuilder/form-builder.min.js"></script>
+<script src="~/lib/formbuilder/form-render.min.js"></script>
+
+<script>
+    jQuery(function ($) {
+
+        $('.render-wrap').formRender({
+            dataType: 'json',
+            formData: @Html.Raw(Model.OptionFormData)
+        });
+
+        $("#addToCartBtn").click(function (e) {
+            // Stop the normal navigation
+            e.preventDefault();
+
+            //Build the new URL
+            var url = $(this).attr("href");
+            var userData = window.JSON.stringify($('.render-wrap').formRender("userData"));
+            url = url.replace("dummyData", userData);
+            //Navigate to the new URL
+            window.location.href = url;
+        });
+    });
+
+
+    //console.log(parsedFormData);
+
+</script>
+
+

@@ -29,7 +29,7 @@
                         <div data-id="347e72b6" data-element_type="widget" class="elementor-element unitItem-item4-custom elementor-widget " data-model-cid="c184" data-widget_type="text-editor.default">
                             <div class="elementor-widget-container">
                                 <div class="elementor-text-editor elementor-clearfix" data-elementor-setting-key="editor" data-elementor-inline-editing-toolbar="advanced">
-                                    <a id="cartButton" asp-controller="Checkout" asp-action="AddToCheckout" asp-route-itemId="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</a>                    
+                                    <a id="cartButton" asp-controller="UnitItem" asp-action="View" asp-route-itemId="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</a>                    
                                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                                     {
                                         <br/><a asp-action="Edit" asp-controller="unitItem" asp-route-id="@Model.unitItemId" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>

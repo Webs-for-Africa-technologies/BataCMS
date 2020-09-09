@@ -84,7 +84,8 @@ namespace BataCMS.Controllers
                     InStock = model.InStock,
                     DateModified = DateTime.Today,
                     CategoryId = category.CategoryId,
-                    ImageUrl = photoPath
+                    ImageUrl = photoPath,
+                    OptionFormData = model.OptionFormData
                 };
 
                 await _unitItemRepository.AddAsync(newUnitItem);
@@ -204,5 +205,11 @@ namespace BataCMS.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ViewAsync(int itemId)
+        {
+            unitItem unitItem = await _unitItemRepository.GetItemByIdAsync(itemId);
+            return View(unitItem);
+        }
     }
 }

@@ -46,6 +46,7 @@ namespace BataCMS.Data.Repositories
                     unitItemId = item.unitItem.unitItemId,
                     PurchaseId = purchase.PurchaseId,
                     Price = item.unitItem.Price,
+                    selectedOptionData = item.selectedOptions,
                 };
                 purchaseTotal += (item.unitItem.Price*item.Amount) * _currencyRepository.GetCurrentCurrency().Rate;
                 await _appDbContext.PurchasedItems.AddAsync(purchasedItem);

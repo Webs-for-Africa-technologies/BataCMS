@@ -35,13 +35,13 @@ namespace BataCMS.Controllers
             return View(cVM);  
         }
 
-        public async Task<RedirectToActionResult> AddToCheckoutAsync(int itemId)
+        public async Task<RedirectToActionResult> AddToCheckoutAsync(int itemId, string selectedOptions)
         {
             var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == itemId);
 
             if (selectedItem != null)
             {
-                await _checkoutRepository.AddItemAsync(selectedItem, 1);
+                await _checkoutRepository.AddItemAsync(selectedItem, 1, selectedOptions);
             }
             return RedirectToAction("Index");
         }

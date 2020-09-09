@@ -10,5 +10,6 @@ namespace BataCMS.Data.Models
         public int PurchaseAmount { get; set; }
         public decimal Price { get; set; }
         public String ItemName { get; set; }
+        public List<userOptionObject> purchaseSelectedOptions { get; set; }
     }
 }

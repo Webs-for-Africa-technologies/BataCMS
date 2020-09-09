@@ -14,5 +14,7 @@ namespace BataCMS.Data.Models
         public int Amount { get; set; }
 
         public string CheckoutId { get; set; }
+
+        public string selectedOptions { get; set; }
     }
 }

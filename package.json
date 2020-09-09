@@ -6,10 +6,11 @@
   "version": "0.6.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.4.1",
+    "formBuilder": "^3.6.1",
     "jquery": "^3.4.1",
     "jquery-validation": "^1.19.1",
     "jquery-validation-unobtrusive": "^3.2.11",
-    "bootstrap": "^4.4.1",
     "popper.js": "^1.16.1"
   },
   "devDependencies": {

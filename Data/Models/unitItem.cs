@@ -1,7 +1,10 @@
 ﻿using BataCMS.Data.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BataCMS.Data.Models
 {
@@ -27,6 +30,8 @@ namespace BataCMS.Data.Models
 
         public string ImageUrl { get; set; }
 
+
+        public string OptionFormData { get; set; }
 
     }
 }

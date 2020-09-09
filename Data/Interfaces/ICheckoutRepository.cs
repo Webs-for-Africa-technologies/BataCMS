@@ -9,7 +9,7 @@ namespace BataCMS.Data.Interfaces
     public interface ICheckoutRepository
     {
 
-        Task AddItemAsync(unitItem item, int amount);
+        Task AddItemAsync(unitItem item, int amount, string selectedOptions);
 
         Task<decimal> RemoveItemAsync(unitItem item);
 

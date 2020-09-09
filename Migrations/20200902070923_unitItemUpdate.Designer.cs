@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200902070923_unitItemUpdate")]
+    partial class unitItemUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,9 +119,6 @@ namespace BataCMS.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CheckoutId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("selectedOptions")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("unitItemId")
@@ -248,9 +247,6 @@ namespace BataCMS.Migrations
 
                     b.Property<int>("PurchaseId")
                         .HasColumnType("int");
-
-                    b.Property<string>("selectedOptionData")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("unitItemId")
                         .HasColumnType("int");

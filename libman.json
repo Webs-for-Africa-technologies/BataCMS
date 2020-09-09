@@ -10,6 +10,22 @@
         "jquery.js"
       ]
     },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery-ui.min.js"
+      ]
+    },
+
+    {
+      "library": "jQuery-formBuilder@3.5.1",
+      "destination": "wwwroot/lib/formbuilder/",
+      "files": [
+        "form-builder.min.js",
+        "form-render.min.js"
+      ]
+    },
 
     {
       "provider": "unpkg",

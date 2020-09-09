@@ -52,6 +52,10 @@
                 </div>
             </div>
 
+            <div id="fb-editor"></div>
+            <div class="render-wrap"></div>
+            <button class="btn btn-outline-primary" id="edit-form">Edit Form</button>
+
             <div class="form-group row">
                 <label asp-for="InStock" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-1">
@@ -66,24 +70,83 @@
                 </div>
             </div>
 
+            <input asp-for="OptionFormData" class="form-control" placeholder="InStock" type ="hidden" id="optionFormData" value=""/>
+
 
             <div asp-validation-summary="All" class="text-danger"></div>
 
 
         </form>
+
     </div>
+
 </body>
 </html>
 
-<script src="~/lib/jquery/jquery.js"></script>
-@section Scripts{ 
+<style>
+    .render-wrap {
+        display: none;
+    }
 
-<script>
-    $(document).ready(function () {
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split('\\').pop();
-            $(this).next('.custom-file-label').html(fileName);
+    #edit-form {
+        display: none;
+        float: right;
+    }
+
+    .form-rendered #edit-form {
+        display: block;
+    }
+
+    .form-rendered #fb-editor {
+        display: none;
+    }
+
+    .form-rendered .render-wrap {
+        display: block;
+    }
+
+</style>
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
+<script src="~/lib/formbuilder/form-builder.min.js"></script>
+<script src="~/lib/formbuilder/form-render.min.js"></script>
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        })
+
+        var options = {
+            disabledActionButtons: ['data'],
+            disableFields: ['autocomplete', 'button', 'date', 'file', 'header', 'hidden', 'number', 'paragraph', 'starRating', 'text', 'textarea'],
+            onSave: function (evt, formData) {
+                console.log("formbuilder saved");
+                window.sessionStorage.setItem('formData', formData);
+                document.getElementById('optionFormData').value = sessionStorage.getItem("formData");
+                toggleEdit(false);
+                $(".render-wrap").formRender({ formData });   
+            },
+        };
+
+        function toggleEdit(editing) {
+            document.body.classList.toggle("form-rendered", !editing);
+        };
+
+        document.getElementById("edit-form").onclick = function () {
+            toggleEdit(true);
+        };
+
+        jQuery(function ($) {
+            $(document.getElementById('fb-editor')).formBuilder(options);
         });
-    })
-</script>
+
+
+        
+
+    </script>
 }
