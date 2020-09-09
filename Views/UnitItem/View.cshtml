@@ -14,10 +14,9 @@
             <div class="col-md-6 product_content">
                 <h4>@Model.Name</h4>
                 <div class="btn-ground">
-                    <a asp-action="AddToCheckout" asp-controller="Checkout" asp-route-itemId="@Model.unitItemId"  asp-route-selectedOptions="dummyData"  type="button" class="btn btn-primary" id="addToCartBtn"><span class="fa-shopping-cart"></span> Add To Cart</a>
-                    <button type="button" class="btn btn-primary"><span class="fa-heart"></span> Add To Wishlist</button>
+                    <a asp-action="AddToCheckout" asp-controller="Checkout" asp-route-itemId="@Model.unitItemId"  asp-route-selectedOptions="dummyData"  type="button" class="btn btn-primary" id="addToCartBtn"><span class="fas fa-shopping-cart"></span> Add To Cart</a>
                 </div>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <p>@Model.Description</p>
                 <h3 class="cost"><span class="glyphicon glyphicon-usd"></span>@Model.Price</h3>
                 <div class="space-ten"></div>
                 <div class="row">

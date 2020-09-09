@@ -23,5 +23,7 @@ namespace BataCMS.ViewModels
         public IFormFile Image { get; set; }
 
         public string OptionFormData { get; set; }
+
+        public string Description { get; set; }
     }
 }
