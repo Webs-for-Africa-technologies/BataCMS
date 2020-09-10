@@ -135,7 +135,7 @@ namespace BataCMS.Controllers
             };
             return View(vm);
         }
-
+            
         [HttpPost]
         public IActionResult PostExportExcel()
         {
@@ -288,5 +288,16 @@ namespace BataCMS.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> DeletePurchasesAsync()
+        {
+            await _purchaseRepository.DeletePurchasesAsync();
+
+            return RedirectToAction("ListPurchases");
+
+        }
     }
+
+
+
 }

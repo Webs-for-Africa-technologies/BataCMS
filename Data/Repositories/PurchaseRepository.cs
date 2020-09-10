@@ -66,6 +66,13 @@ namespace BataCMS.Data.Repositories
            await _hubContext.Clients.All.SendAsync("updatePurchase", OrderCount);
         }
 
+        public async Task DeletePurchasesAsync()
+        {
+            _appDbContext.PaymentMethods.RemoveRange(_appDbContext.PaymentMethods.Where(u => u.PaymentMethodName != null));
+            _appDbContext.Purchases.RemoveRange(_appDbContext.Purchases.Where(u => u.isDelivered == true));
+            await _appDbContext.SaveChangesAsync();
+        }
+
         public async Task<Purchase> GetPurchaseByIdAsync(int purchaseId)
         {
             return await _appDbContext.Purchases.Include(p => p.PaymentMethods).FirstOrDefaultAsync(p => p.PurchaseId == purchaseId);
