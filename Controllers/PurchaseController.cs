@@ -23,6 +23,7 @@ namespace BataCMS.Controllers
         private readonly IUnitItemRepository _unitItemRepository;
         private readonly IPurchasedItemRepository _purchasedItemRepository;
         private readonly ICurrencyRepository _currencyRepository;
+        private readonly IPaymentMethodRepository _paymentMethodRepository;
 
 
 
@@ -32,7 +33,8 @@ namespace BataCMS.Controllers
             _checkoutRepository = checkoutRepository;
             _unitItemRepository = unitItemRepository;
             _purchasedItemRepository = purchasedItemRepository;
-            _currencyRepository = currencyRepository; 
+            _currencyRepository = currencyRepository;
+            _paymentMethodRepository = paymentMethodRepository;
         }
 
         [Authorize]
@@ -188,7 +190,12 @@ namespace BataCMS.Controllers
         {
             Purchase purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
             purchase.isDelivered = true;
-           await _purchaseRepository.UpdatePurchaseAsync(purchase);
+
+            //update the paymentMethod
+            PaymentMethod paymentMethod = purchase.PaymentMethods.FirstOrDefault();
+            paymentMethod.isConfirmed = true;
+            await _paymentMethodRepository.UpdatePaymentMethod(paymentMethod);
+            await _purchaseRepository.UpdatePurchaseAsync(purchase);
             return RedirectToAction("ListOrders", "Purchase");
         }
 
@@ -207,7 +214,7 @@ namespace BataCMS.Controllers
 
                 List<userOptionObject> userOptionValues = new List<userOptionObject>();
 
-                if (item.selectedOptionData != null)
+                if (item.selectedOptionData != "dummyData")
                 {
                     using var jsonDoc = JsonDocument.Parse(item.selectedOptionData);
                     var root = jsonDoc.RootElement;

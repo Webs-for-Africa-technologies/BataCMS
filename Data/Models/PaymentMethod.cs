@@ -13,5 +13,6 @@ namespace BataCMS.Data.Models
         [Required]
         public string PaymentMethodName { get; set; }
         public decimal AmountPaid { get; set; }
+        public bool isConfirmed { get; set; }
     }
 }

@@ -34,5 +34,11 @@ namespace BataCMS.Data.Repositories
         {
            return _appDbContext.PaymentMethods.FirstOrDefault(p => p.PaymentMethodId == paymentMethodId);
         }
+
+        public async Task UpdatePaymentMethod(PaymentMethod paymentMethod)
+        {
+            _appDbContext.PaymentMethods.Update(paymentMethod);
+            await _appDbContext.SaveChangesAsync();
+        }
     }
 }

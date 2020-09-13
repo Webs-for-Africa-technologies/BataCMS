@@ -68,7 +68,7 @@ namespace BataCMS.Data.Repositories
 
         public async Task DeletePurchasesAsync()
         {
-            _appDbContext.PaymentMethods.RemoveRange(_appDbContext.PaymentMethods.Where(u => u.PaymentMethodName != null));
+            _appDbContext.PaymentMethods.RemoveRange(_appDbContext.PaymentMethods.Where(u => u.isConfirmed == true));
             _appDbContext.Purchases.RemoveRange(_appDbContext.Purchases.Where(u => u.isDelivered == true));
             await _appDbContext.SaveChangesAsync();
         }

@@ -13,5 +13,7 @@ namespace BataCMS.Data.Interfaces
         PaymentMethod GetPaymentMethodById(int paymentMethodId);
 
         PaymentMethod GetMethodByPurchaseId(int purchaseId);
+
+        Task UpdatePaymentMethod(PaymentMethod paymentMethod);
     }
 }
