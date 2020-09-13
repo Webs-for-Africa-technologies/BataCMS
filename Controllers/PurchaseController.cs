@@ -120,15 +120,15 @@ namespace BataCMS.Controllers
             {
                 if (filter == "hour")
                 {
-                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)) && p.isDelivered == true));
                 }
                 if (filter == "day")
                 {
-                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddDays(-1)));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-1)) && p.isDelivered == true));
                 }
                 if (filter == "week")
                 {
-                    purchases = _purchaseRepository.Purchases.Where(p => p.PurchaseDate >= (DateTime.Now.AddDays(-7)));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-7)) && p.isDelivered == true));
                 }
             }
             var vm = new ListPurchaseViewModel
