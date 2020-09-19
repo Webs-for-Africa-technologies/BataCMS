@@ -77,7 +77,7 @@ namespace BataCMS.Controllers
 
                 var category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == model.Category);
 
-                unitItem newUnitItem = new unitItem
+                RentalAsset newUnitItem = new RentalAsset
                 {
                     Name = model.Name,
                     Price = model.Price,
@@ -90,7 +90,7 @@ namespace BataCMS.Controllers
                 };
 
                 await _unitItemRepository.AddAsync(newUnitItem);
-                return RedirectToAction("List", new { id = newUnitItem.unitItemId });
+                return RedirectToAction("List", new { id = newUnitItem.RentalAssetId });
 
             }
             return View();
@@ -105,12 +105,12 @@ namespace BataCMS.Controllers
                 Text = x.CategoryName
             }).ToList();
 
-            unitItem unitItem = await _unitItemRepository.GetItemByIdAsync(id);
+            RentalAsset unitItem = await _unitItemRepository.GetItemByIdAsync(id);
             Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryId == unitItem.CategoryId);
 
             EditUnitItemViewModel editUnitItemViewModel = new EditUnitItemViewModel
             {
-                unitItemId = unitItem.unitItemId,
+                unitItemId = unitItem.RentalAssetId,
                 Name = unitItem.Name,
                 Price = unitItem.Price,
                 InStock = unitItem.InStock,
@@ -128,7 +128,7 @@ namespace BataCMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitItem unitItem = await _unitItemRepository.GetItemByIdAsync(model.unitItemId);
+                RentalAsset unitItem = await _unitItemRepository.GetItemByIdAsync(model.unitItemId);
                 Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == model.Category);
 
 
@@ -183,7 +183,7 @@ namespace BataCMS.Controllers
         public ViewResult List(string category, string searchString)
         {
             string _category = category;
-            IEnumerable<unitItem> unitItems;
+            IEnumerable<RentalAsset> unitItems;
 
             string currentCategory = string.Empty;
 
@@ -197,7 +197,7 @@ namespace BataCMS.Controllers
             }
             else
             {
-                unitItems = _unitItemRepository.unitItems.OrderBy(p => p.unitItemId);
+                unitItems = _unitItemRepository.unitItems.OrderBy(p => p.RentalAssetId);
                 currentCategory = "All Items";
             }
 
@@ -213,7 +213,7 @@ namespace BataCMS.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewAsync(int itemId)
         {
-            unitItem unitItem = await _unitItemRepository.GetItemByIdAsync(itemId);
+            RentalAsset unitItem = await _unitItemRepository.GetItemByIdAsync(itemId);
             return View(unitItem);
         }
     }

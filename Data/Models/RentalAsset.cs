@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BataCMS.Data.Models
 {
-    public class unitItem
+    public class RentalAsset
     {
         [Required]
-        public int unitItemId { get; set; }
+        public int RentalAssetId { get; set; }
 
         [Required]
         public string Name { get; set; }

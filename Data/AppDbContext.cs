@@ -22,7 +22,7 @@ namespace BataCMS.Data
             modelBuilder.Entity<Category>()
                 .HasIndex(b => b.CategoryName).IsUnique(true);
 
-            modelBuilder.Entity<unitItem>().Property(e => e.OptionFormData).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            modelBuilder.Entity<RentalAsset>().Property(e => e.OptionFormData).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
 
             modelBuilder.Entity<CheckoutItem>().Property(e => e.selectedOptions).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
 
@@ -32,7 +32,7 @@ namespace BataCMS.Data
 
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<unitItem> UnitItems { get; set; }
+        public DbSet<RentalAsset> RentalAssets { get; set; }
         public DbSet<CheckoutItem> CheckoutItems { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<PurchasedItem> PurchasedItems { get; set; }

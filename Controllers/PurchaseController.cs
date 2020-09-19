@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using System.Text.Json;
+using RentalAsset = BataCMS.Data.Models.RentalAsset;
 
 namespace BataCMS.Controllers
 {
@@ -210,7 +211,7 @@ namespace BataCMS.Controllers
 
             foreach (var item in purchasedItems)
             {
-                unitItem unit = await _unitItemRepository.GetItemByIdAsync(item.unitItemId);
+                RentalAsset unit = await _unitItemRepository.GetItemByIdAsync(item.unitItemId);
 
                 List<userOptionObject> userOptionValues = new List<userOptionObject>();
 

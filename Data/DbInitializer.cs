@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RentalAsset = BataCMS.Data.Models.RentalAsset;
 
 namespace BataCMS.Data
 {
@@ -29,11 +30,11 @@ namespace BataCMS.Data
             }
 
 
-            if (!context.UnitItems.Any())
+            if (!context.RentalAssets.Any())
             {
                 context.AddRange
                 (
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Beer",
                         Price = 7.95M,
@@ -41,7 +42,7 @@ namespace BataCMS.Data
                         InStock = true,
                         ImageUrl = "/Content/Images/beer.PNG",
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Rum & Coke",
                         Price = 12.95M,
@@ -49,7 +50,7 @@ namespace BataCMS.Data
                         InStock = true,
                         ImageUrl = "/Content/Images/rum and coke.PNG",
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Tequila ",
                         Price = 12.95M,
@@ -58,7 +59,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/tequila.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Wine ",
                         Price = 16.75M,
@@ -66,7 +67,7 @@ namespace BataCMS.Data
                         InStock = true,
                         ImageUrl = "~/Content/Images/wine.PNG",
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Burger and Chips",
                         Price = 17.95M,
@@ -75,7 +76,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/burger and chips.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Whiskey with Ice",
                         Price = 15.95M,
@@ -84,7 +85,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/whiskey with ice.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Jägermeister",
                         Price = 15.95M,
@@ -93,7 +94,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/jag.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Champagne",
                         Price = 15.95M,
@@ -102,7 +103,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/champagne.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Piña colada ",
                         Price = 15.95M,
@@ -111,7 +112,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/pina colada.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "White Russian",
                         Price = 15.95M,
@@ -120,7 +121,7 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/white russian.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Long Island Iced Tea",
                         Price = 15.95M,
@@ -129,48 +130,48 @@ namespace BataCMS.Data
                         ImageUrl = "~/Content/Images/long island.PNG",
 
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Vodka",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Gin and tonic",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Cosmopolitan",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
                         InStock = false,
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Fish and Chips ",
                         Price = 12.95M,
                         Category = Categories["Food"],
                         InStock = true,
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Water ",
                         Price = 12.95M,
                         Category = Categories["Non-alcoholic"],
                         InStock = true,
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Coffee ",
                         Price = 12.95M,
                         Category = Categories["Non-alcoholic"],
                         InStock = true,
                     },
-                    new unitItem
+                    new RentalAsset
                     {
                         Name = "Kvass",
                         Price = 12.95M,

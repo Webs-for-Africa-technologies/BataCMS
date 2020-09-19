@@ -29,20 +29,20 @@ namespace BataCMS.Controllers
         public ViewResult Index(string category)
         {
             string _category = category;
-            IEnumerable<unitItem> unitItems;
+            IEnumerable<RentalAsset> rentalAssets;
 
             if (string.IsNullOrEmpty(category))
             {
-                unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Food");
+                rentalAssets = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Food");
             }
             else
             {
-                unitItems = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals(_category));
+                rentalAssets = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals(_category));
             }
 
             var homeViewModel = new HomeViewModel
             {
-                HomeItems = unitItems
+                HomeItems = rentalAssets
             };
 
             return View(homeViewModel);

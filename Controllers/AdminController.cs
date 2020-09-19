@@ -113,7 +113,7 @@ namespace BataCMS.Controllers
                 return View("NotFound");
             }
 
-            IEnumerable<unitItem> unitItems = _unitItemRepository.unitItems.Where(p => p.CategoryId == _categoryId);
+            IEnumerable<RentalAsset> unitItems = _unitItemRepository.unitItems.Where(p => p.CategoryId == _categoryId);
 
             var model = new EditCategoryViewModel
             {

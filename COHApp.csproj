@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200919080606_RentalAsset.cs" />
+    <Compile Remove="Migrations\20200919080606_RentalAsset.Designer.cs" />
+    <Compile Remove="Migrations\20200919081434_RentalAsset.cs" />
+    <Compile Remove="Migrations\20200919081434_RentalAsset.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="src\css\Home.css" />
     <None Remove="src\css\site.css" />
   </ItemGroup>

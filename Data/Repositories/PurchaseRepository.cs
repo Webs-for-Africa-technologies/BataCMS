@@ -43,12 +43,12 @@ namespace BataCMS.Data.Repositories
             {
                 var purchasedItem = new PurchasedItem {
                     Amount = item.Amount,
-                    unitItemId = item.unitItem.unitItemId,
+                    unitItemId = item.RentalAsset.RentalAssetId,
                     PurchaseId = purchase.PurchaseId,
-                    Price = item.unitItem.Price,
+                    Price = item.RentalAsset.Price,
                     selectedOptionData = item.selectedOptions,
                 };
-                purchaseTotal += (item.unitItem.Price*item.Amount) * _currencyRepository.GetCurrentCurrency().Rate;
+                purchaseTotal += (item.RentalAsset.Price*item.Amount) * _currencyRepository.GetCurrentCurrency().Rate;
                 await _appDbContext.PurchasedItems.AddAsync(purchasedItem);
             }
             purchase.PurchasesTotal = purchaseTotal;

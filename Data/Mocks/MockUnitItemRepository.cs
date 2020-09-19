@@ -10,11 +10,11 @@ namespace BataCMS.Data.Mocks
     public class MockUnitItemRepository : IUnitItemRepository
     {
         private readonly ICategoryRepository _categoryRepository = new MockCategoryRepository(); 
-        public IEnumerable<unitItem> unitItems { get
+        public IEnumerable<RentalAsset> unitItems { get
             {
-                return new List<unitItem>
+                return new List<RentalAsset>
                 {
-                    new unitItem
+                    new RentalAsset
                     {
                     Name = "340ml Zambezi Beer",
                     Price = 30,
@@ -22,14 +22,14 @@ namespace BataCMS.Data.Mocks
                     InStock = true
                     },
 
-                new unitItem
+                new RentalAsset
                     {
                     Name = "340ml Castle Beer",
                     Price = 30,
                     Category = _categoryRepository.Categories.First(),
                     InStock = true
                     },
-                new unitItem
+                new RentalAsset
                     {
                     Name = "340ml BlackLabel Beer",
                     Price = 30,
@@ -37,21 +37,21 @@ namespace BataCMS.Data.Mocks
                     InStock = true
                     },
 
-                new unitItem
+                new RentalAsset
                     {
                     Name = "Cheese Burger",
                     Price = 30,
                     Category = _categoryRepository.Categories.Last(),
                     InStock = true
                     },
-                new unitItem
+                new RentalAsset
                     {
                     Name = "340ml Hunters Dry Beer",
                     Price = 35,
                     Category = _categoryRepository.Categories.First(),
                     InStock = true
                     },
-                new unitItem
+                new RentalAsset
                     {
                     Name = "Buffalo Wings",
                     Price = 25,
@@ -64,7 +64,7 @@ namespace BataCMS.Data.Mocks
             set { }  
         }
 
-        public unitItem AddAsync(unitItem item)
+        public RentalAsset AddAsync(RentalAsset item)
         {
             throw new NotImplementedException();
         }
@@ -74,27 +74,27 @@ namespace BataCMS.Data.Mocks
             throw new NotImplementedException();
         }
 
-        public unitItem EditItemAsync(unitItem updatedItem)
+        public RentalAsset EditItemAsync(RentalAsset updatedItem)
         {
             throw new NotImplementedException();
         }
 
-        public unitItem GetItemByIdAsync(int itemId)
+        public RentalAsset GetItemByIdAsync(int itemId)
         {
             throw new NotImplementedException(); 
         }
 
-        Task<unitItem> IUnitItemRepository.AddAsync(unitItem item)
+        Task<RentalAsset> IUnitItemRepository.AddAsync(RentalAsset item)
         {
             throw new NotImplementedException();
         }
 
-        Task IUnitItemRepository.EditItemAsync(unitItem updatedItem)
+        Task IUnitItemRepository.EditItemAsync(RentalAsset updatedItem)
         {
             throw new NotImplementedException();
         }
 
-        Task<unitItem> IUnitItemRepository.GetItemByIdAsync(int itemId)
+        Task<RentalAsset> IUnitItemRepository.GetItemByIdAsync(int itemId)
         {
             throw new NotImplementedException();
         }

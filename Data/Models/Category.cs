@@ -15,6 +15,6 @@ namespace BataCMS.Data.Models
 
         public string Description { get; set; }
 
-        public List<unitItem> itemList { get; set; }
+        public List<RentalAsset> itemList { get; set; }
     }
 }

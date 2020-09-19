@@ -16,6 +16,6 @@ namespace BataCMS.ViewModels
 
         public string Description { get; set; }
 
-        public IEnumerable<unitItem> ItemList { get; set; }
+        public IEnumerable<RentalAsset> ItemList { get; set; }
     }
 }

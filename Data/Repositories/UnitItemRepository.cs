@@ -18,9 +18,9 @@ namespace BataCMS.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<unitItem> unitItems => _appDbContext.UnitItems.Include(c => c.Category);
+        public IEnumerable<RentalAsset> unitItems => _appDbContext.RentalAssets.Include(c => c.Category);
 
-        public async Task<unitItem> GetItemByIdAsync(int unitItemId) => await _appDbContext.UnitItems.FirstOrDefaultAsync(p => p.unitItemId == unitItemId);
+        public async Task<RentalAsset> GetItemByIdAsync(int unitItemId) => await _appDbContext.RentalAssets.FirstOrDefaultAsync(p => p.RentalAssetId == unitItemId);
 
         //Remove user should not be able to remove unit item to maintain integrity of purchasedItems. 
 
@@ -35,16 +35,16 @@ namespace BataCMS.Data.Repositories
 
         }*/
 
-        public async Task<unitItem> AddAsync(unitItem item)
+        public async Task<RentalAsset> AddAsync(RentalAsset item)
         {
-            await _appDbContext.UnitItems.AddAsync(item);
+            await _appDbContext.RentalAssets.AddAsync(item);
             await _appDbContext.SaveChangesAsync();
             return item;
         }
 
-        public async Task EditItemAsync(unitItem updatedItem)
+        public async Task EditItemAsync(RentalAsset updatedItem)
         {
-            _appDbContext.UnitItems.Update(updatedItem);
+            _appDbContext.RentalAssets.Update(updatedItem);
             await _appDbContext.SaveChangesAsync();
         }
     }

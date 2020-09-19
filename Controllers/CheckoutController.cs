@@ -37,7 +37,7 @@ namespace BataCMS.Controllers
 
         public async Task<RedirectToActionResult> AddToCheckoutAsync(int itemId, string selectedOptions)
         {
-            var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == itemId);
+            var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.RentalAssetId == itemId);
 
             if (selectedItem != null)
             {
@@ -48,7 +48,7 @@ namespace BataCMS.Controllers
 
         public async Task<RedirectToActionResult> RemoveFromCheckoutAsync(int unitItemId)
         {
-            var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.unitItemId == unitItemId);
+            var selectedItem = _unitItemRepository.unitItems.FirstOrDefault(p => p.RentalAssetId == unitItemId);
 
             if (selectedItem != null)
             {

@@ -17,7 +17,7 @@ namespace BataCMS.Data.Models
 
         public string selectedOptionData { get; set; }
 
-        public virtual unitItem UnitItem { get; set; }
+        public virtual RentalAsset RentalAsset { get; set; }
 
         public virtual Purchase Purchase { get; set; }
 

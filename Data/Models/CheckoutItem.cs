@@ -9,7 +9,7 @@ namespace BataCMS.Data.Models
     {
         public int CheckoutItemId { get; set; }
 
-        public unitItem unitItem { get; set; }
+        public RentalAsset RentalAsset { get; set; }
 
         public int Amount { get; set; }
 

@@ -24,16 +24,16 @@ namespace BataCMS.Data.Repositories
 
         }
 
-        public async Task AddItemAsync(unitItem item, int amount, string selectedOptions)
+        public async Task AddItemAsync(RentalAsset item, int amount, string selectedOptions)
         {
-            var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
+            var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.RentalAsset.RentalAssetId == item.RentalAssetId && s.CheckoutId == _checkout.CheckoutId);
 
             if (checkoutItem == null)
             {
                 checkoutItem = new CheckoutItem
                 {
                     CheckoutId = _checkout.CheckoutId,
-                    unitItem = item,
+                    RentalAsset = item,
                     Amount = 1,
                     selectedOptions = selectedOptions
                 };
@@ -60,20 +60,20 @@ namespace BataCMS.Data.Repositories
 
         public async Task<List<CheckoutItem>> GetCheckoutItemsAsync()
         {
-            return _checkout.CheckoutItems ?? (_checkout.CheckoutItems = await _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Include(s => s.unitItem).ToListAsync());
+            return _checkout.CheckoutItems ?? (_checkout.CheckoutItems = await _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Include(s => s.RentalAsset).ToListAsync());
 
         }
 
         public decimal GetCheckoutTotal()
         {
-            var total = _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Select(c => c.unitItem.Price * c.Amount).Sum();
+            var total = _appDbContext.CheckoutItems.Where(c => c.CheckoutId == _checkout.CheckoutId).Select(c => c.RentalAsset.Price * c.Amount).Sum();
 
             return total * _currencyRepository.GetCurrentCurrency().Rate;
         }
 
-        public async Task<decimal> RemoveItemAsync(unitItem item)
+        public async Task<decimal> RemoveItemAsync(RentalAsset item)
         {
-            var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.unitItem.unitItemId == item.unitItemId && s.CheckoutId == _checkout.CheckoutId);
+            var checkoutItem = await _appDbContext.CheckoutItems.SingleOrDefaultAsync(s => s.RentalAsset.RentalAssetId == item.RentalAssetId && s.CheckoutId == _checkout.CheckoutId);
 
             var localAmount = 0;
 

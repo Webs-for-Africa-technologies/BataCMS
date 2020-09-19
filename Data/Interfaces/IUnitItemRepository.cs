@@ -8,14 +8,14 @@ namespace BataCMS.Data.Interfaces
 {
     public interface IUnitItemRepository
     {
-        IEnumerable<unitItem> unitItems { get; }
+        IEnumerable<RentalAsset> unitItems { get; }
 
-        Task<unitItem> GetItemByIdAsync(int itemId);
+        Task<RentalAsset> GetItemByIdAsync(int itemId);
 
         /*Task<int> DeleteItem(int itemId);*/
 
-        Task<unitItem> AddAsync (unitItem item);
+        Task<RentalAsset> AddAsync (RentalAsset item);
 
-        Task EditItemAsync(unitItem updatedItem);
+        Task EditItemAsync(RentalAsset updatedItem);
     }
 }
