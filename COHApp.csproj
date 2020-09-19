@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20200919080606_RentalAsset.Designer.cs" />
     <Compile Remove="Migrations\20200919081434_RentalAsset.cs" />
     <Compile Remove="Migrations\20200919081434_RentalAsset.Designer.cs" />
+    <Compile Remove="Migrations\20200919091323_VendorUser.cs" />
+    <Compile Remove="Migrations\20200919091323_VendorUser.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

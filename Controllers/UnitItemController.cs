@@ -81,7 +81,7 @@ namespace BataCMS.Controllers
                 {
                     Name = model.Name,
                     Price = model.Price,
-                    InStock = model.InStock,
+                    IsAvailable = model.InStock,
                     DateModified = DateTime.Today,
                     CategoryId = category.CategoryId,
                     ImageUrl = photoPath,
@@ -113,7 +113,7 @@ namespace BataCMS.Controllers
                 unitItemId = unitItem.RentalAssetId,
                 Name = unitItem.Name,
                 Price = unitItem.Price,
-                InStock = unitItem.InStock,
+                InStock = unitItem.IsAvailable,
                 Category = category.CategoryName,
                 ExistingImagePath = unitItem.ImageUrl,
                 OptionFormData = unitItem.OptionFormData,
@@ -135,7 +135,7 @@ namespace BataCMS.Controllers
                 unitItem.Name = model.Name;
                 unitItem.Price = model.Price;
                 unitItem.CategoryId = category.CategoryId;
-                unitItem.InStock = model.InStock;
+                unitItem.IsAvailable = model.InStock;
                 unitItem.OptionFormData = model.OptionFormData; 
                 unitItem.DateModified = DateTime.Today;
                 unitItem.Description = model.Description;

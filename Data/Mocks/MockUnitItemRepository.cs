@@ -19,7 +19,7 @@ namespace BataCMS.Data.Mocks
                     Name = "340ml Zambezi Beer",
                     Price = 30,
                     Category = _categoryRepository.Categories.First(),
-                    InStock = true
+                    IsAvailable = true
                     },
 
                 new RentalAsset
@@ -27,14 +27,14 @@ namespace BataCMS.Data.Mocks
                     Name = "340ml Castle Beer",
                     Price = 30,
                     Category = _categoryRepository.Categories.First(),
-                    InStock = true
+                    IsAvailable = true
                     },
                 new RentalAsset
                     {
                     Name = "340ml BlackLabel Beer",
                     Price = 30,
                     Category = _categoryRepository.Categories.First(),
-                    InStock = true
+                    IsAvailable = true
                     },
 
                 new RentalAsset
@@ -42,21 +42,21 @@ namespace BataCMS.Data.Mocks
                     Name = "Cheese Burger",
                     Price = 30,
                     Category = _categoryRepository.Categories.Last(),
-                    InStock = true
+                    IsAvailable = true
                     },
                 new RentalAsset
                     {
                     Name = "340ml Hunters Dry Beer",
                     Price = 35,
                     Category = _categoryRepository.Categories.First(),
-                    InStock = true
+                    IsAvailable = true
                     },
                 new RentalAsset
                     {
                     Name = "Buffalo Wings",
                     Price = 25,
                     Category = _categoryRepository.Categories.Last(),
-                    InStock = true
+                    IsAvailable = true
                     },
 
                 };

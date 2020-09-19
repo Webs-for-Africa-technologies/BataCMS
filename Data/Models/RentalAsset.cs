@@ -19,11 +19,13 @@ namespace BataCMS.Data.Models
         [DisplayFormat(DataFormatString = "{0:n2}")]
         public decimal Price { get; set; }
 
-        public bool InStock { get; set; }
+        public bool IsAvailable { get; set; }
 
         public DateTime DateModified { get; set; }
 
         public int CategoryId { get; set; }
+
+        public string Location { get; set; }
 
         [Required]
         public virtual Category Category { get; set; }

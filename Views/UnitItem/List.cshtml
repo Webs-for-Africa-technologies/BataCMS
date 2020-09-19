@@ -63,7 +63,7 @@
                             <div class="row">
                                 @foreach (var item in Model.UnitItems)
                                 {
-                                    if (item.InStock == true)
+                                    if (item.IsAvailable == true)
                                     {
                                         @await Html.PartialAsync("UnitItemSummary", item);
                                     }

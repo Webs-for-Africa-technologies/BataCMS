@@ -257,7 +257,7 @@
 
                                 @foreach (var item in Model.HomeItems)
                                 {
-                                    if (item.InStock == true)
+                                    if (item.IsAvailable == true)
                                     {
                                         @await Html.PartialAsync("UnitItemSummary", item);
                                     }

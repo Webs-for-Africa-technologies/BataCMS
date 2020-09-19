@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200919090709_ApplicationUser")]
+    partial class ApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +31,6 @@ namespace BataCMS.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -98,8 +96,6 @@ namespace BataCMS.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.Category", b =>
@@ -459,22 +455,6 @@ namespace BataCMS.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("COHApp.Data.Models.VendorUser", b =>
-                {
-                    b.HasBaseType("BataCMS.Data.Models.ApplicationUser");
-
-                    b.Property<int>("CardNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoIDUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VendorUserId")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("VendorUser");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.CheckoutItem", b =>

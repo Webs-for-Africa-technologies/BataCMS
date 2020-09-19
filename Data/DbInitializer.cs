@@ -39,7 +39,7 @@ namespace BataCMS.Data
                         Name = "Beer",
                         Price = 7.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                         ImageUrl = "/Content/Images/beer.PNG",
                     },
                     new RentalAsset
@@ -47,7 +47,7 @@ namespace BataCMS.Data
                         Name = "Rum & Coke",
                         Price = 12.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                         ImageUrl = "/Content/Images/rum and coke.PNG",
                     },
                     new RentalAsset
@@ -55,7 +55,7 @@ namespace BataCMS.Data
                         Name = "Tequila ",
                         Price = 12.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                         ImageUrl = "~/Content/Images/tequila.PNG",
 
                     },
@@ -64,7 +64,7 @@ namespace BataCMS.Data
                         Name = "Wine ",
                         Price = 16.75M,
                         Category = Categories["Alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                         ImageUrl = "~/Content/Images/wine.PNG",
                     },
                     new RentalAsset
@@ -72,7 +72,7 @@ namespace BataCMS.Data
                         Name = "Burger and Chips",
                         Price = 17.95M,
                         Category = Categories["Food"],
-                        InStock = true,
+                        IsAvailable = true,
                         ImageUrl = "~/Content/Images/burger and chips.PNG",
 
                     },
@@ -81,7 +81,7 @@ namespace BataCMS.Data
                         Name = "Whiskey with Ice",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                         ImageUrl = "~/Content/Images/whiskey with ice.PNG",
 
                     },
@@ -90,7 +90,7 @@ namespace BataCMS.Data
                         Name = "Jägermeister",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                         ImageUrl = "~/Content/Images/jag.PNG",
 
                     },
@@ -99,7 +99,7 @@ namespace BataCMS.Data
                         Name = "Champagne",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                         ImageUrl = "~/Content/Images/champagne.PNG",
 
                     },
@@ -108,7 +108,7 @@ namespace BataCMS.Data
                         Name = "Piña colada ",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                         ImageUrl = "~/Content/Images/pina colada.PNG",
 
                     },
@@ -117,7 +117,7 @@ namespace BataCMS.Data
                         Name = "White Russian",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                         ImageUrl = "~/Content/Images/white russian.PNG",
 
                     },
@@ -126,7 +126,7 @@ namespace BataCMS.Data
                         Name = "Long Island Iced Tea",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                         ImageUrl = "~/Content/Images/long island.PNG",
 
                     },
@@ -135,7 +135,7 @@ namespace BataCMS.Data
                         Name = "Vodka",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                     },
                     new RentalAsset
                     {
@@ -148,35 +148,35 @@ namespace BataCMS.Data
                         Name = "Cosmopolitan",
                         Price = 15.95M,
                         Category = Categories["Alcoholic"],
-                        InStock = false,
+                        IsAvailable = false,
                     },
                     new RentalAsset
                     {
                         Name = "Fish and Chips ",
                         Price = 12.95M,
                         Category = Categories["Food"],
-                        InStock = true,
+                        IsAvailable = true,
                     },
                     new RentalAsset
                     {
                         Name = "Water ",
                         Price = 12.95M,
                         Category = Categories["Non-alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                     },
                     new RentalAsset
                     {
                         Name = "Coffee ",
                         Price = 12.95M,
                         Category = Categories["Non-alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                     },
                     new RentalAsset
                     {
                         Name = "Kvass",
                         Price = 12.95M,
                         Category = Categories["Non-alcoholic"],
-                        InStock = true,
+                        IsAvailable = true,
                     }
                 );
             }

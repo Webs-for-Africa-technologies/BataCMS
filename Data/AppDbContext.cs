@@ -1,4 +1,5 @@
 ﻿using BataCMS.Data.Models;
+using COHApp.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -39,6 +40,8 @@ namespace BataCMS.Data
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<PurchasePaymentMethod> PurchasePaymentMethod { get; set; }
         public DbSet<Currency> Currencies { get; set; }
+        public DbSet<VendorUser> VendorUsers { get; set; }
+
 
 
     }
