@@ -1,6 +1,5 @@
-# BataCMS
+# COH App
 
-A content management system that can be used for anything that requires managing of content including purchases and previews of items to be 
-bought. 
+An App that will be used to for managing the a city's rental assets 
 
 Built with love using ASP.Net Core MVC 
