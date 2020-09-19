@@ -38,7 +38,7 @@ namespace BataCMS.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<PurchasedItem> PurchasedItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public DbSet<PurchasePaymentMethod> PurchasePaymentMethod { get; set; }
+        public DbSet<Lease> Leases { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<VendorUser> VendorUsers { get; set; }
 

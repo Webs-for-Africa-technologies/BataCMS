@@ -16,15 +16,15 @@ namespace BataCMS.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public void AddPurchasePaymentMethod(PurchasePaymentMethod purchasePaymentMethod)
+        public void AddPurchasePaymentMethod(Lease purchasePaymentMethod)
         {
             _appDbContext.AddAsync(purchasePaymentMethod);
             _appDbContext.SaveChanges();
         }
 
-        public PurchasePaymentMethod GetPurchasePaymentMethodByPurchaseId(int purchaseId)
+        public Lease GetPurchasePaymentMethodByPurchaseId(int purchaseId)
         {
-            return _appDbContext.PurchasePaymentMethod.FirstOrDefault(p => p.PurchaseId == purchaseId);
+            return _appDbContext.Leases.FirstOrDefault(p => p.VendorUserId == purchaseId);
         }
     }
 }

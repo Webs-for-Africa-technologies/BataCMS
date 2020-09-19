@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200919093543_PurchasePaymentPlaceholder")]
+    partial class PurchasePaymentPlaceholder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,26 +174,6 @@ namespace BataCMS.Migrations
                     b.ToTable("Currencies");
                 });
 
-            modelBuilder.Entity("BataCMS.Data.Models.Lease", b =>
-                {
-                    b.Property<int>("LeaseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("RentalAssetId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VendorUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LeaseId");
-
-                    b.HasIndex("RentalAssetId");
-
-                    b.ToTable("Leases");
-                });
-
             modelBuilder.Entity("BataCMS.Data.Models.PaymentMethod", b =>
                 {
                     b.Property<int>("PaymentMethodId")
@@ -250,6 +232,31 @@ namespace BataCMS.Migrations
                     b.HasKey("PurchaseId");
 
                     b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("BataCMS.Data.Models.PurchasePaymentMethod", b =>
+                {
+                    b.Property<int>("PurchasePaymentMethodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Placeholder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PurchasePaymentMethodId");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("PurchasePaymentMethod");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.PurchasedItem", b =>
@@ -482,20 +489,26 @@ namespace BataCMS.Migrations
                         .HasForeignKey("RentalAssetId");
                 });
 
-            modelBuilder.Entity("BataCMS.Data.Models.Lease", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.RentalAsset", "RentalAsset")
-                        .WithMany()
-                        .HasForeignKey("RentalAssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BataCMS.Data.Models.PaymentMethod", b =>
                 {
                     b.HasOne("BataCMS.Data.Models.Purchase", null)
                         .WithMany("PaymentMethods")
                         .HasForeignKey("PurchaseId");
+                });
+
+            modelBuilder.Entity("BataCMS.Data.Models.PurchasePaymentMethod", b =>
+                {
+                    b.HasOne("BataCMS.Data.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BataCMS.Data.Models.Purchase", "Purchase")
+                        .WithMany()
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.PurchasedItem", b =>

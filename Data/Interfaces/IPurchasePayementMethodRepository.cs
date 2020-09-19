@@ -8,8 +8,8 @@ namespace BataCMS.Data.Interfaces
 {
     public interface IPurchasePayementMethodRepository
     {
-        PurchasePaymentMethod GetPurchasePaymentMethodByPurchaseId(int purchaseId);
+        Lease GetPurchasePaymentMethodByPurchaseId(int purchaseId);
 
-        void AddPurchasePaymentMethod(PurchasePaymentMethod purchasePaymentMethod);
+        void AddPurchasePaymentMethod(Lease purchasePaymentMethod);
     }
 }
