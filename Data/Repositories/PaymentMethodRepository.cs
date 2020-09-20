@@ -17,7 +17,7 @@ namespace BataCMS.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public void CreatePaymentMethod(PaymentMethod paymentMethod, Purchase purchase)
+        public void CreatePaymentMethod(PaymentMethod paymentMethod, Transaction purchase)
         {
             _appDbContext.AddAsync(paymentMethod);
             _appDbContext.SaveChanges();
@@ -25,9 +25,7 @@ namespace BataCMS.Data.Repositories
 
         public PaymentMethod GetMethodByPurchaseId(int purchaseId)
         {
-            Purchase purchase = _appDbContext.Purchases.Include(p => p.PaymentMethods).SingleOrDefault(p => p.PurchaseId == purchaseId);
-
-            return purchase.PaymentMethods.First();
+            throw new NotImplementedException();
         }
 
         public PaymentMethod GetPaymentMethodById(int paymentMethodId)
@@ -40,5 +38,6 @@ namespace BataCMS.Data.Repositories
             _appDbContext.PaymentMethods.Update(paymentMethod);
             await _appDbContext.SaveChangesAsync();
         }
+
     }
 }

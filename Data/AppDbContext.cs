@@ -35,7 +35,7 @@ namespace BataCMS.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<RentalAsset> RentalAssets { get; set; }
         public DbSet<CheckoutItem> CheckoutItems { get; set; }
-        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<PurchasedItem> PurchasedItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Lease> Leases { get; set; }

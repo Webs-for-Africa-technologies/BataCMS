@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using System.Text.Json;
 using RentalAsset = BataCMS.Data.Models.RentalAsset;
+using Transaction = BataCMS.Data.Models.Transaction;
 
 namespace BataCMS.Controllers
 {
@@ -46,7 +47,7 @@ namespace BataCMS.Controllers
 
         [HttpPost]
         [Authorize] 
-        public async Task<IActionResult> CheckoutAsync(Purchase purchase, PaymentMethod paymentMethod)
+        public async Task<IActionResult> CheckoutAsync(Transaction purchase, PaymentMethod paymentMethod)
         {
             var items = await _checkoutRepository.GetCheckoutItemsAsync();
             decimal checkoutTotal = _checkoutRepository.GetCheckoutTotal();
@@ -82,7 +83,7 @@ namespace BataCMS.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ListOrders(string filter)
         {
-            IEnumerable<Purchase> purchases = null; 
+            IEnumerable<Transaction> purchases = null; 
             if (String.IsNullOrEmpty(filter) || filter == "all")
             {
                 purchases = _purchaseRepository.Purchases.Where(p => p.isDelivered == false);
@@ -91,15 +92,15 @@ namespace BataCMS.Controllers
             {
                 if (filter == "hour")
                 {
-                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)) && p.isDelivered == false));  
+                    purchases = _purchaseRepository.Purchases.Where((p => p.TransactionDate >= (DateTime.Now.AddHours(-1)) && p.isDelivered == false));  
                 }
                 if (filter == "day")
                 {
-                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-1)) && p.isDelivered == false));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-1)) && p.isDelivered == false));
                 }
                 if (filter == "week")
                 {
-                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-7)) && p.isDelivered == false));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-7)) && p.isDelivered == false));
                 }
             }
             var vm = new ListPurchaseViewModel
@@ -112,7 +113,7 @@ namespace BataCMS.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ListPurchases(string filter)
         {
-            IEnumerable<Purchase> purchases = null;
+            IEnumerable<Transaction> purchases = null;
             if (String.IsNullOrEmpty(filter) || filter == "all")
             {
                 purchases = _purchaseRepository.Purchases.Where(p => p.isDelivered == true);
@@ -121,15 +122,15 @@ namespace BataCMS.Controllers
             {
                 if (filter == "hour")
                 {
-                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddHours(-1)) && p.isDelivered == true));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.TransactionDate >= (DateTime.Now.AddHours(-1)) && p.isDelivered == true));
                 }
                 if (filter == "day")
                 {
-                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-1)) && p.isDelivered == true));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-1)) && p.isDelivered == true));
                 }
                 if (filter == "week")
                 {
-                    purchases = _purchaseRepository.Purchases.Where((p => p.PurchaseDate >= (DateTime.Now.AddDays(-7)) && p.isDelivered == true));
+                    purchases = _purchaseRepository.Purchases.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-7)) && p.isDelivered == true));
                 }
             }
             var vm = new ListPurchaseViewModel
@@ -170,11 +171,10 @@ namespace BataCMS.Controllers
 
                 for (int index = 1; index <= myPurchases.Count; index++)
                 {                      
-                    workSheet.Cells[index + 1, 1].Value = myPurchases[index - 1].PurchaseId;
-                    workSheet.Cells[index + 1, 2].Value = myPurchases[index - 1].PurchaseDate;
+                    workSheet.Cells[index + 1, 1].Value = myPurchases[index - 1].TransactionId;
+                    workSheet.Cells[index + 1, 2].Value = myPurchases[index - 1].TransactionDate;
                     workSheet.Cells[index + 1, 3].Value = myPurchases[index - 1].ServerName;
-                    workSheet.Cells[index + 1, 4].Value = myPurchases[index - 1].PurchasesTotal;
-                    workSheet.Cells[index + 1, 5].Value = myPurchases[index - 1].PaymentMethods.First().PaymentMethodName;
+                    workSheet.Cells[index + 1, 4].Value = myPurchases[index - 1].TransactionTotal;
                 }
                 package.Save();
             }
@@ -189,13 +189,10 @@ namespace BataCMS.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmDeliveryAsync(int purchaseId)
         {
-            Purchase purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
+            Transaction purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
             purchase.isDelivered = true;
 
             //update the paymentMethod
-            PaymentMethod paymentMethod = purchase.PaymentMethods.FirstOrDefault();
-            paymentMethod.isConfirmed = true;
-            await _paymentMethodRepository.UpdatePaymentMethod(paymentMethod);
             await _purchaseRepository.UpdatePurchaseAsync(purchase);
             return RedirectToAction("ListOrders", "Purchase");
         }
@@ -205,7 +202,7 @@ namespace BataCMS.Controllers
         {
             var purchaseObjects = new List<PurchaseObject>();
 
-            Purchase purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
+            Transaction purchase = await _purchaseRepository.GetPurchaseByIdAsync(purchaseId);
 
             IEnumerable<PurchasedItem> purchasedItems = _purchasedItemRepository.GetPurchasedItemsById(purchaseId);
 
@@ -280,17 +277,15 @@ namespace BataCMS.Controllers
                 purchaseObjects.Add(purchaseObject);
             }
 
-            Currency currency = await _currencyRepository.GetCurrencyByNameAsync(purchase.PaymentMethods.First().PaymentMethodName);
-            PaymentMethod paymentMethod = purchase.PaymentMethods.First();
+            //Currency currency = await _currencyRepository.GetCurrencyByNameAsync(purchase.PaymentMethods.First().PaymentMethodName);
+            //PaymentMethod paymentMethod = purchase.PaymentMethods.First();
 
 
             var vm = new PurchaseDetailViewModel
             {
-                PurchaseId = purchase.PurchaseId,
+                PurchaseId = purchase.TransactionId,
                 PurchasedItems = purchaseObjects,
-                PaymentMethod = paymentMethod,
                 Purchase = purchase,
-                Currency = currency
                 
             }; 
 

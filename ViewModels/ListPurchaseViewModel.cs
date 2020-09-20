@@ -8,7 +8,7 @@ namespace BataCMS.ViewModels
 {
     public class ListPurchaseViewModel
     {
-        public IEnumerable<Purchase> Purchases { get; set; }
+        public IEnumerable<Transaction> Purchases { get; set; }
 
     }
 }

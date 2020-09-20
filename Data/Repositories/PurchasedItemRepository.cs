@@ -18,7 +18,7 @@ namespace BataCMS.Data.Repositories
 
         public IEnumerable<PurchasedItem> GetPurchasedItemsById(int purchaseId)
         {
-            return _appDbContext.PurchasedItems.Where(p => p.PurchaseId == purchaseId);
+            return _appDbContext.PurchasedItems.Where(p => p.TransactionId == purchaseId);
         }
     }
 }

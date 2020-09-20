@@ -41,12 +41,12 @@
                     @foreach (var line in Model.Purchases)
                     {
                         <tr>
-                            <td class="text-center">@line.PurchaseId</td>
+                            <td class="text-center">@line.TransactionId</td>
                             <td class="text-left">@line.ServerName</td>
                             <td class="text-right">
-                                @line.PurchaseDate)
+                                @line.TransactionDate)
                             </td>
-                            <td class="text-center"><a class="btn btn-primary" asp-controller="Purchase" asp-action="PurchaseDetail" asp-route-purchaseId="@line.PurchaseId">Purchase Details</a></td>
+                            <td class="text-center"><a class="btn btn-primary" asp-controller="Purchase" asp-action="PurchaseDetail" asp-route-purchaseId="@line.TransactionId">Purchase Details</a></td>
                         </tr>
                     }
                 }

@@ -46,7 +46,7 @@
     </div>
     @if (Model.Purchase.isDelivered == false)
     {
-        <form method="post" asp-action="ConfirmDelivery" asp-route-purchaseId="@Model.Purchase.PurchaseId">
+        <form method="post" asp-action="ConfirmDelivery" asp-route-purchaseId="@Model.Purchase.TransactionId">
             <button class="btn btn btn-secondary order-button ">Confirm Delivery</button>
         </form>
 
@@ -54,7 +54,7 @@
     <div class="card mb-3">
         <div class="card-header">Purchase Date</div>
         <div class="card-body">
-            <h5 class="card-title">@Model.Purchase.PurchaseDate</h5>
+            <h5 class="card-title">@Model.Purchase.TransactionDate</h5>
         </div>
     </div>
 
@@ -72,23 +72,17 @@
         </div>
     </div>
 
-    <div class="card mb-3">
-        <div class="card-header">Table Number</div>
-        <div class="card-body">
-            <h5 class="card-title">@Model.Purchase.DeliveryLocation</h5>
-        </div>
-    </div>
 
     <div class="card mb-3">
         <div class="card-header">Order Notes</div>
         <div class="card-body">
-            <h5 class="card-title">@Model.Purchase.PurchaseNotes</h5>
+            <h5 class="card-title">@Model.Purchase.TransactionNotes</h5>
         </div>
     </div>
     <div class="card mb-3">
         <div class="card-header">Purchase Total</div>
         <div class="card-body">
-            <h5 class="card-title">@Model.Currency.CurrencyName  @Model.Purchase.PurchasesTotal</h5>
+            <h5 class="card-title">@Model.Currency.CurrencyName  @Model.Purchase.TransactionTotal</h5>
         </div>
     </div>
 </body>

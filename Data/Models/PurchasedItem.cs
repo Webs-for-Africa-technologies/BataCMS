@@ -7,7 +7,7 @@ namespace BataCMS.Data.Models
     {
         public int PurchasedItemId { get; set; }
 
-        public int PurchaseId { get; set; }
+        public int TransactionId { get; set; }
 
         public int unitItemId { get; set; }
 
@@ -18,8 +18,6 @@ namespace BataCMS.Data.Models
         public string selectedOptionData { get; set; }
 
         public virtual RentalAsset RentalAsset { get; set; }
-
-        public virtual Purchase Purchase { get; set; }
 
 
     }

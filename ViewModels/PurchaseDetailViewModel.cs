@@ -12,7 +12,7 @@ namespace BataCMS.ViewModels
         public int PurchaseId { get; set; }
         public List<PurchaseObject> PurchasedItems { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
-        public Purchase Purchase { get; set; }
+        public Transaction Purchase { get; set; }
         public Currency Currency { get; set; }
         
     }

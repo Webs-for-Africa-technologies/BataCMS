@@ -8,13 +8,13 @@ namespace BataCMS.Data.Interfaces
 {
     public interface IPurchaseRepository
     {
-        Task CreatePurchaseAsync(Purchase purchase);
+        Task CreatePurchaseAsync(Transaction purchase);
 
-        IEnumerable<Purchase> Purchases { get; }
+        IEnumerable<Transaction> Purchases { get; }
 
-        Task<Purchase> GetPurchaseByIdAsync(int purchaseId);
+        Task<Transaction> GetPurchaseByIdAsync(int purchaseId);
 
-        Task UpdatePurchaseAsync(Purchase purchase);
+        Task UpdatePurchaseAsync(Transaction purchase);
 
         Task DeletePurchasesAsync();
     }
