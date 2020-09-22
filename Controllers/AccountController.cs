@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BataCMS.Data.Models;
 using BataCMS.ViewModels;
+using COHApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace BataCMS.Controllers
                 return View(loginViewModel);
             }
 
-            var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
+            var user = await _userManager.FindByPhoneNumber(loginViewModel.Number);
 
             if (user != null)
             {
@@ -63,7 +64,6 @@ namespace BataCMS.Controllers
             return View(loginViewModel);
         }
 
-        //implement the AccessDenied that redirect to the ReturnUrl and displays Access denied error. Comment#0001 
         public ActionResult AccessDenied()
         {
             return View();
@@ -112,7 +112,7 @@ namespace BataCMS.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Account", "Login");
         }
 
     }

@@ -9,13 +9,12 @@ namespace BataCMS.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [Display(Name ="Email")]
-        public string Email { get; set; }
+        [Display(Name ="Phone Number")]
+        public string Number { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
 
         public string ReturnUrl { get; set; }
 
