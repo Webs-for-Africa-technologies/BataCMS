@@ -22,6 +22,7 @@ namespace BataCMS.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>()
                 .HasIndex(b => b.CategoryName).IsUnique(true);
+            modelBuilder.Entity<ApplicationUser>().HasAlternateKey(p => new { p.IDNumber, p.PhoneNumber}); 
 
             modelBuilder.Entity<RentalAsset>().Property(e => e.OptionFormData).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
 

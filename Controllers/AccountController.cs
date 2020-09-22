@@ -81,7 +81,7 @@ namespace BataCMS.Controllers
             IDictionary<string, object> value = new Dictionary<string, object>();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = registerViewModel.UserName, Email = registerViewModel.Email, PhoneNumber = registerViewModel.Number };
+                var user = new ApplicationUser { UserName = registerViewModel.LastName+registerViewModel.IdNumber, FirstName = registerViewModel.FirstName, LastName = registerViewModel.LastName, PhoneNumber = registerViewModel.Number, IDNumber = registerViewModel.IdNumber };
 
                 var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 

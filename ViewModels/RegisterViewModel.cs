@@ -9,14 +9,25 @@ namespace BataCMS.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
 
-        [Display(Name = "Email address")]
-        [Required(ErrorMessage = "The email address is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Email { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+
+        [Display(Name = "National ID Number")]
+        [Required(ErrorMessage = "Please enter a valid national ID Number")]
+        public string IdNumber { get; set; }
+
+        [Phone]
+        [Display(Name = "Phone Number")]
+        [Required(ErrorMessage = "Your must provide a PhoneNumber")]
+        public string Number { get; set; }
+
 
         [Required]
         [DataType(DataType.Password)]
@@ -26,12 +37,9 @@ namespace BataCMS.ViewModels
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
-
-        [Phone]
-        [Display(Name = "Phone Number")]
-        [Required(ErrorMessage = "Your must provide a PhoneNumber")]
-        public string Number { get; set; }
-
         public string ReturnUrl { get; set; }
+
+
+
     }
 }
