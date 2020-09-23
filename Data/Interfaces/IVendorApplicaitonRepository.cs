@@ -11,5 +11,10 @@ namespace COHApp.Data.Interfaces
         IEnumerable<VendorApplication> vendorApplications { get; }
 
         Task<VendorApplication> AddAsync(VendorApplication application);
+
+        Task<VendorApplication> GetApplicationByIdAsync(int applicationId);
+
+        Task UpdateApplicationAsync(VendorApplication application);
+
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
 @model CreateVendorApplicationViewModel
 
 
@@ -40,6 +40,8 @@
                     </div>
                 </div>
             </div>
+
+            <input type="hidden" asp-for="ApplicantId" class="form-control custom-file-input" value="@UserManager.GetUserId(User)" />
 
 
             <div class="form-group row">

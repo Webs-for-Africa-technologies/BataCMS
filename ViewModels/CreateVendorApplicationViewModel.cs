@@ -17,5 +17,7 @@ namespace BataCMS.ViewModels
 
         public IFormFile ResidencyProof { get; set; }
 
+        public string ApplicantId { get; set; }
+
     }
 }
