@@ -14,6 +14,8 @@ using Westwind.AspNetCore.LiveReload;
 using Microsoft.AspNetCore.Identity;
 using BataCMS.ViewModels;
 using BataCMS.Infrastructure;
+using COHApp.Data.Interfaces;
+using COHApp.Data.Repositories;
 
 namespace BataCMS
 {
@@ -49,6 +51,8 @@ namespace BataCMS
             services.AddTransient<IPaymentMethodRepository, PaymentMethodRepository>();
             services.AddTransient<IPurchasePayementMethodRepository, PurchasePaymentMethodRepository>();
             services.AddTransient<IPurchasedItemRepository, PurchasedItemRepository>();
+            services.AddTransient<IVendorApplicaitonRepository, VendorApplicationRepository>();
+
 
             services.AddSignalR();
 

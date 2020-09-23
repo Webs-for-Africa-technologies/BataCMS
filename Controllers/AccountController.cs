@@ -112,7 +112,7 @@ namespace BataCMS.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Account", "Login");
+            return RedirectToAction("Login", "Account");
         }
 
     }

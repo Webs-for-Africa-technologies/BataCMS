@@ -15,5 +15,12 @@ namespace COHApp.Data
             return await um?.Users?.SingleOrDefaultAsync(x => x.PhoneNumber == number);
         }
 
+        public static async Task<String> GetFirstName(this UserManager<ApplicationUser> um, ApplicationUser applicationUser)
+        {
+            ApplicationUser user =  await um?.Users?.SingleOrDefaultAsync(x => x.FirstName == applicationUser.FirstName);
+
+            return user.FirstName; 
+        }
+
     }
 }

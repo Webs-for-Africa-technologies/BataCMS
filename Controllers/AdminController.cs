@@ -241,7 +241,9 @@ namespace BataCMS.Controllers
             {
                 Id = user.Result.Id,
                 UserName = user.Result.UserName,
-                Email = user.Result.Email,
+                FirstName = user.Result.FirstName,
+                LastName = user.Result.LastName,
+                IdNumber = user.Result.IDNumber,
                 Number = user.Result.PhoneNumber,
                 Roles = userRoles
             };
