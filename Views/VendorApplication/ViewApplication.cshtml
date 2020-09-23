@@ -63,16 +63,43 @@
         <form method="post" asp-action="ApproveApplication" asp-route-applicationId="@Model.VendorApplicationId">
             <button class="btn btn btn-success">Approve Application</button>
         </form>
+        <button onclick="DisplayForm()" class="btn btn btn-danger">Decline Application</button>
 
-        <form method="post" asp-action="DeclineApplication" asp-route-purchaseId="@Model.VendorApplicationId">
-            <button class="btn btn btn-danger">Decline Application</button>
+
+        <form id="FormDecline" method="post" asp-action="DeclineApplication" asp-controller="VendorApplication">
+
+            <input type="hidden" asp-for="VendorApplicationId" class="form-control custom-file-input" value=" @Model.VendorApplicationId" />
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label asp-for="RejectMessage" class="col-sm-2 col-form-label"></label>
+                    <textarea asp-for="RejectMessage" class="form-control"></textarea>
+                    <span asp-validation-for="RejectMessage" class="text-danger"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn btn-danger">Decline Application</button>
         </form>
-
-
     </div>
 </body>
+
 </html>
 
+<style>
+    #FormDecline {
+        display: none;
+    }
+</style>
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
+@section Scripts{
+
+    <script>
+        function DisplayForm() {
+            $("#FormDecline").show();
+        }
+    </script>
+}
 
 
 

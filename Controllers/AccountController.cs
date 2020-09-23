@@ -16,6 +16,7 @@ namespace BataCMS.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
+
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
@@ -87,6 +88,9 @@ namespace BataCMS.Controllers
 
                 if (result.Succeeded)
                 {
+                    //add the user to User role by default. 
+                    await _userManager.AddToRoleAsync(user, "User");
+
                     if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         return RedirectToAction("ListUsers","Admin"); 

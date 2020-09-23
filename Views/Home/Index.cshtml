@@ -22,13 +22,18 @@
                 <div data-id="524b0677" data-element_type="column" class="elementor-element  column-item1-custom elementor-column elementor-top-column" data-col="16" data-model-cid="c28">
                     <div class="elementor-column-wrap elementor-element-empty">
                         <div class="elementor-background-overlay"></div>
-                        <div class="elementor-widget-wrap">
-                            <a asp-action="Create" asp-controller="VendorApplication" class="elementor-button-link elementor-button elementor-size-md" role="button">
-                                <span class="elementor-button-content-wrapper">
-                                    <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Apply here</span>
-                                </span>
-                            </a>
-                        </div>
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+                        {
+                            <div class="elementor-widget-wrap">
+                                <a asp-action="Create" asp-controller="VendorApplication" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                                    <span class="elementor-button-content-wrapper">
+
+                                        <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Apply here</span>
+                                    </span>
+                                </a>
+                            </div>
+                        }
+
                     </div>
                 </div>
                 </div>

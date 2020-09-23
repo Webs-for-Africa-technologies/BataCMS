@@ -14,6 +14,7 @@ namespace BataCMS.ViewModels
         public string IdProofUrl { get; set; }
         public string ResidenceProof { get; set; }
         public DateTime ApplicationDate { get; set; }
+        public string RejectMessage { get; set; }
 
     }
 }

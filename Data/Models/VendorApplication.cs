@@ -15,10 +15,17 @@ namespace COHApp.Data.Models
 
         [Required]
         public string ApplicantId { get; set; }
+
+        [Display(Name = "Proof of Identity")]
         public string IdProofUrl { get; set; }
+
+        [Display(Name = "Proof of Residency")]
         public string ResidencyProofUrl { get; set; }
+
         public string Status { get; set; }
         public DateTime ApplicationDate { get; set; }
+
+        public string RejectMessage { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

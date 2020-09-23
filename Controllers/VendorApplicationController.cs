@@ -130,7 +130,23 @@ namespace COHApp.Controllers
             VendorApplication application = await _vendorApplicationRepository.GetApplicationByIdAsync(applicationId);
             application.Status = "Approved";
 
-            //update the paymentMethod
+            //Add the user to the VendorRole
+            ApplicationUser user = await _userManager.FindByIdAsync(application.ApplicantId);
+            await _userManager.RemoveFromRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, "Vendor");
+
+
+            await _vendorApplicationRepository.UpdateApplicationAsync(application);
+            return RedirectToAction("ListApplications", "VendorApplication");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeclineApplication(ViewApplicationViewModel model)
+        {
+            VendorApplication application = await _vendorApplicationRepository.GetApplicationByIdAsync(model.VendorApplicationId);
+            application.Status = "Declined";
+            application.RejectMessage = model.RejectMessage;
+
             await _vendorApplicationRepository.UpdateApplicationAsync(application);
             return RedirectToAction("ListApplications", "VendorApplication");
         }
