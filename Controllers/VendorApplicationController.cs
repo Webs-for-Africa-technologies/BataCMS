@@ -84,7 +84,8 @@ namespace COHApp.Controllers
                 ExistingResidencyProofURL = application.ResidencyProofUrl,
                 FullName = application.ApplicantName,
                 Status = application.Status,
-                RejectMessage = application.RejectMessage
+                RejectMessage = application.RejectMessage,
+                ApplicantId = application.ApplicantId
             };
             return View(editApplicationViewModel);
         }
@@ -128,7 +129,7 @@ namespace COHApp.Controllers
                 }
 
                 await _vendorApplicationRepository.UpdateApplicationAsync(application);
-                return RedirectToAction("MyApplications");
+                return RedirectToAction("MyApplications", new { applicantId = application.ApplicantId });
             }
             return View();
         }

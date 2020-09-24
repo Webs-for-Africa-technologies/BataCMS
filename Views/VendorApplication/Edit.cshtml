@@ -72,7 +72,7 @@
                     {
                         <button type="submit" class="btn btn-primary">Update</button>
                     }
-                    <a asp-controller="VendorApplication" asp-action="MyApplications" class="btn btn-primary">Cancel</a>
+                    <a asp-controller="VendorApplication" asp-action="MyApplications" asp-route-applicantId="@Model.ApplicantId" class="btn btn-primary">Cancel</a>
                 </div>
             </div>
 
