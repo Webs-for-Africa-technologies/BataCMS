@@ -1,0 +1,65 @@
+﻿@model BataCMS.ViewModels.ListApplicationsViewModel
+
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My Applications</title>
+</head>
+
+<main role="main">
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Application ID</th>
+                    <th>Applicant Name</th>
+                    <th class="text-right">Application Date</th>
+                    <th>Application Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Applications.Any())
+                {
+                    @foreach (var line in Model.Applications)
+                    {
+                        <tr>
+                            <td class="text-center">@line.VendorApplicationId</td>
+                            <td class="text-left">@line.ApplicantName</td>
+                            <td class="text-right">
+                                @line.ApplicationDate)
+                            </td>
+                            <td class="text-left">@line.Status</td>
+                            <td class="text-center"><a class="btn btn-primary" asp-controller="VendorApplication" asp-action="ViewApplication" asp-route-applicationId="@line.VendorApplicationId"> View</a></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+            <tr>
+                <div class="card">
+                    <div class="header">
+                        No Applications Made Yet
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Use the button below to apply to be a Vendor
+                        </h5>
+                        <a class="btn btn-primary" asp-controller="VendorApplication" asp-action="Create">Apply</a>
+
+                    </div>
+                </div>
+            </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script src="~/lib/jquery/jquery.js"></script>
+
+@section Scripts{
+
+}
+

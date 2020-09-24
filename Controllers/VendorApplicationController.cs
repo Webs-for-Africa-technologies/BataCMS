@@ -19,6 +19,7 @@ using COHApp.Data.Models;
 using COHApp.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using COHApp.ViewModels;
 
 namespace COHApp.Controllers
 {
@@ -49,8 +50,8 @@ namespace COHApp.Controllers
             if (ModelState.IsValid)
             {
 
-                string IdProofPath = ProcessUploadedImage(model.IdProof, model.FullName);
-                string ResidencyProofPath = ProcessUploadedImage(model.ResidencyProof, model.FullName);
+                string IdProofPath = ProcessUploadedImage(model.IdProof);
+                string ResidencyProofPath = ProcessUploadedImage(model.ResidencyProof);
 
 
                 VendorApplication newVendorApplication = new VendorApplication
@@ -68,6 +69,79 @@ namespace COHApp.Controllers
 
             }
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditAsync(int applicationId)
+        {
+            VendorApplication application = await _vendorApplicationRepository.GetApplicationByIdAsync(applicationId);
+
+
+            EditApplicationViewModel editApplicationViewModel = new EditApplicationViewModel
+            {
+                VendorApplicationId = application.VendorApplicationId,
+                ExitingIdProofURL = application.IdProofUrl,
+                ExistingResidencyProofURL = application.ResidencyProofUrl,
+                FullName = application.ApplicantName,
+                Status = application.Status,
+                RejectMessage = application.RejectMessage
+            };
+            return View(editApplicationViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAsync(EditApplicationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                VendorApplication application = await _vendorApplicationRepository.GetApplicationByIdAsync(model.VendorApplicationId);
+
+                application.ApplicantName = model.FullName;
+                application.ApplicationDate = DateTime.Now;
+
+                //make all application pending after editing
+                application.Status = "Pending";
+                application.RejectMessage = null;
+
+                if (model.IdProof != null)
+                {
+                    if (model.ExitingIdProofURL != null)
+                    {
+                        string filePath = Path.Combine(_webHostEnvironment.WebRootPath + model.ExitingIdProofURL);
+                        System.IO.File.Delete(filePath);
+                    }
+
+                    application.IdProofUrl = ProcessUploadedImage(model.IdProof);
+
+                }
+
+                if (model.ResidencyProof != null)
+                {
+                    if (model.ExistingResidencyProofURL != null)
+                    {
+                        string filePath = Path.Combine(_webHostEnvironment.WebRootPath + model.ExistingResidencyProofURL);
+                        System.IO.File.Delete(filePath);
+                    }
+
+                    application.ResidencyProofUrl = ProcessUploadedImage(model.ResidencyProof);
+
+                }
+
+                await _vendorApplicationRepository.UpdateApplicationAsync(application);
+                return RedirectToAction("MyApplications");
+            }
+            return View();
+        }
+
+        public IActionResult MyApplications(string applicantId)
+        {
+            IEnumerable<VendorApplication> applications = _vendorApplicationRepository.vendorApplications.Where(p => p.ApplicantId == applicantId);
+
+            var vm = new ListApplicationsViewModel
+            {
+                Applications = applications
+            };
+            return View(vm);
         }
 
         [Authorize(Roles = "Employee")]
@@ -101,7 +175,6 @@ namespace COHApp.Controllers
             return View(vm);
         }
 
-        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> ViewApplicationAsync(int applicationId)
         {
 
@@ -118,7 +191,8 @@ namespace COHApp.Controllers
                 Applicant = user,
                 IdProofUrl = application.IdProofUrl,
                 ResidenceProof = application.ResidencyProofUrl,
-                ApplicationDate = application.ApplicationDate
+                ApplicationDate = application.ApplicationDate,
+                RejectMessage = application.RejectMessage
             };
 
             return View(vm);
@@ -157,7 +231,7 @@ namespace COHApp.Controllers
             return View();
         }
 
-        private string ProcessUploadedImage(IFormFile Image, string Owner)
+        private string ProcessUploadedImage(IFormFile Image)
         {
             string uniqueFileName = null;
 
