@@ -24,8 +24,6 @@ namespace BataCMS.Data
                 .HasIndex(b => b.CategoryName).IsUnique(true);
             modelBuilder.Entity<ApplicationUser>().HasAlternateKey(p => new { p.IDNumber, p.PhoneNumber}); 
 
-            modelBuilder.Entity<RentalAsset>().Property(e => e.OptionFormData).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-
             modelBuilder.Entity<CheckoutItem>().Property(e => e.selectedOptions).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
 
             modelBuilder.Entity<PurchasedItem>().Property(e => e.selectedOptionData).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));

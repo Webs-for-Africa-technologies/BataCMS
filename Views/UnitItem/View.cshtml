@@ -39,10 +39,7 @@
 <script>
     jQuery(function ($) {
 
-        $('.render-wrap').formRender({
-            dataType: 'json',
-            formData: @Html.Raw(Model.OptionFormData)
-        });
+
 
         $("#addToCartBtn").click(function (e) {
             // Stop the normal navigation

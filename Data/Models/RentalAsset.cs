@@ -1,7 +1,9 @@
 ﻿using BataCMS.Data.Interfaces;
+using COHApp.Data.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,7 +36,7 @@ namespace BataCMS.Data.Models
 
         public string Description { get; set; }
 
-        public string OptionFormData { get; set; }
+        public List<Image> Images { get; set; }
 
     }
 }

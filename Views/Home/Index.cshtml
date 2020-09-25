@@ -80,6 +80,16 @@
 
                                         }
 
+                                        @if (User.IsInRole("Employee"))
+                                        {
+                                            <a asp-action="Create" asp-controller="RentalAsset" class="elementor-button-link elementor-button elementor-size-md" role="button">
+                                                <span class="elementor-button-content-wrapper">
+                                                    <span class="elementor-button-text" data-elementor-setting-key="text" data-elementor-inline-editing-toolbar="none">Add Create</span>
+                                                </span>
+                                            </a>
+
+                                        }
+
                                     </div>
                                 </div>
                             </div>

@@ -52,6 +52,8 @@ namespace BataCMS
             services.AddTransient<IPurchasePayementMethodRepository, PurchasePaymentMethodRepository>();
             services.AddTransient<IPurchasedItemRepository, PurchasedItemRepository>();
             services.AddTransient<IVendorApplicaitonRepository, VendorApplicationRepository>();
+            services.AddTransient<IRentalAssetRepository, RentalAssetRepository>();
+
 
 
             services.AddSignalR();

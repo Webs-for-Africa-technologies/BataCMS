@@ -1,0 +1,136 @@
+﻿@model COHApp.ViewModels.EditRentalAssetViewModel
+@{
+    ViewBag.Title = "Edit Rental Asset";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Rental Asset</title>
+</head>
+<body>
+
+    <div class="container">
+        x
+        <form enctype="multipart/form-data" asp-controller="RentalAsset" asp-action="Edit" method="post" class="mt-3">
+
+            <input type="hidden" asp-for="RentalAssetId" />
+            <input type="hidden" asp-for="ExistingImagePath" />
+            <input type="hidden" asp-for="ExistingImages" />
+
+
+            <div class="form-group row">
+                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Price" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Price" class="form-control" placeholder="Price" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Location" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Location" class="form-control" placeholder="Price" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group row">
+                <label asp-for="Category" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="Category" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["categories"])">
+                        <option value="">Select One</option>
+                    </select>
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Images" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="custom-file">
+                        <input multiple asp-for="Images" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Replace Images</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="IsAvailable" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-1">
+                    <input asp-for="IsAvailable" class="form-control" placeholder="InStock" />
+                    <span asp-validation-for="IsAvailable" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row col-sm-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="@Model.ExistingImagePath" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                </div>
+            </div>
+            @foreach (var item in Model.ExistingImages)
+            {
+                <div class="form-group row col-sm-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@item.ImageUrl" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                    </div>
+                </div>
+
+            }
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-controller="RentalAsset" asp-action="List" class="btn btn-primary">Cancel</a>
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </form>
+
+        <form asp-action="DeleteItem" asp-route-id="@Model.RentalAssetId" method="post">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to PERMANENTLY delete the Rental Asset: @Model.Name')">Delete Asset</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var filelabel = $(this).next('.custom-file-label');
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    filelabel.html(files.length + "files selected");
+                } else if (files.lenght == 1) {
+                    var fileName = files[0].name.val().split('\\').pop();
+                    fileLabel.html(fileName)
+                }
+            });
+        })
+    </script>
+}
+
+

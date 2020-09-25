@@ -85,7 +85,6 @@ namespace BataCMS.Controllers
                     DateModified = DateTime.Today,
                     CategoryId = category.CategoryId,
                     ImageUrl = photoPath,
-                    OptionFormData = model.OptionFormData,
                     Description = model.Description
                 };
 
@@ -116,7 +115,6 @@ namespace BataCMS.Controllers
                 InStock = unitItem.IsAvailable,
                 Category = category.CategoryName,
                 ExistingImagePath = unitItem.ImageUrl,
-                OptionFormData = unitItem.OptionFormData,
                 Description = unitItem.Description
             };
             return View(editUnitItemViewModel);
@@ -136,7 +134,6 @@ namespace BataCMS.Controllers
                 unitItem.Price = model.Price;
                 unitItem.CategoryId = category.CategoryId;
                 unitItem.IsAvailable = model.InStock;
-                unitItem.OptionFormData = model.OptionFormData; 
                 unitItem.DateModified = DateTime.Today;
                 unitItem.Description = model.Description;
 
