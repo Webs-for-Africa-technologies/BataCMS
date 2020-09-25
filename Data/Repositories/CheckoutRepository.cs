@@ -1,5 +1,6 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
+using COHApp.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

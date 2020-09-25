@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BataCMS.Data;
 using Microsoft.AspNetCore.Http;
 using System.Drawing;
+using COHApp.Data.Interfaces;
+using COHApp.Data.Models;
 
 namespace BataCMS.Controllers
 {

@@ -7,6 +7,8 @@ using BataCMS.Data.Models;
 using BataCMS.Data.Repositories;
 using BataCMS.Infrastructure;
 using BataCMS.ViewModels;
+using COHApp.Data.Interfaces;
+using COHApp.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;

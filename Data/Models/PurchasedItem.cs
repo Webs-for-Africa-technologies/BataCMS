@@ -1,4 +1,5 @@
-﻿using System;
+﻿using COHApp.Data.Models;
+using System;
 using System.Collections.Generic;
 
 namespace BataCMS.Data.Models

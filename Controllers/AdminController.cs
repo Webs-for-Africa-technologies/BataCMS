@@ -2,6 +2,9 @@
 using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
 using BataCMS.ViewModels;
+using COHApp.Data.Interfaces;
+using COHApp.Data.Models;
+using COHApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BataCMS.Controllers
+namespace COHApp.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller

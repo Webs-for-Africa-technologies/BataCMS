@@ -1,5 +1,5 @@
-﻿using BataCMS.Data.Interfaces;
-using BataCMS.Data.Models;
+﻿using COHApp.Data.Interfaces;
+using COHApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
