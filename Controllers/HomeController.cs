@@ -18,15 +18,16 @@ namespace BataCMS.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUnitItemRepository _unitItemRepository;
+
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IRentalAssetRepository _rentalAssetRepository;
 
 
 
-        public HomeController(IUnitItemRepository unitItem, ICategoryRepository categoryRepository)
-        {
-            _unitItemRepository = unitItem;
+        public HomeController( ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
+        {;
             _categoryRepository = categoryRepository;
+            _rentalAssetRepository = rentalAssetRepository; 
         }
         public ViewResult Index(string category)
         {
@@ -35,11 +36,11 @@ namespace BataCMS.Controllers
 
             if (string.IsNullOrEmpty(category))
             {
-                rentalAssets = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName == "Food");
+                rentalAssets = _rentalAssetRepository.rentalAssets.Where(p => p.Category.CategoryName == "Mbare Musika");
             }
             else
             {
-                rentalAssets = _unitItemRepository.unitItems.Where(p => p.Category.CategoryName.Equals(_category));
+                rentalAssets = _rentalAssetRepository.rentalAssets.Where(p => p.Category.CategoryName.Equals(_category));
             }
 
             var homeViewModel = new HomeViewModel

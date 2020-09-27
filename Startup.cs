@@ -38,18 +38,11 @@ namespace BataCMS
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddIdentityCore<VendorUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
-            services.AddScoped<Checkout>();
-            services.AddScoped<CurrentCurrency>();
 
 
-            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
-            services.AddTransient<ICheckoutRepository, CheckoutRepository>();
-            services.AddTransient<IUnitItemRepository, UnitItemRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IPurchaseRepository, PurchaseRepository>();
             services.AddTransient<IPaymentMethodRepository, PaymentMethodRepository>();
-            services.AddTransient<IPurchasePayementMethodRepository, PurchasePaymentMethodRepository>();
-            services.AddTransient<IPurchasedItemRepository, PurchasedItemRepository>();
+            services.AddTransient<IPurchasePayementMethodRepository, PurchasePaymentMethodRepository>();;
             services.AddTransient<IVendorApplicaitonRepository, VendorApplicationRepository>();
             services.AddTransient<IRentalAssetRepository, RentalAssetRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();
@@ -66,8 +59,7 @@ namespace BataCMS
             services.AddMemoryCache();
 
             services.AddHttpContextAccessor();
-            services.AddScoped(sp => Checkout.GetCart(sp));
-            services.AddScoped(sp => CurrentCurrency.GetCurrentCurrency(sp));
+
 
             services.AddSession();
 

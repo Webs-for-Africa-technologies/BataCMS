@@ -57,7 +57,6 @@
 
 
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome @UserManager.GetUserName(User)</a>
-                @await Component.InvokeAsync("CheckoutSummary")
                 @await Html.PartialAsync("LoginPartial")
             </div>
         </nav>

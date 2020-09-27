@@ -1,6 +1,5 @@
 ﻿using BataCMS.Data.Interfaces;
 using BataCMS.Data.Models;
-using BataCMS.Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

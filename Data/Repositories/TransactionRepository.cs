@@ -13,15 +13,11 @@ namespace BataCMS.Data.Repositories
     public class TransactionRepository : ITransactionRepository
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ICheckoutRepository _checkoutRepository;
-        private readonly ICurrencyRepository _currencyRepository;
 
 
-        public TransactionRepository(AppDbContext appDbContext, ICheckoutRepository checkoutRepository, ICurrencyRepository currencyRepository, IHubContext<SignalServer> hubContext)
+        public TransactionRepository(AppDbContext appDbContext, IHubContext<SignalServer> hubContext)
         {
             _appDbContext = appDbContext;
-            _checkoutRepository = checkoutRepository;
-            _currencyRepository = currencyRepository;
         }
 
         public IEnumerable<Transaction> Purchases => _appDbContext.Transactions.Include(p => p.Lease).OrderByDescending(p => p.TransactionDate);

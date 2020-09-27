@@ -57,7 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\ViewModels\" />
     <Folder Include="wwwroot\dist\" />
     <Folder Include="wwwroot\images\applications\" />
     <!-- extends watching group to include *.js files -->

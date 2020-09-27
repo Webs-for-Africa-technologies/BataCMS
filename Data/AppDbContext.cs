@@ -24,26 +24,16 @@ namespace BataCMS.Data
                 .HasIndex(b => b.CategoryName).IsUnique(true);
             modelBuilder.Entity<ApplicationUser>().HasAlternateKey(p => new { p.IDNumber, p.PhoneNumber}); 
 
-            modelBuilder.Entity<CheckoutItem>().Property(e => e.selectedOptions).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-
-            modelBuilder.Entity<PurchasedItem>().Property(e => e.selectedOptionData).HasConversion(v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), v => JsonConvert.DeserializeObject<string>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-
         }
 
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<RentalAsset> RentalAssets { get; set; }
-        public DbSet<CheckoutItem> CheckoutItems { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<PurchasedItem> PurchasedItems { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Lease> Leases { get; set; }
-        public DbSet<Currency> Currencies { get; set; }
         public DbSet<VendorUser> VendorUsers { get; set; }
         public DbSet<VendorApplication> VendorApplications { get; set; }
-
-
-
 
     }
 }

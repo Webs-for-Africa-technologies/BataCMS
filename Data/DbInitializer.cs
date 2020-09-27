@@ -26,12 +26,6 @@ namespace BataCMS.Data
                 context.PaymentMethods.AddRange(PaymentMethods.Select(c => c.Value));
             }
 
-            if (!context.Currencies.Any())
-            {
-                context.Currencies.AddRange(Currencies.Select(c => c.Value));
-            }
-
-
             if (!context.RentalAssets.Any())
             {
                 context.AddRange
@@ -96,30 +90,5 @@ namespace BataCMS.Data
             }
         }
 
-
-        private static Dictionary<string, Currency> currencies;
-        public static Dictionary<string, Currency> Currencies
-        {
-            get
-            {
-                if (currencies == null)
-                {
-                    var genresList = new Currency[]
-                    {
-                        new Currency { CurrencyName = "USD", Rate = 1M, isCurrent = true},
-                        new Currency { CurrencyName = "ZWL", Rate = 100M, isCurrent = false},
-                    };
-
-                    currencies = new Dictionary<string, Currency>();
-
-                    foreach (Currency genre in genresList)
-                    {
-                        currencies.Add(genre.CurrencyName, genre);
-                    }
-                }
-                return currencies;
-
-            }
-        }
     }
 }

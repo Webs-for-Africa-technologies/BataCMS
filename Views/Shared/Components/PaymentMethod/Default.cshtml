@@ -1,13 +1,7 @@
 ﻿@model PaymentMethod
-@inject BataCMS.Data.Interfaces.ICurrencyRepository currency
 
 <div class="form-group">
     <div class="row">
-        <div class="col-md-5 mb-3">
-            <label asp-for="PaymentMethodName">Payment Method</label>
-            <input asp-for="PaymentMethodName" class="form-control" type="text" value="@currency.GetCurrentCurrency().CurrencyName" placeholder ="@currency.GetCurrentCurrency().CurrencyName" readonly>
-            <span asp-validation-for="PaymentMethodName" class="text-danger"></span>
-        </div>
 
         <div class="col-md-3 mb-3">
             <label asp-for="AmountPaid">Amount</label>

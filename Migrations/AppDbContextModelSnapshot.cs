@@ -106,54 +106,6 @@ namespace BataCMS.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("BataCMS.Data.Models.CheckoutItem", b =>
-                {
-                    b.Property<int>("CheckoutItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CheckoutId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RentalAssetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("selectedOptions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CheckoutItemId");
-
-                    b.HasIndex("RentalAssetId");
-
-                    b.ToTable("CheckoutItems");
-                });
-
-            modelBuilder.Entity("BataCMS.Data.Models.Currency", b =>
-                {
-                    b.Property<int>("CurrencyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CurrencyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("isCurrent")
-                        .HasColumnType("bit");
-
-                    b.HasKey("CurrencyId");
-
-                    b.ToTable("Currencies");
-                });
-
             modelBuilder.Entity("BataCMS.Data.Models.Lease", b =>
                 {
                     b.Property<int>("LeaseId")
@@ -200,38 +152,6 @@ namespace BataCMS.Migrations
                     b.HasKey("PaymentMethodId");
 
                     b.ToTable("PaymentMethods");
-                });
-
-            modelBuilder.Entity("BataCMS.Data.Models.PurchasedItem", b =>
-                {
-                    b.Property<int>("PurchasedItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("RentalAssetId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("selectedOptionData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("unitItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PurchasedItemId");
-
-                    b.HasIndex("RentalAssetId");
-
-                    b.ToTable("PurchasedItems");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.RentalAsset", b =>
@@ -539,17 +459,10 @@ namespace BataCMS.Migrations
                     b.Property<string>("PhotoIDUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VendorUserId")
+                    b.Property<int?>("VendorUserId")
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("VendorUser");
-                });
-
-            modelBuilder.Entity("BataCMS.Data.Models.CheckoutItem", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.RentalAsset", "RentalAsset")
-                        .WithMany()
-                        .HasForeignKey("RentalAssetId");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.Lease", b =>
@@ -559,13 +472,6 @@ namespace BataCMS.Migrations
                         .HasForeignKey("RentalAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BataCMS.Data.Models.PurchasedItem", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.RentalAsset", "RentalAsset")
-                        .WithMany()
-                        .HasForeignKey("RentalAssetId");
                 });
 
             modelBuilder.Entity("BataCMS.Data.Models.RentalAsset", b =>

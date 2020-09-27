@@ -22,18 +22,16 @@ namespace COHApp.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly ICurrencyRepository _currencyRepository;
-        private readonly IUnitItemRepository _unitItemRepository;
+        private readonly IRentalAssetRepository _rentalAssetRepository;
 
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, ICurrencyRepository currencyRepository, IUnitItemRepository unitItemRepository)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _categoryRepository = categoryRepository;
-            _currencyRepository = currencyRepository;
-            _unitItemRepository = unitItemRepository; 
+            _rentalAssetRepository = rentalAssetRepository; 
         }   
 
         [HttpGet]
@@ -116,7 +114,7 @@ namespace COHApp.Controllers
                 return View("NotFound");
             }
 
-            IEnumerable<RentalAsset> unitItems = _unitItemRepository.unitItems.Where(p => p.CategoryId == _categoryId);
+            IEnumerable<RentalAsset> unitItems = _rentalAssetRepository.rentalAssets.Where(p => p.CategoryId == _categoryId);
 
             var model = new EditCategoryViewModel
             {
@@ -373,117 +371,6 @@ namespace COHApp.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> AddCurrencyAsync(AddCurrencyViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                Currency currency = new Currency
-                {
-                    CurrencyName = model.CurrencyName,
-                    Rate = model.Rate
-                };
-
-                var existingCurrency = await _currencyRepository.GetCurrencyByNameAsync(model.CurrencyName);
-
-                if (existingCurrency == null)
-                {
-                    await _currencyRepository.AddCurrencyAsync(currency);
-                    return RedirectToAction("Index", "Home");
-
-                }
-                else
-                {
-                    ModelState.AddModelError("", "The Currency already exists");
-                }
-
-            }
-            return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult ListCurrencies()
-        {
-            var currencies = _currencyRepository.Currencies;
-            return View(currencies);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditCurrencyAsync(int id)
-        {
-            var currency = await _currencyRepository.GetCurrencyByIdAsync(id);
-
-            if (currency == null)
-            {
-                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
-                return View("NotFound");
-            }
-
-
-            var model = new EditCurrencyViewModel
-            {
-                Id = currency.CurrencyId,
-                CurrencyName = currency.CurrencyName,
-                Rate = currency.Rate
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditCurrencyAsync(EditCurrencyViewModel model)
-        {
-            var currency = await _currencyRepository.GetCurrencyByIdAsync(model.Id);
-
-            if (currency == null)
-            {
-                ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-                currency.CurrencyName = model.CurrencyName;
-                currency.Rate = model.Rate;
-
-                if (model.IsActive == true)
-                {
-                    await _currencyRepository.SetCurrentCurrencyAsync(currency);
-                }
-
-                await _currencyRepository.UpdateCurrencyAsync(currency);
-
-                return RedirectToAction("ListCurrencies", "Admin");
-            }
-        }
-
-        public async Task<IActionResult> DeleteCurrencyAsync(int id)
-        {
-            var currency = await _currencyRepository.GetCurrencyByIdAsync(id);
-
-            if (currency == null)
-            {
-                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-                if (currency.isCurrent == true)
-                {
-                    ViewBag.ErrorMessage = $"You cannot delete the currency {currency.CurrencyName}, the currency is currently active";
-                    return View("NotFound");
-
-                }
-                else
-                {
-                    await _currencyRepository.DeleteCurrencyAsync(currency);
-                    return RedirectToAction("ListCurrencies");
-
-                }
-
-            }
-        }
-
-
 
     }
 
