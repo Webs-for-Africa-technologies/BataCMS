@@ -25,7 +25,7 @@ namespace BataCMS.Data.Repositories
             _hubContext = hubContext;
         }
 
-        public IEnumerable<Transaction> Purchases => _appDbContext.Transactions.Include(p => p.Rental).OrderByDescending(p => p.TransactionDate);
+        public IEnumerable<Transaction> Purchases => _appDbContext.Transactions.Include(p => p.Lease).OrderByDescending(p => p.TransactionDate);
 
         public async Task CreatePurchaseAsync(Transaction purchase)
         {
@@ -75,7 +75,7 @@ namespace BataCMS.Data.Repositories
 
         public async Task<Transaction> GetPurchaseByIdAsync(int purchaseId)
         {
-            return await _appDbContext.Transactions.Include(p => p.Rental).FirstOrDefaultAsync(p => p.TransactionId == purchaseId);
+            return await _appDbContext.Transactions.Include(p => p.Lease).FirstOrDefaultAsync(p => p.TransactionId == purchaseId);
         }
 
         public async Task UpdatePurchaseAsync(Transaction purchase)

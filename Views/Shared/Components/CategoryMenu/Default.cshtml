@@ -4,11 +4,11 @@
     <div class="dropdown-menu">
         @foreach (var category in Model)
         {
-            <a class="dropdown-item" asp-controller="Home" asp-action="Index"asp-route-category="@category.CategoryName">@category.CategoryName</a>
+            <a class="dropdown-item" asp-controller="RentalAsset" asp-action="List"asp-route-category="@category.CategoryName">@category.CategoryName</a>
             
         }
         <a class="divider"></a>
-        <a class="dropdown-item" asp-controller="UnitItem" asp-action="List" asp-route-category="">Show all Items</a>
+        <a class="dropdown-item" asp-controller="RentalAsset" asp-action="List" asp-route-category="">Show all Items</a>
 
         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
         {

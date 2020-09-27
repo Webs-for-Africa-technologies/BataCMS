@@ -8,7 +8,7 @@ namespace COHApp.Data.Models
 {
     public class VendorUser : ApplicationUser
     {
-        public int VendorUserId { get; set; }
+        public int? VendorUserId { get; set; }
         public int CardNumber { get; set; }
         public string PhotoIDUrl { get; set; }
     }

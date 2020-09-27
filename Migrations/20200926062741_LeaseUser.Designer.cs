@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200926062741_LeaseUser")]
+    partial class LeaseUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +282,7 @@ namespace BataCMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("LeaseId")
+                    b.Property<int?>("RentalAssetId")
                         .HasColumnType("int");
 
                     b.Property<string>("ServerName")
@@ -309,7 +311,7 @@ namespace BataCMS.Migrations
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("LeaseId");
+                    b.HasIndex("RentalAssetId");
 
                     b.ToTable("Transactions");
                 });
@@ -579,9 +581,9 @@ namespace BataCMS.Migrations
 
             modelBuilder.Entity("BataCMS.Data.Models.Transaction", b =>
                 {
-                    b.HasOne("BataCMS.Data.Models.Lease", "Lease")
+                    b.HasOne("BataCMS.Data.Models.RentalAsset", "Rental")
                         .WithMany()
-                        .HasForeignKey("LeaseId");
+                        .HasForeignKey("RentalAssetId");
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.Image", b =>

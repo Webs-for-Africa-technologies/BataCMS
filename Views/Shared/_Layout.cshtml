@@ -54,6 +54,17 @@
                             <a class="nav-link" asp-action="List" asp-controller="RentalAsset">List Assets</a>
                         </li>
                     }
+
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="List" asp-controller="RentalAsset">List Assets</a>
+                        </li>
+                    }
+
+
                     <li class="nav-item">
                         <a class="nav-link" asp-action="Index" asp-controller="Contact">Contact</a>
                     </li>

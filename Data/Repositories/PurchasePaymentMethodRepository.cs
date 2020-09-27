@@ -25,7 +25,7 @@ namespace BataCMS.Data.Repositories
 
         public Lease GetPurchasePaymentMethodByPurchaseId(int purchaseId)
         {
-            return _appDbContext.Leases.FirstOrDefault(p => p.VendorUserId == purchaseId);
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model COHApp.ViewModels.TransactionCheckoutViewModel
+
+<div class="orderForm container">
+    <h3 class="text-center">Just one more step</h3>
+    <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+            <div class="col-md-3">
+                <input asp-for="LeaseId" class="form-control" type="text" value="@ViewBag.leaseId" hidden>
+                <span asp-validation-for="LeaseId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                <label asp-for="TransactionNotes" class="col-sm-2 col-form-label"></label>
+                <textarea asp-for="TransactionNotes" class="form-control"></textarea>
+                <span asp-validation-for="TransactionNotes" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="btn-group col-md-offset-2 col-md-8">
+                <input class="btn btn-success" type="submit" value="Complete order" />
+                <input class="btn btn-primary-outline" value="Cancel" onclick="location.href='@Url.Action("Index","Checkout")'" />
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </form>
+
+</div>

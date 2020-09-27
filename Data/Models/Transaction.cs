@@ -37,7 +37,7 @@ namespace BataCMS.Data.Models
         [Display(Name ="Confirm Delivery")]
         public bool isDelivered { get; set; }
 
-        public RentalAsset Rental { get; set; }
+        public Lease Lease { get; set; }
 
 
     }

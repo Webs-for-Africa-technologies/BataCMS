@@ -29,6 +29,12 @@
                             <div class="elementor-widget-container">
                                 <div class="elementor-text-editor elementor-clearfix" data-elementor-setting-key="editor" data-elementor-inline-editing-toolbar="advanced">
                                     <a id="cartButton" asp-controller="RentalAsset" asp-action="View" asp-route-itemId="@Model.RentalAssetId" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
+                                    {
+                                        <br /><a asp-action="MakeBooking" asp-controller="Lease" asp-route-rentalAssetId="@Model.RentalAssetId" type="button" class="btn btn-sm btn-outline-secondary"> Make A Booking</a>
+
+                                    }
+
                                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee"))
                                     {
                                         <br /><a asp-action="Edit" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>

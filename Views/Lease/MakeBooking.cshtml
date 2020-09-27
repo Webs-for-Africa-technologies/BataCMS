@@ -1,0 +1,66 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model Lease
+
+
+<div class="orderForm container">
+    <h3 class="text-center">Just one more step</h3>
+    <form asp-action="MakeBooking" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+            <div class="col-md-3">
+                <input asp-for="UserId" class="form-control" type="text" value="@UserManager.GetUserId(User)" placeholder="@UserManager.GetUserName(User)" hidden>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                <input asp-for="RentalAssetId" class="form-control" type="text" value="@ViewBag.RentalAssetId" placeholder="" hidden>
+                <span asp-validation-for="RentalAssetId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.leaseFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.leaseFrom, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <span asp-validation-for="leaseFrom" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.leaseTo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.leaseTo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <span asp-validation-for="leaseTo" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="btn-group col-md-offset-2 col-md-8">
+                <input class="btn btn-success" type="submit" value="Complete Complete" />
+                <input class="btn btn-primary-outline" value="Cancel" onclick="location.href='@Url.Action("Index","Checkout")'" />
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </form>
+
+</div>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#FromDatePicker").datepicker();
+            $("#ToDataPicker").datepicker();
+
+        });
+    </script>
+}

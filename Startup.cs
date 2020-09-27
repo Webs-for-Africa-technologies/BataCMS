@@ -16,6 +16,7 @@ using BataCMS.ViewModels;
 using BataCMS.Infrastructure;
 using COHApp.Data.Interfaces;
 using COHApp.Data.Repositories;
+using COHApp.Data.Models;
 
 namespace BataCMS
 {
@@ -33,11 +34,9 @@ namespace BataCMS
         }
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             //Server configuration 
-
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentityCore<VendorUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
             services.AddScoped<Checkout>();
             services.AddScoped<CurrentCurrency>();
@@ -53,6 +52,10 @@ namespace BataCMS
             services.AddTransient<IPurchasedItemRepository, PurchasedItemRepository>();
             services.AddTransient<IVendorApplicaitonRepository, VendorApplicationRepository>();
             services.AddTransient<IRentalAssetRepository, RentalAssetRepository>();
+            services.AddTransient<ITransactionRepository, TransactionRepository>();
+            services.AddTransient<ILeaseRepository, LeaseRepository>();
+
+
 
 
 

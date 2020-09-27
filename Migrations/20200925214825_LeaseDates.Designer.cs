@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200924204626_RentalAssetImages")]
-    partial class RentalAssetImages
+    [Migration("20200925214825_LeaseDates")]
+    partial class LeaseDates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,28 +108,6 @@ namespace BataCMS.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("BataCMS.Data.Models.Category", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CategoryId");
-
-                    b.HasIndex("CategoryName")
-                        .IsUnique();
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("BataCMS.Data.Models.CheckoutItem", b =>
                 {
                     b.Property<int>("CheckoutItemId")
@@ -190,6 +168,12 @@ namespace BataCMS.Migrations
 
                     b.Property<int>("VendorUserId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("leaseFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("leaseTo")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("LeaseId");
 
@@ -330,6 +314,28 @@ namespace BataCMS.Migrations
                     b.HasIndex("RentalAssetId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("COHApp.Data.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("CategoryName")
+                        .IsUnique();
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.Image", b =>
@@ -566,7 +572,7 @@ namespace BataCMS.Migrations
 
             modelBuilder.Entity("BataCMS.Data.Models.RentalAsset", b =>
                 {
-                    b.HasOne("BataCMS.Data.Models.Category", "Category")
+                    b.HasOne("COHApp.Data.Models.Category", "Category")
                         .WithMany("itemList")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RentalAsset = BataCMS.Data.Models.RentalAsset;
+using Category = COHApp.Data.Models.Category;
 
 namespace BataCMS.Data
 {
