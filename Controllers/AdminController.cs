@@ -8,6 +8,7 @@ using COHApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace COHApp.Controllers
 
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> roleAddedUser, UserManager<ApplicationUser> roleRemovedUser, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -198,23 +199,47 @@ namespace COHApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ManageUserAsync(EditUserViewModel model)
         {
-            var user = _userManager.FindByIdAsync(model.Id);
+            var user = _userManager.FindByIdAsync(model.Id).GetAwaiter().GetResult();
 
             if (user == null )
             {
                 ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
                 return View("NotFound");
             }
+            
             else
             {
-                user.Result.UserName = model.UserName;
-                user.Result.PhoneNumber = model.Number;
 
-                var result = await _userManager.UpdateAsync(user.Result);
+                //add a user to a role
+                IdentityResult roleResult = null;
+                if (model.AddedRole != null)
+                {
+                    var addedRole = _roleManager.FindByIdAsync(model.AddedRole).GetAwaiter().GetResult();
+                    roleResult = await _userManager.AddToRoleAsync(user, addedRole.Name);
+                }
+
+                //remove user from role
+                if (model.RemovedRole != null)
+                {
+                    var removedRole = _roleManager.FindByNameAsync(model.RemovedRole).GetAwaiter().GetResult();
+                    roleResult = await _userManager.RemoveFromRoleAsync(user, removedRole.Name);
+                }
+
+                user.UserName = model.UserName;
+                user.PhoneNumber = model.Number;
+
+                var result = await _userManager.UpdateAsync(user);
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ListUsers",  "Admin");
+                    if (roleResult.Succeeded)
+                    {
+                        return RedirectToAction("ListUsers", "Admin");
+                    }
+                    foreach (var error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
                 foreach (var error in result.Errors)
                 {
@@ -230,113 +255,40 @@ namespace COHApp.Controllers
         {
             var user = _userManager.FindByIdAsync(id);
 
+            this.ViewData["availableRoles"] = _roleManager.Roles.Select(x => new SelectListItem
+            {
+                Value = x.Id,
+                Text = x.Name
+            }).ToList();
+
             if (user == null)
             {
                 ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
                 return View("NotFound");
             }
 
-            var userRoles = await _userManager.GetRolesAsync(user.Result);
+            var currentRoles = await _userManager.GetRolesAsync(user.GetAwaiter().GetResult());
+
+            this.ViewData["currentRoles"] = currentRoles.Select(x => new SelectListItem
+            {
+                Value = x,
+                Text = x
+            }).ToList();
 
             var model = new EditUserViewModel
             {
                 Id = user.Result.Id,
-                UserName = user.Result.UserName,
+                UserName = user.Result.UserName,    
                 FirstName = user.Result.FirstName,
                 LastName = user.Result.LastName,
                 IdNumber = user.Result.IDNumber,
                 Number = user.Result.PhoneNumber,
-                Roles = userRoles
+                Roles = currentRoles
             };
             return View(model);
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> AddOrRemoveUsers(string roleId)
-        {
-            ViewBag.roleId = roleId;
-
-            var role = _roleManager.FindByIdAsync(roleId);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"The Role with roleId = {roleId} cannot be found";
-                return View("Not found");
-            }
-
-            var model = new List<UserRoleViewModel>();
-
-            var AllUser = _userManager.Users;
-            var UserInThisRole = await _userManager.GetUsersInRoleAsync(role.Result.Name);
-
-            foreach (var user in AllUser)
-            {
-                var userRoleViewModel = new UserRoleViewModel
-                { 
-                    UserId = user.Id,
-                    UserName = user.UserName,
-                    IsSelected = false
-
-                };
-                if (UserInThisRole.Any(p=>p.Id == userRoleViewModel.UserId))
-                {
-                    userRoleViewModel.IsSelected = true;
-                }
-                model.Add(userRoleViewModel);
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddOrRemoveUsers(List<UserRoleViewModel> model, string roleId) 
-        {
-            var role = _roleManager.FindByIdAsync(roleId);
-
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"The Role with roleId = {roleId} cannot be found";
-                return View("Not found");
-            }
-
-            for (int i = 0; i < model.Count; i++)
-            {
-                var user = await _userManager.FindByIdAsync(model[i].UserId);
-
-                IdentityResult result = null;
-
-                if (model[i].IsSelected && !(await _userManager.IsInRoleAsync(user, role.Result.Name)))
-                {
-                    result = await _userManager.AddToRoleAsync(user, role.Result.Name);
-                }
-                else if (!model[i].IsSelected && await _userManager.IsInRoleAsync(user, role.Result.Name))
-                {
-                    result = await _userManager.RemoveFromRoleAsync(user, role.Result.Name);
-
-                }
-                else
-                {
-                    continue;
-                }
-
-                if (result.Succeeded)
-                {
-                    if (i < (model.Count - 1))
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        return RedirectToAction("ListRoles");   
-                    }
-                }
-
-            }
-
-            return RedirectToAction("ListRoles");
-
-            }
 
         
         public async Task<IActionResult> DeleteUserAsync(string id)

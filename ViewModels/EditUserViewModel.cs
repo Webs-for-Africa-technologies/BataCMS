@@ -27,6 +27,12 @@ namespace BataCMS.ViewModels
 
         public string Number { get; set; }
 
+        [Display(Name = "Add to Role")]
+        public string AddedRole { get; set; }
+
+        [Display(Name = "Remove From Role")]
+        public string RemovedRole { get; set; }
+
         public IList<string> Roles { get; set; }
 
     }
