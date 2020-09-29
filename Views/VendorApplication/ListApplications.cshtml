@@ -7,59 +7,54 @@
     <title>Pending Applications</title>
 </head>
 
-<main role="main">
-    <div class="container">
+<div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Applications from...</button>
 
-        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Applications from...</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="hour">Last hour</a>
+                    <a class="divider"></a>
+                    <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="day">Last Day...</a>
+                    <a class="divider"></a>
+                    <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="week">Last Week...</a>
+                    <a class="divider"></a>
+                    <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="all">All</a>
+                </div>
 
-        <div class="dropdown-menu">
-            <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="hour">Last hour</a>
-            <a class="divider"></a>
-            <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="day">Last Day...</a>
-            <a class="divider"></a>
-            <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="week">Last Week...</a>
-            <a class="divider"></a>
-            <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="all">All</a>
-        </div>
-
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Application ID</th>
-                    <th>Applicant Name</th>
-                    <th class="text-right">Application Date</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Applications.Any())
-                {
-                    @foreach (var line in Model.Applications)
-                    {
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td class="text-center">@line.VendorApplicationId</td>
-                            <td class="text-left">@line.ApplicantName</td>
-                            <td class="text-right">
-                                @line.ApplicationDate)
-                            </td>
-                            <td class="text-center"><a class="btn btn-primary" asp-controller="VendorApplication" asp-action="ViewApplication" asp-route-applicationId="@line.VendorApplicationId"> View</a></td>
+                            <th>Application ID</th>
+                            <th>Applicant Name</th>
+                            <th class="text-right">Application Date</th>
+                            <th></th>
                         </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td class="text-center">No Applications Made Yet</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</main>
-
-<script src="~/lib/jquery/jquery.js"></script>
-
-@section Scripts{
-
-}
+                    </thead>
+                    <tbody>
+                        @if (Model.Applications.Any())
+                        {
+                            @foreach (var line in Model.Applications)
+                            {
+                                <tr>
+                                    <td class="text-center">@line.VendorApplicationId</td>
+                                    <td class="text-left">@line.ApplicantName</td>
+                                    <td class="text-right">
+                                        @line.ApplicationDate)
+                                    </td>
+                                    <td class="text-center"><a class="btn btn-primary" asp-controller="VendorApplication" asp-action="ViewApplication" asp-route-applicationId="@line.VendorApplicationId"> View</a></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="text-center">No Applications Made Yet</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
 

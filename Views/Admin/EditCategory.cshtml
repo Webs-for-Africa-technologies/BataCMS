@@ -7,64 +7,68 @@
     <title>Manage Category</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Manage Category</h1>
+    <div id="main">
+        <div class="wrapper">
+            <div class="inner">
+                <h1>Manage Category</h1>
 
-        <form class="mt-3" method="post">
-            <div class="form-group row">
-                <label asp-for="Id" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Id" disabled class="form-control" />
+                <form class="mt-3" method="post">
+                    <div class="field">
+                        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Id" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label asp-for="CategoryName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="CategoryName" class="form-control" />
+                            <span asp-validation-for="CategoryName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <ul class="actions">
+                            <li><button type="submit" class="btn button special">Update</button></li>
+                            <li><a asp-action="ListCategories" class="btn button">Cancel</a></li>
+                        </ul>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </form>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Items in Category</h3>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.ItemList.Any())
+                        {
+                            foreach (var item in Model.ItemList)
+                            {
+                                <h5 class="card-title">@item.Name</h5>
+                            }
+                        }
+                        else
+                        {
+                            <h5 class="card-title">The Category has no Items </h5>
+                            <form asp-action="DeleteCategory" asp-route-id="@Model.Id" method="post">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the category: @Model.CategoryName')">Delete Category</button>
+                            </form>
+                        }
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label asp-for="CategoryName" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="CategoryName" class="form-control" />
-                    <span asp-validation-for="CategoryName" class="text-danger"></span>
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <label asp-for="Description" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a asp-action="ListCategories" class="btn btn-primary">Cancel</a>
-                </div>
-            </div>
-
-            <div asp-validation-summary="All" class="text-danger"></div>
-        </form>
-
-        <div class="card">
-            <div class="card-header">
-                <h3>Items in Category</h3>
-            </div>
-            <div class="card-body">
-                @if (Model.ItemList.Any())
-                {
-                    foreach (var item in Model.ItemList)
-                    {
-                        <h5 class="card-title">@item.Name</h5>
-                    }
-                }
-                else
-                {
-                    <h5 class="card-title">The Category has no Items </h5>
-                    <form asp-action="DeleteCategory" asp-route-id="@Model.Id" method="post">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the category: @Model.CategoryName')">Delete Category</button>
-                    </form>
-                }
-            </div>
         </div>
-
     </div>
 </body>
 </html>

@@ -11,75 +11,79 @@
 </head>
 <body>
 
-    <div class="container">
-        <form enctype="multipart/form-data" asp-controller="VendorApplication" asp-action="edit" method="post" class="mt-3">
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <form enctype="multipart/form-data" asp-controller="VendorApplication" asp-action="edit" method="post" class="mt-3">
 
-            <input type="hidden" asp-for="VendorApplicationId" />
-            <input type="hidden" asp-for="ExitingIdProofURL" />
-            <input type="hidden" asp-for="ExistingResidencyProofURL" />
-
-
-            <div class="form-group row">
-                <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="FullName" class="form-control" placeholder="Name" />
-                    <span asp-validation-for="FullName" class="text-danger"></span>
-                </div>
-            </div>
+                    <input type="hidden" asp-for="VendorApplicationId" />
+                    <input type="hidden" asp-for="ExitingIdProofURL" />
+                    <input type="hidden" asp-for="ExistingResidencyProofURL" />
 
 
-
-            <div class="form-group row">
-                <label asp-for="IdProof" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="custom-file">
-                        <input asp-for="IdProof" class="form-control custom-file-input" />
-                        <label class="custom-file-label">Click here to change Proof of Identity</label>
+                    <div class="field first half">
+                        <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="FullName" class="form-control" placeholder="Name" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <label asp-for="ResidencyProof" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="custom-file">
-                        <input asp-for="ResidencyProof" class="form-control custom-file-input" />
-                        <label class="custom-file-label">Click here to change Proof of Residency</label>
+
+
+                    <div class="field half">
+                        <label asp-for="IdProof" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <div class="custom-file">
+                                <input asp-for="IdProof" class="form-control custom-file-input" />
+                                <label class="custom-file-label">Click here to change Proof of Identity</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="field">
+                        <label asp-for="ResidencyProof" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <div class="custom-file">
+                                <input asp-for="ResidencyProof" class="form-control custom-file-input" />
+                                <label class="custom-file-label">Click here to change Proof of Residency</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="@Model.ExitingIdProofURL" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="@Model.ExistingResidencyProofURL" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <ul class="actions">
+                            @if (Model.Status == "Declined")
+                            {
+                                <li><button type="submit" class="btn btn-primary">Re Submit</button></li>
+
+                            }
+                            else
+                            {
+                                <li><button type="submit" class="btn btn-primary">Update</button></li>
+                            }
+                            <li><a asp-controller="VendorApplication" asp-action="MyApplications" asp-route-applicantId="@Model.ApplicantId" class="btn btn-primary">Cancel</a></li>
+                        </ul>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                </form>
             </div>
-
-            <div class="form-group row col-sm-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="@Model.ExitingIdProofURL" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
-                </div>
-            </div>
-
-            <div class="form-group row col-sm-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="@Model.ExistingResidencyProofURL" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    @if (Model.Status == "Declined")
-                    {
-                        <button type="submit" class="btn btn-primary">Re Submit</button>
-
-                    }
-                    else
-                    {
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    }
-                    <a asp-controller="VendorApplication" asp-action="MyApplications" asp-route-applicantId="@Model.ApplicantId" class="btn btn-primary">Cancel</a>
-                </div>
-            </div>
-
-            <div asp-validation-summary="All" class="text-danger"></div>
-
-
-        </form>
+        </div>
     </div>
 </body>
 </html>

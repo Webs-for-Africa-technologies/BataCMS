@@ -38,6 +38,7 @@ namespace COHApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult Create()
         {
             return View();

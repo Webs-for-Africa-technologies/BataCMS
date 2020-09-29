@@ -12,102 +12,99 @@
 </head>
 <body>
 
-    <div class="container">
-        x
-        <form enctype="multipart/form-data" asp-controller="RentalAsset" asp-action="Edit" method="post" class="mt-3">
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <form enctype="multipart/form-data" asp-controller="RentalAsset" asp-action="Edit" method="post" class="mt-3">
 
-            <input type="hidden" asp-for="RentalAssetId" />
-            <input type="hidden" asp-for="ExistingImagePath" />
-            <input type="hidden" asp-for="ExistingImages" />
-
-
-            <div class="form-group row">
-                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Name" class="form-control" placeholder="Name" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label asp-for="Price" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Price" class="form-control" placeholder="Price" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label asp-for="Location" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <input asp-for="Location" class="form-control" placeholder="Price" />
-                    <span asp-validation-for="Location" class="text-danger"></span>
-                </div>
-            </div>
+                    <input type="hidden" asp-for="RentalAssetId" />
+                    <input type="hidden" asp-for="ExistingImagePath" />
+                    <input type="hidden" asp-for="ExistingImages" />
 
 
-
-            <div class="form-group row">
-                <label asp-for="Category" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <select asp-for="Category" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["categories"])">
-                        <option value="">Select One</option>
-                    </select>
-                    <span asp-validation-for="Category" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Description"></label>
-                <textarea asp-for="Description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group row">
-                <label asp-for="Images" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="custom-file">
-                        <input multiple asp-for="Images" class="form-control custom-file-input" />
-                        <label class="custom-file-label">Replace Images</label>
+                    <div class="field first half">
+                        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Name" class="form-control" placeholder="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <label asp-for="IsAvailable" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-1">
-                    <input asp-for="IsAvailable" class="form-control" placeholder="InStock" />
-                    <span asp-validation-for="IsAvailable" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group row col-sm-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="@Model.ExistingImagePath" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
-                </div>
-            </div>
-            @foreach (var item in Model.ExistingImages)
-            {
-                <div class="form-group row col-sm-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="@item.ImageUrl" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" alt="" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                    <div class="field half">
+                        <label asp-for="Price" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Price" class="form-control" placeholder="Price" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
 
-            }
+                    <div class="field first half">
+                        <label asp-for="Location" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Location" class="form-control" placeholder="Price" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
 
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a asp-controller="RentalAsset" asp-action="List" class="btn btn-primary">Cancel</a>
-                </div>
+
+
+                    <div class="field half">
+                        <label asp-for="Category" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <select asp-for="Category" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["categories"])">
+                                <option value="">Select One</option>
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label asp-for="Description"></label>
+                        <textarea asp-for="Description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="field">
+                        <label asp-for="Images" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <div class="custom-file">
+                                <input multiple asp-for="Images" class="form-control custom-file-input" />
+                                <label class="custom-file-label">Replace Images</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label asp-for="IsAvailable" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-1">
+                            <input asp-for="IsAvailable" class="form-control" placeholder="InStock" />
+                            <span asp-validation-for="IsAvailable" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row 50% uniform">
+                        <div class="4u"><span class="image fit"><img src="@Model.ExistingImagePath" alt="" /></span></div>
+
+                        @foreach (var item in Model.ExistingImages)
+                        {
+                            <div class="4u"><span class="image fit"><img src="@item.ImageUrl" alt="@item.ImageName" /></span></div>
+                        }
+                    </div>
+
+                        <div class="form-group row">
+                            <ul class="actions">
+                                <li><button type="submit" class="btn button">Update</button></li>
+                                <li><a asp-controller="RentalAsset" asp-action="List" class="btn button special">Cancel</a></li>
+                            </ul>
+                        </div>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </form>
+
+                <form asp-action="DeleteItem" asp-route-id="@Model.RentalAssetId" method="post">
+                    <button type="submit" class="btn button special" onclick="return confirm('Are you sure you want to PERMANENTLY delete the Rental Asset: @Model.Name')">Delete Asset</button>
+                </form>
             </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-        </form>
-
-        <form asp-action="DeleteItem" asp-route-id="@Model.RentalAssetId" method="post">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to PERMANENTLY delete the Rental Asset: @Model.Name')">Delete Asset</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>

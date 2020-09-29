@@ -9,51 +9,61 @@
     <title>ListUsers</title>
 </head>
 <body>
-    <div class="container">
-        <h1>All Users</h1>
-        @if (Model.Any())
-        {
-            <a class="btn btn-primary" asp-controller="Account" asp-action="Register"> Add a new user</a>
-            <a asp-action="ListRoles" asp-controller="Admin" class="btn btn-primary">Manage User Roles</a>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <header class="major">
+                    <h1>All Users</h1>
+                </header>
+                @if (Model.Any())
+                {
+                    <a class="btn btn-primary" asp-controller="Account" asp-action="Register"> Add a new user</a>
+                    <a asp-action="ListRoles" asp-controller="Admin" class="btn btn-primary">Manage User Roles</a>
 
 
-            foreach (var user in Model)
-            {
-                <div class="card mb-3">
-                    <div class="card-header">
-                        User: @user.Id
+                    foreach (var user in Model)
+                    {
+                        <div class="table-wrapper">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>User: </th>
+                                        <th>@user.Id</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Username: </td>
+                                        <td> @user.UserName</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="actions">
+                            <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post">
+                                <a asp-action="ManageUser" asp-controller="Admin" asp-route-id="@user.Id" class="btn button">Manage User</a>
+                                <button type="submit" class="btn button special" onclick="return confirm('Are you sure you want to delete the user: @user.UserName')">Delete</button>
+                            </form>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="card">
+                        <div class="header">
+                            No Users Created Yet!!
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Use the button below to create a new user
+                            </h5>
+                            <a class="btn button" asp-controller="Account" asp-action="Register">Add a New User</a>
+
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title"> Username: @user.UserName</h5>
-                    </div>
-
-                    <div class="card-footer">
-                        <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post">
-                            <a asp-action="ManageUser" asp-controller="Admin" asp-route-id="@user.Id" class="btn btn-primary">Manage User</a>
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the user: @user.UserName')">Delete</button>
-                        </form>
-
-                    </div>
-                </div>
-
-            }
-
-        }
-        else
-        {
-            <div class="card">
-                <div class="header">
-                    No Users Created Yet!!
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        Use the button below to create a new user
-                    </h5>
-                    <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Add a New User</a>
-
-                </div>
+                }
             </div>
-        }
+        </div>
     </div>
 </body>
 </html>

@@ -3,82 +3,110 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <script type="module" src="~/dist/site.entry.js" defer></script>
-    <link rel="stylesheet" href="~/dist/site.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-    <title>@ViewBag.Title</title>
+    <title>Home</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link href="~/dist/main.css" rel="stylesheet" />
+    <link href="~/dist/font-awesome.min.css" rel="stylesheet" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
 <body>
-    <header>
 
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="ListUsers" asp-controller="Admin">User Management</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="ListCategories" asp-controller="Admin">Category Management</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="List" asp-controller="unitItem">Inventory Management</a>
-                        </li>
-
-                    }
-
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="MyApplications" asp-controller="VendorApplication" asp-route-applicantId="@UserManager.GetUserId(User)">My Applications </a>
-                        </li>
-
-                    }
-
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="ListApplications" asp-controller="VendorApplication">Vendor Applications<span id="orderCount" class="badge badge-danger badge-pill"></span></a>
-
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="List" asp-controller="RentalAsset">List Assets</a>
-                        </li>
-                    }
-
-
-                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
-                    {
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="List" asp-controller="RentalAsset">List Assets</a>
-                        </li>
-                    }
-
-
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Index" asp-controller="Contact">Contact</a>
-                    </li>
-                </ul>
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome @UserManager.GetUserName(User)</a>
-                @await Html.PartialAsync("LoginPartial")
-            </div>
+    <header id="header" class="alt">
+        <a asp-controller="Home" asp-action="Index" class="logo"><strong>Home</strong></a>
+        <nav>
+            <a href="#menu">Menu</a>
         </nav>
     </header>
+
+
+    <nav id="menu">
+        <ul class="links">
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a asp-action="ListUsers" asp-controller="Admin">User Management</a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-action="ListCategories" asp-controller="Admin">Category Management</a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-action="List" asp-controller="unitItem">Inventory Management</a>
+                </li>
+
+
+            }
+
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee"))
+            {
+                <li class="nav-item">
+                    <a asp-action="ListApplications" asp-controller="VendorApplication">Vendor Applications<span id="orderCount" class="badge badge-danger badge-pill"></span></a>
+
+                </li>
+
+                <li class="nav-item">
+                    <a asp-action="List" asp-controller="RentalAsset">List Assets</a>
+                </li>
+            }
+
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+            {
+                <li class="nav-item">
+                    <a asp-action="MyApplications" asp-controller="VendorApplication" asp-route-applicantId="@UserManager.GetUserId(User)">My Applications </a>
+                </li>
+
+            }
+
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
+            {
+
+                <li class="nav-item">
+                    <a asp-action="List" asp-controller="RentalAsset">List Assets</a>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link" asp-action="Index" asp-controller="Contact">Contact</a>
+            </li>
+        </ul>
+        @if (signInManager.IsSignedIn(User))
+        {
+            <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
+                  method="post" class="navbar-right">
+                <ul class="actions vertical">
+                    <li><a class="button special fit" href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
+                </ul>
+            </form>
+        }
+        else
+        {
+            <ul class="actions vertical">
+                <li><a class="button special fit" id="loginLink" asp-controller="Account" asp-action="Login"> Log in </a></li>
+                <li><a class="button fit" id="registerLink" asp-controller="Account" asp-action="Register"> Register</a></li>
+            </ul>
+        }
+
+    </nav>
+
     <div>
         @RenderBody()
     </div>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/skel.min.js"></script>
+    <script src="~/js/util.js"></script>
+    <script src="~/js/jquery.scrollex.min.js"></script>
+    <script src="~/js/jquery.scrolly.min.js"></script>
+
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/site.js"></script>
+    <script src="~/js/main.js"></script>
+
+
+
+
 
     <script>
         //an immediately invoked function that checks to see if the text is in local storage already

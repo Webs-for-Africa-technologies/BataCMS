@@ -9,98 +9,94 @@
 </head>
 
 <body>
-    @if (Model.RejectMessage != null)
-    {
-        <div class="card mb-3">
-            <div class="card-header">Rejection Message</div>
-            <div class="card-body">
-                <h5 class="card-title text-danger">@Model.RejectMessage</h5>
-            </div>
-        </div>
-
-    }
-
-    <div class="container">
-        <h2>Vendor Application</h2>
-        <br />
-        <h3>Application No: @Model.VendorApplicationId</h3>
-        <br />
-
-        <div class="card mb-3">
-            <div class="card-header">Application Date</div>
-            <div class="card-body">
-                <h5 class="card-title">@Model.ApplicationDate</h5>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-header">Applicant Name</div>
-            <div class="card-body">
-                <h5 class="card-title">@Model.Applicant.FirstName  @Model.Applicant.LastName</h5>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-header">Applicant ID Number</div>
-            <div class="card-body">
-                <h5 class="card-title">@Model.Applicant.IDNumber </h5>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-header">Applicant PhoneNumber</div>
-            <div class="card-body">
-                <h5 class="card-title">@Model.Applicant.PhoneNumber </h5>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-header">Proof of ID </div>
-            <div class="card-body">
-                <div class="col-md-5">
-                    <img class="featurette-image img-fluid mx-auto" src="@Model.IdProofUrl" alt="Generic placeholder image">
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-header">Proof of ID </div>
-            <div class="card-body">
-                <div class="col-md-5">
-                    <img class="featurette-image img-fluid mx-auto" src="@Model.ResidenceProof" alt="Generic placeholder image">
-                </div>
-            </div>
-        </div>
-
-        @if (User.IsInRole("Employee"))
+    <div id="main">
+        @if (Model.RejectMessage != null)
         {
-            <form method="post" asp-action="ApproveApplication" asp-route-applicationId="@Model.VendorApplicationId">
-                <button class="btn btn btn-success">Approve Application</button>
-            </form>
-            <button onclick="DisplayForm()" class="btn btn btn-danger">Decline Application</button>
+            <div class="card mb-3">
+                <div class="card-header">Rejection Message</div>
+                <div class="card-body">
+                    <h5 class="card-title text-danger">@Model.RejectMessage</h5>
+                </div>
+            </div>
 
+        }
 
-            <form id="FormDecline" method="post" asp-action="DeclineApplication" asp-controller="VendorApplication">
+        <div id="wrapper">
+            <div class="inner">
+                <h2>Vendor Application</h2>
+                <br />
+                <h3>Application No: @Model.VendorApplicationId</h3>
+                <br />
 
-                <input type="hidden" asp-for="VendorApplicationId" class="form-control custom-file-input" value=" @Model.VendorApplicationId" />
-
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <label asp-for="RejectMessage" class="col-sm-2 col-form-label"></label>
-                        <textarea asp-for="RejectMessage" class="form-control"></textarea>
-                        <span asp-validation-for="RejectMessage" class="text-danger"></span>
+                <div class="card mb-3">
+                    <div class="card-header">Application Date</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.ApplicationDate</h5>
                     </div>
                 </div>
-                <button type="submit" class="btn btn btn-danger">Decline Application</button>
-            </form>
 
-        }
-        else if (User.IsInRole("User"))
-        {
-            <a asp-action="Edit" asp-controller="VendorApplication" asp-route-applicationId="@Model.VendorApplicationId" type="button" class="btn btn btn-outline-primary">Edit</a>
-        }
+                <div class="card mb-3">
+                    <div class="card-header">Applicant Name</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Applicant.FirstName  @Model.Applicant.LastName</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Applicant ID Number</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Applicant.IDNumber </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Applicant PhoneNumber</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Applicant.PhoneNumber </h5>
+                    </div>
+                </div>
 
 
+                <div class="6u 12u$(medium)">
+                    <h4>ID Proof</h4>
+                    <span class="image fit"><img src="@Model.IdProofUrl" alt="" /></span>
+                    <br>
+                    <h4>Proof of Residency</h4>
+                    <span class="image fit"><img src="@Model.ResidenceProof" alt="" /></span>
+                    }
+                </div>
+
+
+                @if (User.IsInRole("Employee"))
+                {
+                    <form method="post" asp-action="ApproveApplication" asp-route-applicationId="@Model.VendorApplicationId">
+                        <button class="btn btn btn-success">Approve Application</button>
+                    </form>
+                    <button onclick="DisplayForm()" class="btn btn btn-danger">Decline Application</button>
+
+
+                    <form id="FormDecline" method="post" asp-action="DeclineApplication" asp-controller="VendorApplication">
+
+                        <input type="hidden" asp-for="VendorApplicationId" class="form-control custom-file-input" value=" @Model.VendorApplicationId" />
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label asp-for="RejectMessage" class="col-sm-2 col-form-label"></label>
+                                <textarea asp-for="RejectMessage" class="form-control"></textarea>
+                                <span asp-validation-for="RejectMessage" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn btn-danger">Decline Application</button>
+                    </form>
+
+                }
+                else if (User.IsInRole("User"))
+                {
+                    <a asp-action="Edit" asp-controller="VendorApplication" asp-route-applicationId="@Model.VendorApplicationId" type="button" class="btn btn button">Edit</a>
+                }
+            </div>
+
+        </div>
     </div>
 </body>
 

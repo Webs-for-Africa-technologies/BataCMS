@@ -1,16 +1,16 @@
 ﻿
 @model RegisterViewModel
 
-    <div class="container">
-        <div class="row loginForm">
+<body class="text-center">
+    <div id="wrapper">
+        <div class="inner">
             <div class="col-md-8 col-md-offset-2">
                 <h2>Register now </h2>
-                <h4>Create a new account and place your order</h4>
+                <h4>Create a new account </h4>
                 <hr />
-
                 <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
 
-                    <div class="form-group">
+                    <div class="field half first">
                         <label asp-for="FirstName" class="col-md-5 control-label"></label>
                         <div class="col-md-10">
                             <input asp-for="FirstName" class="form-control" />
@@ -18,7 +18,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="field half">
                         <label asp-for="LastName" class="col-md-5 control-label"></label>
                         <div class="col-md-10">
                             <input asp-for="LastName" class="form-control" />
@@ -26,7 +26,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+
+                    <div class="field half first">
                         <label asp-for="IdNumber" class="col-md-5 control-label"></label>
                         <div class="col-md-10">
                             <input asp-for="IdNumber" class="form-control" />
@@ -34,7 +35,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="field half">
                         <label asp-for="Number" class="col-md-5 control-label"></label>
                         <div class="col-md-10">
                             <input asp-for="Number" class="form-control" />
@@ -42,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="field">
                         <label asp-for="Password" class="col-md-5 control-label"></label>
                         <div class="col-md-10">
                             <input asp-for="Password" class="form-control" />
@@ -50,7 +51,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+
+                    <div class="field">
                         <label asp-for="ConfirmPassword" class="col-md-5 control-label"></label>
                         <div class="col-md-10">
                             <input asp-for="ConfirmPassword" class="form-control" />
@@ -62,11 +64,27 @@
 
                     <div class="form-group pull-right formPullRightButton">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" class="btn btn-success " value="Register" />
+                            <input type="submit" class="button special fit" value="Register" />
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</body>
 
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    .form-horizontal {
+        width: 100%;
+        max-width: 800px;
+        padding: 15px;
+        margin: 0 auto;
+    }
+
+
+</style>

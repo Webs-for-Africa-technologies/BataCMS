@@ -1,25 +1,20 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
-<div class="dropdown row">
-    <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>
-    <div class="dropdown-menu">
-        @foreach (var category in Model)
-        {
-            <a class="dropdown-item" asp-controller="RentalAsset" asp-action="List"asp-route-category="@category.CategoryName">@category.CategoryName</a>
-            
-        }
-        <a class="divider"></a>
-        <a class="dropdown-item" asp-controller="RentalAsset" asp-action="List" asp-route-category="">Show all Items</a>
 
-        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-        {
-            <a class="divider"></a>
-            <a class="dropdown-item" asp-controller="Admin" asp-action="AddCategory" asp-route-category="">Add Category</a>
-        }
-    </div>
-</div>
 
-<style>
-    .dropdown-item {
-        z-index: 99999;
+<button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Categories</button>
+
+<div class="dropdown-menu">
+
+    @foreach (var category in Model)
+    {
+        <a asp-controller="RentalAsset" asp-action="List" asp-route-category="@category.CategoryName"> @category.CategoryName</a>
     }
-</style>
+
+    <a asp-controller="RentalAsset" asp-action="List" asp-route-category="">Show all items</a>
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <a asp-controller="Admin" asp-action="AddCategory" asp-route-category="">Show all items</a>
+    }
+
+</div>

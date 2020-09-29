@@ -4,34 +4,40 @@
 <script type="module" src="~/dist/validation.entry.js" defer></script>
 }
 <body class="text-center">
-    <form asp-controller="Account" asp-action="Login" method="post" class="form-signin">
-        <img class="mb-4" src="~/Content/Images/bbbq-free-img.png" alt="" width="72" height="72">
-        <input type="hidden" asp-for="ReturnUrl" />
+    <div id="wrapper">
+        <div class="inner">
+            <form asp-controller="Account" asp-action="Login" method="post" class="form-signin">
+                <input type="hidden" asp-for="ReturnUrl" />
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-        <label asp-for="Number" class="sr-only">Email address</label>
-        <input asp-for="Number" class="form-control" placeholder="Phone Number" required autofocus>
-        <span asp-validation-for="Number" class="text-danger"></span>
-
-
-        <label asp-for="Password" class="sr-only">Password</label>
-        <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="Number" class="sr-only">Phone Number</label>
+                <input asp-for="Number" class="form-control" placeholder="Phone Number" required autofocus>
+                <span asp-validation-for="Number" class="text-danger"></span>
 
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+                <label asp-for="Password" class="sr-only">Password</label>
+                <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="button special fit" type="submit">Sign in</button>
+                <p>Don't have an account ?<a asp-action="Register" asp-controller="Account">Register here</a></p>
+
+                <p class="mt-5 mb-3 text-muted">&copy; Webs For Africa Technologies 2020</p>
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+            </form>
+
+
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p>Don't have an account ?<a asp-action="Register" asp-controller="Account">Register here</a></p>
 
-        <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-    </form>
+    </div>
 </body>
 
 <style>
@@ -42,7 +48,7 @@
 
     .form-signin {
         width: 100%;
-        max-width: 330px;
+        max-width: 380px;
         padding: 15px;
         margin: 0 auto;
     }
