@@ -57,13 +57,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Content\Images\" />
     <Folder Include="wwwroot\images\applications\" />
     <!-- extends watching group to include *.js files -->
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Content\animations.css" />
-    <None Include="wwwroot\Content\elementor.css" />
     <None Include="wwwroot\js\jquery.scrollex.min.js" />
     <None Include="wwwroot\js\jquery.scrolly.min.js" />
     <None Include="wwwroot\js\main.js" />
