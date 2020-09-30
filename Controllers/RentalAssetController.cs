@@ -20,16 +20,17 @@ namespace COHApp.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IRentalAssetRepository _rentalAssetRepository;
+        private readonly IImageRepository _imageRepository;
 
 
 
 
-        public RentalAssetController(ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment, IRentalAssetRepository rentalAssetRepository)
+        public RentalAssetController(ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment, IRentalAssetRepository rentalAssetRepository, IImageRepository imageRepository)
         {
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
             _rentalAssetRepository = rentalAssetRepository;
-
+            _imageRepository = imageRepository; 
         }
 
         public ViewResult List(string category, string searchString)
@@ -162,6 +163,7 @@ namespace COHApp.Controllers
             if (ModelState.IsValid)
             {
                 List<Image> assetImages = new List<Image>();
+                List<Image> deleteImages = new List<Image>();
                 RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(model.RentalAssetId);
                 Category category = _categoryRepository.Categories.FirstOrDefault(p => p.CategoryName == model.Category);
 
@@ -184,8 +186,9 @@ namespace COHApp.Controllers
                             string filePath = Path.Combine(_webHostEnvironment.WebRootPath + model.ExistingImagePath);
                             System.IO.File.Delete(filePath);
                         }
-                        foreach (var item in model.ExistingImages)
+                        foreach (var item in rentalAsset.Images)
                         {
+                            deleteImages.Add(item);
                             string filePath = Path.Combine(_webHostEnvironment.WebRootPath + item.ImageUrl);
                             System.IO.File.Delete(filePath);
                         }
@@ -209,6 +212,12 @@ namespace COHApp.Controllers
                 }
 
                 await _rentalAssetRepository.EditItemAsync(rentalAsset);
+
+                foreach (var item in deleteImages)
+                {
+                    _imageRepository.DeleteImage(item);
+                }
+
                 return RedirectToAction("List");
 
             }
@@ -245,7 +254,7 @@ namespace COHApp.Controllers
 
             if (Image != null)
             {
-                string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/applications");
+                string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/rentalAssets");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
                 string filePath = Path.Combine(uploadFolder, uniqueFileName);
 
@@ -256,7 +265,7 @@ namespace COHApp.Controllers
 
             }
 
-            string photoPath = "/images/applications/" + uniqueFileName;
+            string photoPath = "/images/rentalAssets/" + uniqueFileName;
             return photoPath;
         }
 

@@ -21,6 +21,12 @@
     <Compile Remove="Migrations\20200919091323_VendorUser.Designer.cs" />
     <Compile Remove="Migrations\20200920075617_Transaction.cs" />
     <Compile Remove="Migrations\20200920075617_Transaction.Designer.cs" />
+    <Compile Remove="Migrations\20200930122720_DatabaseUpdate.cs" />
+    <Compile Remove="Migrations\20200930122720_DatabaseUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20200930124222_DatabaseUpdate.cs" />
+    <Compile Remove="Migrations\20200930124222_DatabaseUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20200930124427_DatabaseUpdate.cs" />
+    <Compile Remove="Migrations\20200930124427_DatabaseUpdate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +65,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Content\Images\" />
     <Folder Include="wwwroot\images\applications\" />
+    <Folder Include="wwwroot\images\rentalAssets\" />
     <!-- extends watching group to include *.js files -->
   </ItemGroup>
 
