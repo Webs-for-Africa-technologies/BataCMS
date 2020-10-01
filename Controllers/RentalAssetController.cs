@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BataCMS.Data.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace COHApp.Controllers
 {
@@ -63,6 +64,94 @@ namespace COHApp.Controllers
 
             return View(vm);
         }
+
+        [Authorize(Roles = "Employee")]
+        public ViewResult BookedList(string category, string searchString)
+        {
+            string _category = category;
+            IEnumerable<RentalAsset> rentalasset;
+
+            string currentCategory = string.Empty;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                rentalasset = _rentalAssetRepository.rentalAssets.Where(p => p.Name.Contains(searchString)).Where(p => p.IsAvailable == false);
+            }
+            else if (!string.IsNullOrEmpty(category))
+            {
+                rentalasset = _rentalAssetRepository.rentalAssets.Where(p => p.Category.CategoryName.Equals(_category)).Where(p => p.IsAvailable == false);
+                currentCategory = _category;
+            }
+            else
+            {
+                rentalasset = _rentalAssetRepository.rentalAssets.Where(p => p.IsAvailable == false).OrderBy(p => p.RentalAssetId);
+                currentCategory = "All Stalls";
+            }
+
+            var vm = new RentalAssetListViewModel
+            {
+                RentalAssets = rentalasset,
+                CurrentCategory = currentCategory
+            };
+
+            return View(vm);
+        }
+
+        /*public async Task<IActionResult> CancelBooking(int id)
+        {
+            var rentalAsset = _rentalAssetRepository.GetItemByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user.Result);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListUsers");
+
+            }
+        }*/
+
+       /* public async Task<IActionResult> DeleteUserAsync(string id)
+        {
+            var user = _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user.Result);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListUsers");
+
+            }
+        }*/
+
+
 
         [HttpGet]
         public async Task<IActionResult> ViewAsync(int itemId)

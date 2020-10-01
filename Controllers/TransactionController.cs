@@ -86,6 +86,10 @@ namespace COHApp.Controllers
                 };
 
                 await _transactionRepository.CreateTransactionAsync(transaction);
+
+                //make the rental asset unavailable
+                await _rentalAssetRepository.BookAsset(lease.leaseTo, rentalAsset.RentalAssetId);
+
                 return RedirectToAction("CheckoutComplete");
             }
             return View(model);

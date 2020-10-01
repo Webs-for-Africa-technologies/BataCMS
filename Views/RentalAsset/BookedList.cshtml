@@ -14,38 +14,30 @@
                     @await Component.InvokeAsync("CategoryMenu")
                 </div>
             </div>
-            
-            @if (User.IsInRole("Employee"))
-            {
-                <a asp-action="Create" asp-controller="RentalAsset" class="button" role="button">Add</a>
-            }
-
 
 
             @if (Model.RentalAssets.Any())
             {
-        <div class="row">
-            @foreach (var item in Model.RentalAssets)
-            {
-                if (item.IsAvailable == true)
-                {
-                    @await Html.PartialAsync("RentalAssetSummary", item);
-                }
+                <div class="row">
+                    @foreach (var item in Model.RentalAssets)
+                    {
+                        
+                        @await Html.PartialAsync("RentalAssetSummary", item);
+                    }
 
-            }
-        </div>
+                </div>
 
             }
             else
             {
                 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-                    <main role="main" class="inner cover">
+                    <div id="main" role="main" class="inner cover">
                         <h1 class="cover-heading">Empty Category</h1>
-                        <p class="lead">It seems that this category is currently, Why not add try our other categories</p>
+                        <p class="lead">It seems there have been no booking made here yet</p>
                         <p class="lead">
                             <a asp-action="index" asp-controller="Home" class="btn btn-lg btn-secondary">Home</a>
                         </p>
-                    </main>
+                    </div>
 
                     <footer class="mastfoot mt-auto">
                         <div class="inner">

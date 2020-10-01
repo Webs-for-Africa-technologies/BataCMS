@@ -1,16 +1,13 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
 @model BataCMS.Data.Models.RentalAsset
 
-
-
-<h4>Fit</h4>
 <span class="image fit"><img src="@Model.ImageUrl" alt="" /></span>
 <div class="box alt">
     <h3>@Model.Location</h3>
     <br>
     <a id="cartButton" asp-controller="RentalAsset" asp-action="View" asp-route-itemId="@Model.RentalAssetId" type="button" class="btn button">View</a>
 
-    @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor") && Model.IsAvailable == true)
     {
         <ul class="actions">
             <li><br /><a asp-action="MakeBooking" asp-controller="Lease" asp-route-rentalAssetId="@Model.RentalAssetId" type="button" class="btn button special"> Make A Booking</a></li>
@@ -23,6 +20,17 @@
         <br /><a asp-action="Edit" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Edit</a>
     }
 
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee") && Model.IsAvailable == false)
+    {
+
+        <br /><a asp-action="CancelBooking" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Cancel Booking</a>
+    }
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee") && Model.IsAvailable == false && DateTime.Now >= Model.BookTillDate)
+    {
+        <br /><a asp-action="SendInvoice" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Invoice</a>
+        
+     }
 </div>
 
 
