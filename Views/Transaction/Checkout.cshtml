@@ -9,12 +9,43 @@
                 <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
                     <div class="form-group">
                         <div class="col-md-3">
-                            <input asp-for="LeaseId" class="form-control" type="text" value="@ViewBag.leaseId" hidden>
+                            <input asp-for="LeaseId" class="form-control disabled" type="text" value="@ViewBag.leaseId">
                             <span asp-validation-for="LeaseId" class="text-danger"></span>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="table-wrapper">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Daily Cost: </th>
+                                    <th> @Model.AssetPricing</th>
+                                </tr>
+
+                                <tr>
+                                    <td>Rental Duration: </td>
+                                    <td>@Model.RentalDuration</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Transaction Total: </td>
+                                    <td>@Model.TransactionTotal</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="field half">
+                        <label asp-for="TransactionType" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <select asp-for="TransactionType" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["paymentOptions"])">
+                                <option value="">Choose One</option>
+                            </select>
+                            <span asp-validation-for="TransactionType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
                         <div class="col-md-3">
                             <label asp-for="TransactionNotes" class="col-sm-2 col-form-label"></label>
                             <textarea asp-for="TransactionNotes" class="form-control"></textarea>
@@ -23,8 +54,8 @@
                     </div>
                     <div class="form-group">
                         <div class="btn-group col-md-offset-2 col-md-8">
-                            <input class="btn btn-success" type="submit" value="Complete order" />
-                            <input class="btn btn-primary-outline" value="Cancel" onclick="location.href='@Url.Action("Index","Checkout")'" />
+                            <input class="btn button" type="submit" value="Complete order" />
+                            <input class="btn button special" value="Cancel" onclick="location.href='@Url.Action("Index","Checkout")'" />
                         </div>
                     </div>
 

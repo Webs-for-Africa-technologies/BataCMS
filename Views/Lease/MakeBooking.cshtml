@@ -5,21 +5,10 @@
 <div id="main">
     <div id="wrapper">
         <div class="inner">
-            <h3 class="text-center">Just one more step</h3>
+            <h3 class="text-center">Select Rental Duration</h3>
             <form asp-action="MakeBooking" method="post" class="form-horizontal" role="form">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <input asp-for="UserId" class="form-control" type="text" value="@UserManager.GetUserId(User)" placeholder="@UserManager.GetUserName(User)" hidden>
-                        <span asp-validation-for="UserId" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <input asp-for="RentalAssetId" class="form-control" type="text" value="@ViewBag.RentalAssetId" placeholder="" hidden>
-                        <span asp-validation-for="RentalAssetId" class="text-danger"></span>
-                    </div>
-                </div>
+                <input asp-for="UserId" class="form-control" type="hidden" value="@UserManager.GetUserId(User)" placeholder="@UserManager.GetUserName(User)">
+                <input asp-for="RentalAssetId" class="form-control" type="hidden" value="@ViewBag.RentalAssetId"  >
 
                 <div class="form-group">
                     <div class="col-md-3">

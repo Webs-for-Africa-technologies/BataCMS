@@ -10,6 +10,7 @@ using COHApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace COHApp.Controllers
@@ -32,10 +33,31 @@ namespace COHApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Checkout(int leaseId)
+        public async Task<IActionResult> CheckoutAsync(int leaseId)
         {
+
+            List<SelectListItem> paymentOptions = new List<SelectListItem>();
+            paymentOptions.Add(new SelectListItem() { Text = "Debit Card", Value = "swipe" });
+            paymentOptions.Add(new SelectListItem() { Text = "Cash", Value = "cash" });
+            paymentOptions.Add(new SelectListItem() { Text = "Eco Cash", Value = "ecocash" });
+
+            this.ViewData["paymentOptions"] = paymentOptions;
+
+            Lease lease = await _leaseRepository.GetLeaseById(leaseId);
+            RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(lease.RentalAssetId);
+
+            var totalDays = (lease.leaseTo - lease.leaseFrom).TotalDays;
+            decimal transactionTotal = rentalAsset.Price * (decimal)totalDays;
+
+            TransactionCheckoutViewModel vm = new TransactionCheckoutViewModel()
+            {
+                AssetPricing = rentalAsset.Price,
+                RentalDuration = totalDays,
+                TransactionTotal = transactionTotal
+            };
+
             ViewBag.leaseId = leaseId;
-            return View();
+            return View(vm);
         }
 
 
@@ -49,16 +71,6 @@ namespace COHApp.Controllers
             //get the vendorUserId 
              ApplicationUser user = await _userManager.FindByIdAsync(lease.UserId);
 
-
-/*            if (user.VendorUserId == null)
-            {
-                ViewBag.ErrorMessage = $"You have to be a Vendor to do a booking";
-                return View("NotFound");
-            }
-            
-            var vendorUserId = user.VendorUserId; */
-
-            //Calculate transaction total 
             var totalDays = (lease.leaseTo - lease.leaseFrom).TotalDays;
             decimal transactionTotal = rentalAsset.Price * (decimal)totalDays;
 
@@ -70,8 +82,7 @@ namespace COHApp.Controllers
                 ServerName = user.FirstName + user.LastName,
                 TransactionDate = DateTime.Today,
                 TransactionNotes = model.TransactionNotes,
-                TransactionType = "Booking", //model.TransactionType,
-                Lease = lease,
+                TransactionType =  model.TransactionType,
                 };
 
                 await _transactionRepository.CreateTransactionAsync(transaction);

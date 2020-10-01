@@ -24,7 +24,6 @@ namespace BataCMS.Data.Repositories
 
         public async Task CreateTransactionAsync(Transaction transaction)
         {
-            transaction.TransactionDate = DateTime.Now;
             await _appDbContext.AddAsync(transaction);
             //Add a purchase to Db to make reference to the FK. 
             await _appDbContext.SaveChangesAsync();

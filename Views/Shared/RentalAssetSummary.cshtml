@@ -12,7 +12,7 @@
 
     @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
     {
-        <ul>
+        <ul class="actions">
             <li><br /><a asp-action="MakeBooking" asp-controller="Lease" asp-route-rentalAssetId="@Model.RentalAssetId" type="button" class="btn button special"> Make A Booking</a></li>
         </ul>
     }
