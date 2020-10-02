@@ -27,7 +27,7 @@ namespace COHApp.Controllers
 
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> roleAddedUser, UserManager<ApplicationUser> roleRemovedUser, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;

@@ -22,11 +22,11 @@ namespace BataCMS.Data.Repositories
 
         public IEnumerable<Transaction> Purchases => _appDbContext.Transactions.Include(p => p.Lease).OrderByDescending(p => p.TransactionDate);
 
-        public async Task CreateTransactionAsync(Transaction transaction)
+        public async Task<int> CreateTransactionAsync(Transaction transaction)
         {
             await _appDbContext.AddAsync(transaction);
             //Add a purchase to Db to make reference to the FK. 
-            await _appDbContext.SaveChangesAsync();
+            return await _appDbContext.SaveChangesAsync();
         }
 
         public async Task DeletePurchasesAsync()

@@ -8,7 +8,7 @@ namespace BataCMS.Data.Interfaces
 {
     public interface ITransactionRepository
     {
-        Task CreateTransactionAsync(Transaction transaction);
+        Task<int> CreateTransactionAsync(Transaction transaction);
 
         IEnumerable<Transaction> Purchases { get; }
 
