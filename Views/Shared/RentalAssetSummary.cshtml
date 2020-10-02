@@ -20,7 +20,7 @@
         <br /><a asp-action="Edit" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Edit</a>
     }
 
-    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee") && Model.IsAvailable == false)
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee") && Model.IsAvailable == false && !(DateTime.Now >= Model.BookTillDate))
     {
 
         <br /><a asp-action="CancelBooking" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Cancel Booking</a>

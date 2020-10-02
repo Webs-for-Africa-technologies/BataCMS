@@ -25,7 +25,7 @@ namespace BataCMS.Data.Models
 
         public DateTime DateModified { get; set; }
 
-        public DateTime BookTillDate { get; set; }
+        public DateTime? BookTillDate { get; set; }
 
         public int CategoryId { get; set; }
 

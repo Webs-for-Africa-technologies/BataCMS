@@ -20,5 +20,7 @@ namespace COHApp.Data.Interfaces
         Task EditItemAsync(RentalAsset updatedItem);
 
         public Task BookAsset(DateTime bookedTill, int assetID);
+
+        public Task EndBooking(int assetId);
     }
 }

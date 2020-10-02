@@ -58,6 +58,15 @@ namespace BataCMS.Data.Repositories
             await _appDbContext.SaveChangesAsync(); 
         }
 
+        public async Task EndBooking(int assetId)
+        {
+            RentalAsset rentalAsset = await _appDbContext.RentalAssets.FindAsync(assetId);
+            rentalAsset.BookTillDate = null;
+            rentalAsset.IsAvailable = true;
+            _appDbContext.RentalAssets.Update(rentalAsset);
+            await _appDbContext.SaveChangesAsync();
+
+        }
     }
 
 }

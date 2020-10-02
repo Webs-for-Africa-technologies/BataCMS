@@ -97,59 +97,55 @@ namespace COHApp.Controllers
             return View(vm);
         }
 
-        /*public async Task<IActionResult> CancelBooking(int id)
-        {
-            var rentalAsset = _rentalAssetRepository.GetItemByIdAsync(id);
 
-            if (user == null)
+        public async Task<IActionResult> CancelBooking(int id)
+        {
+
+            RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(id);
+
+            if (rentalAsset == null)
+            {
+                ViewBag.ErrorMessage = $"The rental asset id={id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                try
+                {
+                    await _rentalAssetRepository.EndBooking(id);
+                    return RedirectToAction("BookedList");
+                }
+                catch (Exception ex)
+                {
+                    return NotFound(ex.Message);
+                }   
+            }
+        }
+
+        public async Task<IActionResult> SendInvoice(int id)
+        {
+            RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(id);
+
+            if (rentalAsset == null)
             {
                 ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
                 return View("NotFound");
             }
             else
             {
-                var result = await _userManager.DeleteAsync(user.Result);
-
-                if (result.Succeeded)
+               /* logic to send invoice here Comment 00001*/
+                try
                 {
-                    return RedirectToAction("ListUsers");
+                    await _rentalAssetRepository.EndBooking(id);
+                    return RedirectToAction("BookedList");
                 }
-                foreach (var error in result.Errors)
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                return View("ListUsers");
+                    return NotFound(ex.Message);
+                } 
 
             }
-        }*/
-
-       /* public async Task<IActionResult> DeleteUserAsync(string id)
-        {
-            var user = _userManager.FindByIdAsync(id);
-
-            if (user == null)
-            {
-                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-                var result = await _userManager.DeleteAsync(user.Result);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListUsers");
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                return View("ListUsers");
-
-            }
-        }*/
+        }
 
 
 
