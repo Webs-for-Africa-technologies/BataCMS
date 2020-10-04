@@ -124,7 +124,7 @@ namespace COHApp.Controllers
                     TransactionDate = DateTime.Now,
                     TransactionNotes = model.TransactionNotes,
                     TransactionType = model.TransactionType,
-                    //Lease = lease
+                    LeaseId = lease.LeaseId
                 };
 
                 var result = await _transactionRepository.CreateTransactionAsync(transaction);

@@ -23,6 +23,9 @@ namespace BataCMS.Data.Models
         [StringLength(50)]
         public string ServerName { get; set; }
 
+
+        public int LeaseId { get; set; }
+
         [BindNever]
         [ScaffoldColumn(false)]
         public DateTime TransactionDate { get; set; }
