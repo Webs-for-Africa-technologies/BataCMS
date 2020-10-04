@@ -7,21 +7,14 @@
 
             <h1> @Html.DisplayFor(Model => Model.CurrentCategory)</h1>
 
-
-
-            <div class="elementor-widget-container">
-                <div class="elementor-button-wrapper">
-                    @await Component.InvokeAsync("CategoryMenu")
-                </div>
-            </div>
-
+            <a class="button" asp-controller="RentalAsset" asp-action="List">Available Stalls</a>
 
             @if (Model.RentalAssets.Any())
             {
                 <div class="row">
                     @foreach (var item in Model.RentalAssets)
                     {
-                        
+
                         @await Html.PartialAsync("RentalAssetSummary", item);
                     }
 
@@ -32,7 +25,6 @@
             {
                 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
                     <div id="main" role="main" class="inner cover">
-                        <h1 class="cover-heading">Empty Category</h1>
                         <p class="lead">It seems there have been no booking made here yet</p>
                         <p class="lead">
                             <a asp-action="index" asp-controller="Home" class="btn btn-lg btn-secondary">Home</a>

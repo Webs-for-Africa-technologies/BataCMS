@@ -1,0 +1,86 @@
+﻿@model COHApp.ViewModels.TransactionDetailViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Transaction Details</title>
+</head>
+
+<body>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <h2>Transcation Details</h2>
+                <br />
+                <h3>Transaction No: @Model.Transaction.TransactionId</h3>
+                <br />
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rental Asset Id</th>
+                            <th>Rental Asset Location</th>
+                            <th>Rental Asset Name</th>
+                            <th class="text-right">Rented From</th>
+                            <th class="text-right">Rented To</th>
+                            <th class="text-right">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">@Model.RentalAsset.RentalAssetId</td>
+                            <td class="text-left">@Model.RentalAsset.Location</td>
+                            <td class="text-right">@Model.RentalAsset.Name</td>
+                            <td class="text-right">@Model.Lease.leaseFrom</td>
+                            <td class="text-right">@Model.Lease.leaseTo</td>
+                            <td class="text-right">@Model.RentalAsset.Price</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="card mb-3">
+                    <div class="card-header">Transaction Total</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Transaction.TransactionTotal</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Vendor Name</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.VendorUser.FirstName @Model.VendorUser.LastName </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Vendor ID</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.VendorUser.IDNumber </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Transaction Date</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Transaction.TransactionDate</h5>
+                    </div>
+                </div>
+
+
+                <div class="card mb-3">
+                    <div class="card-header">Notes</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Transaction.TransactionNotes</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

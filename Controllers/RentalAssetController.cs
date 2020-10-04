@@ -65,7 +65,7 @@ namespace COHApp.Controllers
             return View(vm);
         }
 
-        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Admin")]
         public ViewResult BookedList(string category, string searchString)
         {
             string _category = category;

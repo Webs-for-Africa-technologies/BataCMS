@@ -20,7 +20,7 @@ namespace BataCMS.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Transaction> Purchases => _appDbContext.Transactions.Include(p => p.Lease).OrderByDescending(p => p.TransactionDate);
+        public IEnumerable<Transaction> Transactions => _appDbContext.Transactions.Include(p => p.Lease).OrderByDescending(p => p.TransactionDate);
 
         public async Task<int> CreateTransactionAsync(Transaction transaction)
         {

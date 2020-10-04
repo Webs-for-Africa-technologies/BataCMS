@@ -1,0 +1,67 @@
+﻿@model COHApp.ViewModels.ListTransactionsViewModel
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Completed Bookings</title>
+</head>
+
+<div id="main">
+    <div id="wrapper">
+        <div class="inner">
+            <form method="post" asp-action="PostExportExcel">
+                <button class="button special">ExportExcel</button>
+            </form>
+
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Transactions from...</button>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-controller="Transaction" asp-action="ListTransactions" asp-route-filter="hour">Last hour</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="Transaction" asp-action="ListTransactions" asp-route-filter="day">Last Day...</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="Transaction" asp-action="ListTransactions" asp-route-filter="week">Last Week...</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="Transaction" asp-action="ListTransactions" asp-route-filter="all">All</a>
+            </div>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Vendor Name</th>
+                        <th class="text-right">Booking Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Transactions.Any())
+                    {
+                        @foreach (var line in Model.Transactions)
+                        {
+                            <tr>
+                                <td class="text-center">@line.TransactionId</td>
+                                <td class="text-left">@line.ServerName</td>
+                                <td class="text-right">
+                                    @line.TransactionDate)
+                                </td>
+                                <td class="text-center"><a class="btn btn-primary" asp-controller="Transaction" asp-action="TransactionDetail" asp-route-id="@line.TransactionId">Transaction Details</a></td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td class="text-center">Total Revenue from Bookings: </td>
+                            <td class="text-center">@Model.TotalSales</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-center">No Booking Made Yet</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

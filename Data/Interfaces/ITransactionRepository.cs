@@ -10,7 +10,7 @@ namespace BataCMS.Data.Interfaces
     {
         Task<int> CreateTransactionAsync(Transaction transaction);
 
-        IEnumerable<Transaction> Purchases { get; }
+        IEnumerable<Transaction> Transactions { get; }
 
         Task<Transaction> GetPurchaseByIdAsync(int purchaseId);
 
