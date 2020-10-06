@@ -1,0 +1,70 @@
+﻿@model COHApp.ViewModels.InvoiceDetailViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+</head>
+
+<body>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <h2>Invoice </h2>
+                <br />
+                <h3>Invoice No: @Model.InvoiceId</h3>
+                <br />
+
+
+                <div class="card mb-3">
+                    <div class="card-header">Rental Asset Name</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.RentalAssetName</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Rental Asset Location</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.RentalAssetLocation </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Rented From</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.LeaseFrom</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Rented To</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.LeaseTo</h5>
+                    </div>
+                </div>
+
+
+                <div class="card mb-3">
+                    <div class="card-header">Amount Paid</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.AmountPaid</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Invoice Date</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.LeaseTo</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

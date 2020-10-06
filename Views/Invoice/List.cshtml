@@ -1,0 +1,49 @@
+﻿@model COHApp.ViewModels.ListInvoicesViewModel
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoices</title>
+</head>
+
+<div id="main">
+    <div id="wrapper">
+        <div class="inner">
+
+
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Invoice ID</th>
+                        <th>Rental Asset ID</th>
+                        <th class="text-right">Invoice Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Invoices.Any())
+                    {
+                        @foreach (var line in Model.Invoices)
+                        {
+                            <tr>
+                                <td class="text-center">@line.InvoiceId</td>
+                                <td class="text-left">@line.RentalAssetId</td>
+                                <td class="text-right">
+                                    @line.LeaseTo)
+                                </td>
+                                <td class="text-center"><a class="btn btn-primary" asp-controller="Invoice" asp-action="View" asp-route-id="@line.InvoiceId">Invoice Details</a></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-center">No Invoices Here.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

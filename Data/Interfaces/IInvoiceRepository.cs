@@ -8,9 +8,13 @@ namespace COHApp.Data.Interfaces
 {
     public interface IInvoiceRepository
     {
+        IEnumerable<Invoice> Invoices { get; }
+
         Invoice GetInvoice(int id);
 
         Task AddInvoice(Invoice invoice);
+
+        IEnumerable<Invoice> GetUserInvoices(string userId);
 
     }
 }

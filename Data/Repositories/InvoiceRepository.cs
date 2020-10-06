@@ -16,6 +16,9 @@ namespace COHApp.Data.Repositories
         {
             _appDbContext = appDbContext;
         }
+
+        public IEnumerable<Invoice> Invoices => _appDbContext.Invoices;
+
         public async Task AddInvoice(Invoice invoice)
         {
             await _appDbContext.AddAsync(invoice);
@@ -25,6 +28,11 @@ namespace COHApp.Data.Repositories
         public Invoice GetInvoice(int id)
         {
             return _appDbContext.Invoices.FirstOrDefault(p => p.InvoiceId == id);
+        }
+
+        public IEnumerable<Invoice> GetUserInvoices(string userId)
+        {
+            return _appDbContext.Invoices.Where(p => p.ApplicationId == userId);
         }
     }
 }
