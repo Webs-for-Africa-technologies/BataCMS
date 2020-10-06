@@ -179,15 +179,29 @@
 
                 }
 
-                <article>
-                    <span class="image">
-                        <img src="images/pic02.jpg" alt="" />
-                    </span>
-                    <header class="major">
-                        <h3><a asp-action="List" asp-controller="RentalAsset" class="link">View Rental Assets</a></h3>
-                        <p>Manage the Rental Assets</p>
-                    </header>
-                </article>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
+                {
+                    <article>
+                        <span class="image">
+                            <img src="images/pic02.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="List" asp-controller="RentalAsset" class="link">View Rental Assets</a></h3>
+                            <p>Manage the Rental Assets</p>
+                        </header>
+                    </article>
+
+                    <article>
+                        <span class="image">
+                            <img src="images/pic02.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="List" asp-controller="Invoice" asp-route-userId="@UserManager.GetUserId(User)" class="link">View Rental Assets</a></h3>
+                            <p>Manage the Rental Assets</p>
+                        </header>
+                    </article>
+
+                }
 
             </section>
 

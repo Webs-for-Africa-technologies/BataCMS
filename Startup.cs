@@ -48,6 +48,10 @@ namespace BataCMS
             services.AddTransient<ITransactionRepository, TransactionRepository>();
             services.AddTransient<ILeaseRepository, LeaseRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
+            services.AddTransient<IActiveLeaseRepository, ActiveLeaseRepository>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+
+
 
 
 

@@ -20,15 +20,15 @@
         <br /><a asp-action="Edit" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Edit</a>
     }
 
-    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee") && Model.IsAvailable == false && !(DateTime.Now >= Model.BookTillDate))
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") && Model.IsAvailable == false && !(DateTime.Now >= Model.BookTillDate))
     {
 
-        <br /><a asp-action="CancelBooking" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Cancel Booking</a>
+        <br /><a asp-action="EndBooking" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Cancel Booking</a>
     }
 
-    @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee") && Model.IsAvailable == false && DateTime.Now >= Model.BookTillDate)
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") && Model.IsAvailable == false && DateTime.Now >= Model.BookTillDate)
     {
-        <br /><a asp-action="SendInvoice" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Invoice</a>
+        <br /><a asp-action="EndBooking" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Invoice</a>
         
      }
 </div>

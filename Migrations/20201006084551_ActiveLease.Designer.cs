@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201006084551_ActiveLease")]
+    partial class ActiveLease
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,40 +306,6 @@ namespace BataCMS.Migrations
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.Invoice", b =>
-                {
-                    b.Property<int>("InvoiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("AmountPaid")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ApplicationId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("LeaseFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LeaseTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RentalAssetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InvoiceId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("RentalAssetId");
-
-                    b.ToTable("Invoices");
-                });
-
             modelBuilder.Entity("COHApp.Data.Models.VendorApplication", b =>
                 {
                     b.Property<int>("VendorApplicationId")
@@ -571,19 +539,6 @@ namespace BataCMS.Migrations
                     b.HasOne("BataCMS.Data.Models.RentalAsset", null)
                         .WithMany("Images")
                         .HasForeignKey("RentalAssetId");
-                });
-
-            modelBuilder.Entity("COHApp.Data.Models.Invoice", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("BataCMS.Data.Models.RentalAsset", "RentalAsset")
-                        .WithMany()
-                        .HasForeignKey("RentalAssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.VendorApplication", b =>

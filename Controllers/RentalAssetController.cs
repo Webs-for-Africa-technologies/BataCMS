@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BataCMS.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 
 namespace COHApp.Controllers
 {
@@ -21,18 +23,29 @@ namespace COHApp.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IRentalAssetRepository _rentalAssetRepository;
+        private readonly IActiveLeaseRepository _activeLeaseRepository;
         private readonly IImageRepository _imageRepository;
+        private readonly ILeaseRepository _leaseRepository;
+        private readonly IInvoiceRepository _invoiceRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
 
 
 
-        public RentalAssetController(ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment, IRentalAssetRepository rentalAssetRepository, IImageRepository imageRepository)
+
+        public RentalAssetController(IInvoiceRepository invoiceRepository, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment, IRentalAssetRepository rentalAssetRepository, IImageRepository imageRepository, IActiveLeaseRepository activeLeaseRepository, ILeaseRepository leaseRepository)
         {
             _categoryRepository = categoryRepository;
             _webHostEnvironment = webHostEnvironment;
             _rentalAssetRepository = rentalAssetRepository;
-            _imageRepository = imageRepository; 
+            _imageRepository = imageRepository;
+            _activeLeaseRepository = activeLeaseRepository;
+            _leaseRepository = leaseRepository;
+            _userManager = userManager;
+            _invoiceRepository = invoiceRepository;
+
         }
+
 
         public ViewResult List(string category, string searchString)
         {
@@ -98,10 +111,16 @@ namespace COHApp.Controllers
         }
 
 
-        public async Task<IActionResult> CancelBooking(int id)
+        public async Task<IActionResult> EndBooking(int id)
         {
 
             RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(id);
+
+            ActiveLease activeLease =  _activeLeaseRepository.GetActiveLeaseByAssetId(rentalAsset.RentalAssetId);
+
+            Lease lease = await _leaseRepository.GetLeaseById(activeLease.LeaseId);
+
+            ApplicationUser user = await _userManager.FindByIdAsync(lease.UserId);
 
             if (rentalAsset == null)
             {
@@ -112,38 +131,34 @@ namespace COHApp.Controllers
             {
                 try
                 {
+                    if (rentalAsset.BookTillDate < DateTime.Now)
+                    {
+                        // Calculate amount paid
+
+                        var totalDays = (lease.leaseTo - lease.leaseFrom).TotalDays;
+                        decimal AmountPaid = rentalAsset.Price * (decimal)totalDays;
+
+                        //Add invoice 
+                        var invoice = new Invoice 
+                        {
+                            RentalAssetId = rentalAsset.RentalAssetId,
+                            LeaseFrom = lease.leaseFrom,
+                            LeaseTo = lease.leaseTo,
+                            ApplicationId = user.Id,
+                            AmountPaid = AmountPaid
+                        };
+
+                       await _invoiceRepository.AddInvoice(invoice);
+                        
+                    }
                     await _rentalAssetRepository.EndBooking(id);
+                    await _activeLeaseRepository.RemoveLease(activeLease);
                     return RedirectToAction("BookedList");
                 }
                 catch (Exception ex)
                 {
                     return NotFound(ex.Message);
                 }   
-            }
-        }
-
-        public async Task<IActionResult> SendInvoice(int id)
-        {
-            RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(id);
-
-            if (rentalAsset == null)
-            {
-                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-               /* logic to send invoice here Comment 00001*/
-                try
-                {
-                    await _rentalAssetRepository.EndBooking(id);
-                    return RedirectToAction("BookedList");
-                }
-                catch (Exception ex)
-                {
-                    return NotFound(ex.Message);
-                } 
-
             }
         }
 
@@ -343,10 +358,8 @@ namespace COHApp.Controllers
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
                 string filePath = Path.Combine(uploadFolder, uniqueFileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    Image.CopyTo(fileStream);
-                }
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                Image.CopyTo(fileStream);
 
             }
 

@@ -22,16 +22,18 @@ namespace COHApp.Controllers
         private readonly ILeaseRepository _leaseRepository;
         private readonly IRentalAssetRepository _rentalAssetRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IActiveLeaseRepository _activeLeaseRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
 
 
-        public TransactionController(ILeaseRepository leaseRepository, UserManager<ApplicationUser> userManager, IRentalAssetRepository rentalAssetRepository, ITransactionRepository transactionRepository)
+        public TransactionController(ILeaseRepository leaseRepository, UserManager<ApplicationUser> userManager, IRentalAssetRepository rentalAssetRepository, ITransactionRepository transactionRepository, IActiveLeaseRepository activeLeaseRepository)
         {
             _leaseRepository = leaseRepository;
             _rentalAssetRepository = rentalAssetRepository;
             _userManager = userManager;
             _transactionRepository = transactionRepository;
+            _activeLeaseRepository = activeLeaseRepository;
         }
 
         [Authorize]
@@ -127,12 +129,20 @@ namespace COHApp.Controllers
                     LeaseId = lease.LeaseId
                 };
 
+                var ActiveLease = new ActiveLease
+                { 
+                    RentalAssetId = rentalAsset.RentalAssetId,
+                    LeaseId = lease.LeaseId
+                };
+
+
                 var result = await _transactionRepository.CreateTransactionAsync(transaction);
 
                 //success 
                 if (result > 0)
                 {
                     await _rentalAssetRepository.BookAsset(lease.leaseTo, rentalAsset.RentalAssetId);
+                    await _activeLeaseRepository.AddActiveLeaseAsync(ActiveLease);
                 }
 
                 return RedirectToAction("CheckoutComplete");
@@ -181,7 +191,7 @@ namespace COHApp.Controllers
             }
             stream.Position = 0;
 
-            string excelName = $"Transactions-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}.xlsx";
+            string excelName = $"Transactions-{DateTime.Now:yyyyMMddHHmmssfff}.xlsx";
             // above I define the name of the file using the current datetime.
 
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName); // this will be the actual export.

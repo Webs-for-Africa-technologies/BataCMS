@@ -35,6 +35,8 @@ namespace BataCMS.Data
         public DbSet<VendorUser> VendorUsers { get; set; }
         public DbSet<VendorApplication> VendorApplications { get; set; }
         public DbSet<Image> Image { get; set; }
+        public DbSet<ActiveLease> ActiveLeases { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
 
     }
