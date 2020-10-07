@@ -84,28 +84,38 @@ namespace BataCMS.Controllers
             {
                 var user = new ApplicationUser { UserName = registerViewModel.LastName+registerViewModel.IdNumber, FirstName = registerViewModel.FirstName, LastName = registerViewModel.LastName, PhoneNumber = registerViewModel.Number, IDNumber = registerViewModel.IdNumber };
 
-                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
+                var existingNumber = _userManager.FindByPhoneNumber(registerViewModel.Number);
 
-                if (result.Succeeded)
+                if (existingNumber == null)
                 {
-                    //add the user to User role by default. 
-                    await _userManager.AddToRoleAsync(user, "User");
+                    var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
-                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    if (result.Succeeded)
                     {
-                        return RedirectToAction("ListUsers","Admin"); 
+                        //add the user to User role by default. 
+                        await _userManager.AddToRoleAsync(user, "User");
+
+                        if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            return RedirectToAction("ListUsers", "Admin");
+                        }
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+
                     }
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-
+                    ModelState.AddModelError("", "A user has already registered with the number " + registerViewModel.Number);
                 }
             }
             return View(registerViewModel);

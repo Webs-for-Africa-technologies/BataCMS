@@ -35,7 +35,12 @@ namespace BataCMS
         public void ConfigureServices(IServiceCollection services)
         {
             //Server configuration 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt => { 
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 7; 
+                opt.Password.RequireNonAlphanumeric = false;
+            
+            }).AddEntityFrameworkStores<AppDbContext>();
             services.AddIdentityCore<VendorUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
 

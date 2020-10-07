@@ -22,7 +22,9 @@ namespace BataCMS.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>()
                 .HasIndex(b => b.CategoryName).IsUnique(true);
-            modelBuilder.Entity<ApplicationUser>().HasAlternateKey(p => new { p.IDNumber, p.PhoneNumber}); 
+            modelBuilder.Entity<ApplicationUser>().HasAlternateKey(p => new { p.IDNumber, p.PhoneNumber});
+            modelBuilder.Entity<ApplicationUser>().HasIndex(p => p.PhoneNumber).IsUnique();
+
 
         }
 
