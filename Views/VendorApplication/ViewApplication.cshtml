@@ -63,15 +63,13 @@
                     <br>
                     <h4>Proof of Residency</h4>
                     <span class="image fit"><img src="@Model.ResidenceProof" alt="" /></span>
-                    }
                 </div>
 
 
                 @if (User.IsInRole("Employee"))
                 {
-                    <form method="post" asp-action="ApproveApplication" asp-route-applicationId="@Model.VendorApplicationId">
-                        <button class="btn btn btn-success">Approve Application</button>
-                    </form>
+
+                    <a class="button" asp-action="ApplicationApproval" asp-route-applicationId="@Model.VendorApplicationId"> Approve Application</a>
                     <button onclick="DisplayForm()" class="btn btn btn-danger">Decline Application</button>
 
 

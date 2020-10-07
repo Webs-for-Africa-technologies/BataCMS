@@ -29,6 +29,10 @@
     <Compile Remove="Migrations\20200930124427_DatabaseUpdate.Designer.cs" />
     <Compile Remove="Migrations\20201006114316_Invoice.cs" />
     <Compile Remove="Migrations\20201006114316_Invoice.Designer.cs" />
+    <Compile Remove="Migrations\20201007211459_VendorUserIdentity.cs" />
+    <Compile Remove="Migrations\20201007211459_VendorUserIdentity.Designer.cs" />
+    <Compile Remove="Migrations\20201007212445_ReAddingVendorId.cs" />
+    <Compile Remove="Migrations\20201007212445_ReAddingVendorId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

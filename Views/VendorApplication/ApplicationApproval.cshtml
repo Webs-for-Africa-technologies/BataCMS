@@ -1,0 +1,44 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model COHApp.ViewModels.ApplicationApprovalViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Application Approval</title>
+</head>
+<body>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <form enctype="multipart/form-data" asp-controller="VendorApplication" asp-action="ApplicationApproval" method="post" class="mt-3">
+                    <div class="field">
+                        <label asp-for="CardNumber" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="CardNumber" class="form-control" placeholder="Enter Vendor CardNumber" />
+                            <span asp-validation-for="CardNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="ApplicationId"  value="@ViewBag.applicationId" />
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Submit Application</button>
+                        </div>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+

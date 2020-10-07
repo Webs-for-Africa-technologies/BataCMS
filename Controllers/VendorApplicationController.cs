@@ -19,6 +19,7 @@ using COHApp.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using COHApp.ViewModels;
+using COHApp.Data;
 
 namespace COHApp.Controllers
 {
@@ -28,13 +29,16 @@ namespace COHApp.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IVendorApplicaitonRepository _vendorApplicationRepository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<VendorUser> _vendorUserManager;
 
 
-        public VendorApplicationController(IWebHostEnvironment webHostEnvironment, IVendorApplicaitonRepository vendorApplicaitonRepository, UserManager<ApplicationUser> userManager)
+
+        public VendorApplicationController(UserManager<VendorUser> vendorUserManager, IWebHostEnvironment webHostEnvironment, IVendorApplicaitonRepository vendorApplicaitonRepository, UserManager<ApplicationUser> userManager)
         {
             _webHostEnvironment = webHostEnvironment;
             _vendorApplicationRepository = vendorApplicaitonRepository;
             _userManager = userManager;
+            _vendorUserManager = vendorUserManager;
         }
 
         [HttpGet]
@@ -199,20 +203,63 @@ namespace COHApp.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ApproveApplication(int applicationId)
+
+        [HttpGet]
+        public IActionResult ApplicationApproval(int applicationId)
         {
-            VendorApplication application = await _vendorApplicationRepository.GetApplicationByIdAsync(applicationId);
-            application.Status = "Approved";
+            ViewBag.applicationId = applicationId;
+            return View();
+        }
 
-            //Add the user to the VendorRole
-            ApplicationUser user = await _userManager.FindByIdAsync(application.ApplicantId);
-            await _userManager.RemoveFromRoleAsync(user, "User");
-            await _userManager.AddToRoleAsync(user, "Vendor");
+        [HttpPost]
+        public async Task<IActionResult> ApplicationApproval(ApplicationApprovalViewModel model)
+        {
+            VendorApplication application = await _vendorApplicationRepository.GetApplicationByIdAsync(model.ApplicationId);
+
+            if (ModelState.IsValid)
+            {
+                //Add the user to the VendorRole
+                ApplicationUser user = await _userManager.FindByIdAsync(application.ApplicantId);
 
 
-            await _vendorApplicationRepository.UpdateApplicationAsync(application);
-            return RedirectToAction("ListApplications", "VendorApplication");
+                //Add the user to vendorUser table 
+
+                VendorUser vendorUser = new VendorUser
+                { 
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UserName = user.UserName,
+                    PhoneNumber = user.PhoneNumber,
+                    IDNumber = user.IDNumber,
+                    PasswordHash = user.PasswordHash,
+                    CardNumber = model.CardNumber,
+                    PhotoIDUrl = application.IdProofUrl
+                };
+
+                //remove existing user 
+                await _userManager.DeleteAsync(user); 
+
+                //add new vendorUser
+                IdentityResult result =  await _vendorUserManager.CreateAsync(vendorUser);
+
+                if (result.Succeeded)
+                {
+                    var vendor = await _userManager.FindByPhoneNumber(user.PhoneNumber);
+                    await _userManager.AddToRoleAsync(vendor, "Vendor");
+                    application.Status = "Approved";
+                    await _vendorApplicationRepository.UpdateApplicationAsync(application);
+                    return RedirectToAction("ListApplications", "VendorApplication");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+
+            }
+            return View();
         }
 
         [HttpPost]
