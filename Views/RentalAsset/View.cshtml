@@ -22,7 +22,7 @@
                     <h4>@Model.Location</h4>
 
                     <div class="btn-ground">
-                        <a asp-action="AddToCheckout" asp-controller="Checkout" asp-route-itemId="@Model.RentalAssetId" asp-route-selectedOptions="dummyData" type="button" class="btn btn-primary" id="addToCartBtn"><span class="fas fa-shopping-cart"></span>Make a Booking</a>
+                        <a asp-action="MakeBooking" asp-controller="Lease" asp-route-rentalAssetId="@Model.RentalAssetId"  type="button" class="button" id="addToCartBtn">Make a Booking</a>
                     </div>
                     @if (User.IsInRole("Employee"))
                     {

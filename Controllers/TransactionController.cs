@@ -55,7 +55,7 @@ namespace COHApp.Controllers
             var totalDays = (lease.leaseTo - lease.leaseFrom).TotalDays;
             decimal transactionTotal = rentalAsset.Price * (decimal)totalDays;
 
-            TransactionCheckoutViewModel vm = new TransactionCheckoutViewModel()
+            TransactionCheckoutViewModel vm = new TransactionCheckoutViewModel()    
             {
                 AssetPricing = rentalAsset.Price,
                 RentalDuration = totalDays,
@@ -126,7 +126,8 @@ namespace COHApp.Controllers
                     TransactionDate = DateTime.Now,
                     TransactionNotes = model.TransactionNotes,
                     TransactionType = model.TransactionType,
-                    LeaseId = lease.LeaseId
+                    LeaseId = lease.LeaseId,
+                    VendorUserId = user.Id,
                 };
 
                 var ActiveLease = new ActiveLease

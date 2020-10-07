@@ -32,7 +32,6 @@ namespace COHApp.Controllers
         public async Task<IActionResult> MakeBooking(Lease lease)
         {
             // add the to the leave 
-
             if (ModelState.IsValid)
             {
                var success =  await _leaseRepository.AddLeaseAsync(lease);

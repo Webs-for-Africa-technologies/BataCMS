@@ -17,7 +17,7 @@ namespace BataCMS.Data.Models
         [ScaffoldColumn(false)]
         public decimal TransactionTotal { get; set; }
 
-        public int VendorUserId { get; set; }
+        public string VendorUserId { get; set; }
 
         [Required(ErrorMessage = "Please enter your first name")]
         [StringLength(50)]
