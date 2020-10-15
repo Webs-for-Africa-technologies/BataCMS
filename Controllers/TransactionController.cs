@@ -144,6 +144,7 @@ namespace COHApp.Controllers
                 {
                     await _rentalAssetRepository.BookAsset(lease.leaseTo, rentalAsset.RentalAssetId);
                     await _activeLeaseRepository.AddActiveLeaseAsync(ActiveLease);
+                    await _leaseRepository.RemoveUnPaidLeases();
                 }
 
                 return RedirectToAction("CheckoutComplete");

@@ -12,5 +12,7 @@ namespace COHApp.Data.Interfaces
 
         Task<Lease> GetLeaseById(int leaseId);
 
+        public Task RemoveUnPaidLeases();
+
     }
 }
