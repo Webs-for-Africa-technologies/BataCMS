@@ -86,7 +86,7 @@ namespace BataCMS.Controllers
 
                 var existingNumber = _userManager.FindByPhoneNumber(registerViewModel.Number);
 
-                if (existingNumber == null)
+                if (existingNumber.Result == null)
                 {
                     var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
