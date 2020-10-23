@@ -1,6 +1,6 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
-
+ 
 <html>
 <head>
     <title>Home</title>
@@ -61,9 +61,9 @@
 
             }
 
-            @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
-            {
 
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
+            { 
                 <li class="nav-item">
                     <a asp-action="List" asp-controller="RentalAsset">List Assets</a>
                 </li>
@@ -91,7 +91,10 @@
 
     </nav>
 
+
+
     <div>
+
         @RenderBody()
     </div>
     <script src="~/js/jquery.min.js"></script>

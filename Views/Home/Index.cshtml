@@ -14,9 +14,22 @@
 </head>
 <body>
 
-    <div id="wrapper">
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+    {
+        var user = UserManager.GetUserAsync(User).Result;
+        if (!UserManager.IsPhoneNumberConfirmedAsync(user).Result)
+        {
+            <div class="jumbotron">
+                <h1>Phone Number not verified</h1>
+                <p class="lead">Verify your phone number to enable text notifications on applicaiton updates.</p>
+                <a class="button" style="z-index: 999;" asp-action="ConfirmPhone" asp-controller="Account" asp-route-phoneNumber="@user.PhoneNumber" role="button">Verify</a>
+            </div>
 
+        }
+    }
+    <div id="wrapper">
         <section id="banner" class="major">
+
             <div class="inner">
                 <header class="major">
 
@@ -48,17 +61,17 @@
                         </p>
                     }
 
-                <ul class="actions">
-                    @if (signInManager.IsSignedIn(User))
-                    {
-                        <li><a href="#one" class="button next scrolly">Get Started</a></li>
+                    <ul class="actions">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li><a href="#one" class="button next scrolly">Get Started</a></li>
 
-                    }
-                    else
-                    {
-                        <li><a class="button" id="loginLink" asp-controller="Account" asp-action="Login"> Log in </a></li>
-                    }
-                </ul>
+                        }
+                        else
+                        {
+                            <li><a class="button" id="loginLink" asp-controller="Account" asp-action="Login"> Log in </a></li>
+                        }
+                    </ul>
                 </div>
             </div>
         </section>
