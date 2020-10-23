@@ -17,6 +17,9 @@ using BataCMS.Infrastructure;
 using COHApp.Data.Interfaces;
 using COHApp.Data.Repositories;
 using COHApp.Data.Models;
+using Twilio;
+using COHApp.Data.Models.Configuration;
+
 
 namespace BataCMS
 {
@@ -26,10 +29,12 @@ namespace BataCMS
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
         readonly IConfigurationRoot _configurationRoot;
+        private readonly IConfiguration Configuration;
 
-        public Startup( IHostEnvironment hostEnvironment)
+        public Startup( IHostEnvironment hostEnvironment, IConfiguration configuration)
         {
             _configurationRoot = new ConfigurationBuilder().SetBasePath(hostEnvironment.ContentRootPath).AddJsonFile("appsettings.json").Build();
+            Configuration = configuration;
 
         }
         public void ConfigureServices(IServiceCollection services)
@@ -56,15 +61,9 @@ namespace BataCMS
             services.AddTransient<IActiveLeaseRepository, ActiveLeaseRepository>();
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
 
-
-
-
-
-
-
-
             services.AddSignalR();
 
+            //services.Configure<TwilioAccountDetails>(Configuration.GetSection("TwilioAccountDetails"));
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMemoryCache();
@@ -76,7 +75,11 @@ namespace BataCMS
 
             services.AddLiveReload();
 
+            var accountSid = Configuration["Twilio:AccountSID"];
+            var authToken = Configuration["Twilio:AuthToken"];
+            TwilioClient.Init(accountSid, authToken);
 
+            services.Configure<TwilioVerifySettings>(Configuration.GetSection("Twilio"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

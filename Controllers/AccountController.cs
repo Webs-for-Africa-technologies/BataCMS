@@ -5,9 +5,13 @@ using System.Threading.Tasks;
 using BataCMS.Data.Models;
 using BataCMS.ViewModels;
 using COHApp.Data;
+using COHApp.Data.Models.Configuration;
+using COHApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Twilio.Rest.Verify.V2.Service;
 
 namespace BataCMS.Controllers
 {
@@ -15,12 +19,14 @@ namespace BataCMS.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly TwilioVerifySettings _settings;
 
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(IOptions<TwilioVerifySettings> settings, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _settings = settings.Value;
 
         }
 
@@ -70,6 +76,65 @@ namespace BataCMS.Controllers
             return View();
         }
 
+
+        public ActionResult ConfirmPhone( string phoneNumber)
+        {
+            ConfirmPhoneViewModel vm = new ConfirmPhoneViewModel
+            {
+                PhoneNumber = phoneNumber
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmPhone(ConfirmPhoneViewModel confirmPhoneViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var verification = await VerificationCheckResource.CreateAsync(
+                        to: confirmPhoneViewModel.PhoneNumber,
+                        code: confirmPhoneViewModel.VerificationCode,
+                        pathServiceSid: _settings.VerificationServiceSID
+                    );
+
+                    if (verification.Status == "approved")
+                    {
+                        var identityUser = await _userManager.GetUserAsync(User);
+                        identityUser.PhoneNumberConfirmed = true;
+                        var updateResult = await _userManager.UpdateAsync(identityUser);
+
+                        if (updateResult.Succeeded)
+                        {
+                            return RedirectToAction("ConfirmPhoneSuccess");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "There was an error confirming the verification code, please try again");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", $"There was an error confirming the verification code: {verification.Status}");
+                    }
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("",
+                        "There was an error confirming the code, please check the verification code is correct and try again");
+                }
+
+            }
+            return View(confirmPhoneViewModel);
+        }
+
+        public ActionResult ConfirmPhoneSuccess()
+        {
+            return View();
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -95,14 +160,35 @@ namespace BataCMS.Controllers
                         //add the user to User role by default. 
                         await _userManager.AddToRoleAsync(user, "User");
 
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+
                         if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             return RedirectToAction("ListUsers", "Admin");
                         }
 
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Index", "Home");
+                        try
+                        {
+                            var verification = await VerificationResource.CreateAsync(
+                                to: registerViewModel.Number,
+                                channel: "sms",
+                                pathServiceSid: _settings.VerificationServiceSID
+                            );
+
+                            if (verification.Status == "pending")
+                            {
+                                return RedirectToAction("ConfirmPhone", new { phoneNumber = registerViewModel.Number });
+                            }
+
+                            ModelState.AddModelError("", $"There was an error sending the verification code: {verification.Status}");
+                        }
+                        catch (Exception)
+                        {
+                            ModelState.AddModelError("",
+                                "There was an error sending the verification code, please check the phone number is correct and try again");
+                        }
                     }
+
                     else
                     {
                         foreach (var error in result.Errors)
@@ -128,6 +214,8 @@ namespace BataCMS.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
+
+
 
     }
 }
