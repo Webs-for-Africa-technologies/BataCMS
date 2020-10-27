@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model COHApp.ViewModels.ListUsersViewModel
 
 @{
     Layout = "~/Views/Shared/_SearchBarLayout.cshtml";
@@ -13,15 +13,28 @@
         <div id="wrapper">
             <div class="inner">
                 <header class="major">
-                    <h1>All Users</h1>
+                    <h1>@ViewBag.Role</h1>
                 </header>
-                @if (Model.Any())
+                @if (Model.Users.Any())
                 {
                     <a class="btn btn-primary" asp-controller="Account" asp-action="Register"> Add a new user</a>
                     <a asp-action="ListRoles" asp-controller="Admin" class="btn btn-primary">Manage User Roles</a>
+                    <div class="dropdown-menu">
+                        @if (Model.Roles.Any())
+                        {
+                            @foreach (var role in Model.Roles)
+                            {
+                                <a asp-controller="Admin" asp-action="ListUsers" asp-route-role="@role.Name"> @role.Name</a>
+                            }
+
+                            <a asp-controller="Admin" asp-action="ListUsers" >All Users</a>
 
 
-                    foreach (var user in Model)
+                        }
+
+                    </div>
+
+                    foreach (var user in Model.Users)
                     {
                         <div class="table-wrapper">
                             <table>
@@ -51,13 +64,13 @@
                 {
                     <div class="card">
                         <div class="header">
-                            No Users Created Yet!!
+                            No such users
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">
                                 Use the button below to create a new user
                             </h5>
-                            <a class="btn button" asp-controller="Account" asp-action="Register">Add a New User</a>
+                            <a class="btn button" asp-controller="Admin" asp-action="ListUsers">All Users</a>
 
                         </div>
                     </div>

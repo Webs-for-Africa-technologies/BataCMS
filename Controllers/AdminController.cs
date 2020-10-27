@@ -167,25 +167,68 @@ namespace COHApp.Controllers
 
 
         [HttpGet]
-        public IActionResult ListUsers()
+        public IActionResult ListUsers(string role)
         {
-            var users = _userManager.Users;
-            return View(users);
-        }
 
-        [HttpPost]
-        public IActionResult ListUsers(string SearchString)
-        {
-            if (!string.IsNullOrEmpty(SearchString))
+            string _role = role;
+            IEnumerable<ApplicationUser> users;
+            
+            if (!string.IsNullOrEmpty(role))
             {
-                var searchedUsers = _userManager.Users.Where(p => p.UserName.Contains(SearchString));
-                return View(searchedUsers);
+                users = _userManager.GetUsersInRoleAsync(role).Result;
+                ViewBag.Role = role;
             }
             else
             {
-                var users = _userManager.Users;
-                return View(users);
+                users = _userManager.Users;
+                ViewBag.Role = "All Users";
             }
+
+
+            var roles = _roleManager.Roles;
+
+            var vm = new ListUsersViewModel 
+            {
+                Users = users,
+                Roles = roles,
+
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult ListUsers(string role, string SearchString)
+        {
+            string _role = role;
+            IEnumerable<ApplicationUser> users;
+
+            if (!string.IsNullOrEmpty(role))
+            {
+                users = _userManager.GetUsersInRoleAsync(role).Result;
+                ViewBag.Role = role;
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    users = users.Where(p => p.UserName.Contains(SearchString));
+                }
+            }
+            else if (!string.IsNullOrEmpty(SearchString))
+            {
+                users = _userManager.Users.Where(p => p.UserName.Contains(SearchString));
+
+            }
+            else
+            {
+                users = _userManager.Users;
+                ViewBag.Role = "All Users";
+            }
+            var roles = _roleManager.Roles;
+            var vm = new ListUsersViewModel
+            {
+                Users = users,
+                Roles = roles
+            };
+            return View(vm);
         }
 
 
@@ -352,7 +395,6 @@ namespace COHApp.Controllers
             }
             return processedNumber;
         }
-
 
     }
 
