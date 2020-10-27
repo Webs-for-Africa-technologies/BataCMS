@@ -227,7 +227,7 @@ namespace COHApp.Controllers
                 }
 
                 user.UserName = model.UserName;
-                user.PhoneNumber = model.Number;
+                user.PhoneNumber = ProcessPhoneNumber(model.Number);
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
 
@@ -331,6 +331,28 @@ namespace COHApp.Controllers
         {
             return View();
         }
+
+        private string ProcessPhoneNumber(string phoneNumber)
+        {
+            string processedNumber = null;
+            string extension = "+263";
+
+            if (phoneNumber != null)
+            {
+                string startingNum = phoneNumber.Substring(0, 1);
+
+                //not in E.164 format
+                if (startingNum != "+")
+                {
+                    if (startingNum == "0")
+                    {
+                        processedNumber = extension + phoneNumber.Substring(1);
+                    }
+                }
+            }
+            return processedNumber;
+        }
+
 
     }
 

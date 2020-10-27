@@ -47,7 +47,9 @@ namespace BataCMS.Controllers
                 return View(loginViewModel);
             }
 
-            var user = await _userManager.FindByPhoneNumber(loginViewModel.Number);
+            string phoneNumber = ProcessPhoneNumber(loginViewModel.Number);
+
+            var user = await _userManager.FindByPhoneNumber(phoneNumber);
 
             if (user != null)
             {
@@ -147,9 +149,13 @@ namespace BataCMS.Controllers
             IDictionary<string, object> value = new Dictionary<string, object>();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = registerViewModel.LastName+registerViewModel.IdNumber, FirstName = registerViewModel.FirstName, LastName = registerViewModel.LastName, PhoneNumber = registerViewModel.Number, IDNumber = registerViewModel.IdNumber };
 
-                var existingNumber = _userManager.FindByPhoneNumber(registerViewModel.Number);
+                //Convet number to E.164 format 
+                string phoneNumber = ProcessPhoneNumber(registerViewModel.Number);
+
+                var user = new ApplicationUser { UserName = registerViewModel.LastName+registerViewModel.IdNumber, FirstName = registerViewModel.FirstName, LastName = registerViewModel.LastName, PhoneNumber = phoneNumber, IDNumber = registerViewModel.IdNumber };
+
+                var existingNumber = _userManager.FindByPhoneNumber(phoneNumber);
 
                 if (existingNumber.Result == null)
                 {
@@ -170,14 +176,14 @@ namespace BataCMS.Controllers
                         try
                         {
                             var verification = await VerificationResource.CreateAsync(
-                                to: registerViewModel.Number,
+                                to: phoneNumber,
                                 channel: "sms",
                                 pathServiceSid: _settings.VerificationServiceSID
                             );
 
                             if (verification.Status == "pending")
                             {
-                                return RedirectToAction("ConfirmPhone", new { phoneNumber = registerViewModel.Number });
+                                return RedirectToAction("ConfirmPhone", new { phoneNumber = phoneNumber });
                             }
 
                             ModelState.AddModelError("", $"There was an error sending the verification code: {verification.Status}");
@@ -259,9 +265,9 @@ namespace BataCMS.Controllers
                 user.UserName = model.UserName;
                 user.IDNumber = model.IdNumber;
 
-                if (user.PhoneNumber != model.Number)
+                if (user.PhoneNumber != ProcessPhoneNumber(model.Number))
                 {
-                    user.PhoneNumber = model.Number;
+                    user.PhoneNumber = ProcessPhoneNumber(model.Number);
                     user.PhoneNumberConfirmed = false;
                 }
 
@@ -281,6 +287,26 @@ namespace BataCMS.Controllers
             }
         }
 
+        private string ProcessPhoneNumber(string phoneNumber)
+        {
+            string processedNumber = null;
+            string extension = "+263";
+
+            if (phoneNumber != null)
+            {
+                string startingNum = phoneNumber.Substring(0, 1);
+
+                //not in E.164 format
+                if (startingNum != "+")
+                {
+                    if (startingNum == "0")
+                    {
+                       processedNumber = extension + phoneNumber.Substring(1);
+                    }
+                }
+            }
+            return processedNumber;
+        }
 
 
     }
