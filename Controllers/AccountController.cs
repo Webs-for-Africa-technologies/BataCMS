@@ -215,6 +215,72 @@ namespace BataCMS.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ManageAccountAsync(string id)
+        {
+            var user = _userManager.FindByIdAsync(id);
+
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={id} cannot be found";
+                return View("NotFound");
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(user.GetAwaiter().GetResult());
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Result.Id,
+                UserName = user.Result.UserName,
+                FirstName = user.Result.FirstName,
+                LastName = user.Result.LastName,
+                IdNumber = user.Result.IDNumber,
+                Number = user.Result.PhoneNumber,
+                Roles = currentRoles
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageAccountAsync(EditUserViewModel model)
+        {
+            var user = _userManager.FindByIdAsync(model.Id).GetAwaiter().GetResult();
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
+                return View("NotFound");
+            }
+
+            else
+            {
+
+                user.UserName = model.UserName;
+                user.IDNumber = model.IdNumber;
+
+                if (user.PhoneNumber != model.Number)
+                {
+                    user.PhoneNumber = model.Number;
+                    user.PhoneNumberConfirmed = false;
+                }
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+       
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+        }
+
 
 
     }

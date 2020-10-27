@@ -196,6 +196,7 @@ namespace COHApp.Controllers
             return View(roles);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> ManageUserAsync(EditUserViewModel model)
         {
@@ -227,25 +228,33 @@ namespace COHApp.Controllers
 
                 user.UserName = model.UserName;
                 user.PhoneNumber = model.Number;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
 
                 var result = await _userManager.UpdateAsync(user);
 
                 if (result.Succeeded)
                 {
-                    if (roleResult.Succeeded)
+                    if (roleResult != null)
                     {
-                        return RedirectToAction("ListUsers", "Admin");
+                        if (roleResult.Succeeded)
+                        {
+                            return RedirectToAction("ListUsers", "Admin");
+                        }
+                        foreach (var error in roleResult.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+
                     }
-                    foreach (var error in roleResult.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
+
+                    return RedirectToAction("ListUsers", "Admin");
+
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
                 return View(model);
             }
         }
