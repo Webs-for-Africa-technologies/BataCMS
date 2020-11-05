@@ -19,42 +19,31 @@ namespace BataCMS.Controllers
     public class HomeController : Controller
     {
 
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IServiceTypeRepository _serviceTypeRepository;
         private readonly IRentalAssetRepository _rentalAssetRepository;
 
 
 
-        public HomeController( ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
+        public HomeController( IServiceTypeRepository serviceTypeRepository, IRentalAssetRepository rentalAssetRepository)
         {;
-            _categoryRepository = categoryRepository;
+            _serviceTypeRepository = serviceTypeRepository;
             _rentalAssetRepository = rentalAssetRepository; 
         }
-        public ViewResult Index(string category)
+        public ViewResult Index()
         {
-            string _category = category;
-            IEnumerable<RentalAsset> rentalAssets;
+            return View();
+        }
 
-            if (string.IsNullOrEmpty(category))
-            {
-                rentalAssets = _rentalAssetRepository.rentalAssets.Where(p => p.Category.CategoryName == "Mbare Musika");
-            }
-            else
-            {
-                rentalAssets = _rentalAssetRepository.rentalAssets.Where(p => p.Category.CategoryName.Equals(_category));
-            }
 
+        public ViewResult OnDemandIndex()
+        {
             var homeViewModel = new HomeViewModel
             {
-                HomeItems = rentalAssets
+                ServiceTypes = _serviceTypeRepository.ServiceTypes
             };
 
             return View(homeViewModel);
         }
 
-        public RedirectToActionResult SetCurrency(int currencyId) 
-        {
-            HttpContext.Session.SetInt32("CurrencyId", currencyId);
-            return RedirectToAction("Index");
-        }
     }
 }

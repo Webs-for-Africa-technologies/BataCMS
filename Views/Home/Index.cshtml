@@ -3,7 +3,6 @@
 @model HomeViewModel
 <head>
     <link href="~/Content/Home.css" rel="stylesheet" />
-    <link href="~/Content/elementor.css" rel="stylesheet" />
     <link href="~/Content/animations.css" rel="stylesheet" />
 
 </head>
@@ -104,6 +103,16 @@
 
                     <article>
                         <span class="image">
+                            <img src="images/pic05.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="ListServiceTypes" asp-controller="Admin" class="link">Service Management</a></h3>
+                            <p>Manage the available categories</p>
+                        </header>
+                    </article>
+
+                    <article>
+                        <span class="image">
                             <img src="images/pic02.jpg" alt="" />
                         </span>
                         <header class="major">
@@ -138,6 +147,17 @@
 
                     <article>
                         <span class="image">
+                            <img src="images/pic05.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="MyRequests" asp-controller="ODServiceRequest" asp-route-applicantId="@UserManager.GetUserId(User)" class="link">My Service Requests</a></h3>
+                            <p>View Current Status of your service requests</p>
+                        </header>
+                    </article>
+
+
+                    <article>
+                        <span class="image">
                             <img src="images/pic02.jpg" alt="" />
                         </span>
                         <header class="major">
@@ -151,8 +171,8 @@
                             <img src="images/pic03.jpg" alt="" />
                         </span>
                         <header class="major">
-                            <h3><a href="#" class="link">Parking Application</a></h3>
-                            <p>Lorem etiam nullam</p>
+                            <h3><a asp-action="OnDemandIndex" asp-controller="Home" class="link">On Demand Services</a></h3>
+                            <p>Request for personal services</p>
                         </header>
                     </article>
 
@@ -177,6 +197,16 @@
                         <header class="major">
                             <h3><a asp-action="ListApplications" asp-controller="VendorApplication" class="link">View Applications</a></h3>
                             <p>View Applications</p>
+                        </header>
+                    </article>
+
+                    <article>
+                        <span class="image">
+                            <img src="images/pic09.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="ListRequests" asp-controller="ODServiceRequest" class="link">View Service Requests</a></h3>
+                            <p>View Pending Service Requests</p>
                         </header>
                     </article>
 

@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201104193057_DispatchedServices")]
+    partial class DispatchedServices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,14 +299,20 @@ namespace BataCMS.Migrations
                     b.Property<DateTime>("DispatchTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ServiceRequestId")
+                    b.Property<string>("ServiceRequestId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ServiceRequestODServiceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DispatchedServiceId");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("ServiceRequestId");
+                    b.HasIndex("ServiceRequestODServiceId");
 
                     b.ToTable("DispatchedServices");
                 });
@@ -366,9 +374,9 @@ namespace BataCMS.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.ServiceRequest", b =>
+            modelBuilder.Entity("COHApp.Data.Models.ODService", b =>
                 {
-                    b.Property<int>("ServiceRequestId")
+                    b.Property<int>("ODServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -401,11 +409,11 @@ namespace BataCMS.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ServiceRequestId");
+                    b.HasKey("ODServiceId");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ServiceRequests");
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.ServiceType", b =>
@@ -660,11 +668,9 @@ namespace BataCMS.Migrations
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("COHApp.Data.Models.ServiceRequest", "ServiceRequest")
+                    b.HasOne("COHApp.Data.Models.ODService", "ServiceRequest")
                         .WithMany()
-                        .HasForeignKey("ServiceRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ServiceRequestODServiceId");
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.Image", b =>
@@ -687,7 +693,7 @@ namespace BataCMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.ServiceRequest", b =>
+            modelBuilder.Entity("COHApp.Data.Models.ODService", b =>
                 {
                     b.HasOne("BataCMS.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

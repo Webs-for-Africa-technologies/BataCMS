@@ -34,6 +34,24 @@
     <Compile Remove="Migrations\20201007211459_VendorUserIdentity.Designer.cs" />
     <Compile Remove="Migrations\20201007212445_ReAddingVendorId.cs" />
     <Compile Remove="Migrations\20201007212445_ReAddingVendorId.Designer.cs" />
+    <Compile Remove="Migrations\20201102152935_ODService.cs" />
+    <Compile Remove="Migrations\20201102152935_ODService.Designer.cs" />
+    <Compile Remove="Migrations\20201102174752_ServiceTypeId.cs" />
+    <Compile Remove="Migrations\20201102174752_ServiceTypeId.Designer.cs" />
+    <Compile Remove="Migrations\20201102175652_ServiceTypeId.cs" />
+    <Compile Remove="Migrations\20201102175652_ServiceTypeId.Designer.cs" />
+    <Compile Remove="Migrations\20201102175818_ServiceTypeId.cs" />
+    <Compile Remove="Migrations\20201102175818_ServiceTypeId.Designer.cs" />
+    <Compile Remove="Migrations\20201102180033_ServiceTypeId.cs" />
+    <Compile Remove="Migrations\20201102180033_ServiceTypeId.Designer.cs" />
+    <Compile Remove="Migrations\20201105070702_ApplicationUserIdRemoval.cs" />
+    <Compile Remove="Migrations\20201105070702_ApplicationUserIdRemoval.Designer.cs" />
+    <Compile Remove="Migrations\20201105070824_ApplicationUserIdRemoval.cs" />
+    <Compile Remove="Migrations\20201105070824_ApplicationUserIdRemoval.Designer.cs" />
+    <Compile Remove="Migrations\20201105084039_ServiceRequest.cs" />
+    <Compile Remove="Migrations\20201105084039_ServiceRequest.Designer.cs" />
+    <Compile Remove="Migrations\20201105084517_ServiceRequest.cs" />
+    <Compile Remove="Migrations\20201105084517_ServiceRequest.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +94,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Content\Images\" />
     <Folder Include="wwwroot\images\applications\" />
+    <Folder Include="wwwroot\images\ODServiceRequests\" />
     <Folder Include="wwwroot\images\rentalAssets\" />
     <!-- extends watching group to include *.js files -->
   </ItemGroup>

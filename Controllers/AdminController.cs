@@ -24,15 +24,17 @@ namespace COHApp.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IRentalAssetRepository _rentalAssetRepository;
+        private readonly IServiceTypeRepository _serviceTypeRepository;
 
 
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
+        public AdminController(IServiceTypeRepository serviceTypeRepository, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ICategoryRepository categoryRepository, IRentalAssetRepository rentalAssetRepository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _categoryRepository = categoryRepository;
-            _rentalAssetRepository = rentalAssetRepository; 
+            _rentalAssetRepository = rentalAssetRepository;
+            _serviceTypeRepository = serviceTypeRepository;
         }   
 
         [HttpGet]
@@ -394,6 +396,92 @@ namespace COHApp.Controllers
                 }
             }
             return processedNumber;
+        }
+
+        [HttpGet]
+        public IActionResult ListServiceTypes()
+        {
+            var serviceTypes = _serviceTypeRepository.ServiceTypes;
+            return View(serviceTypes);
+        }
+
+        [HttpGet]
+        public IActionResult AddServiceType()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddServiceTypeAsync(AddServiceTypeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ServiceType serviceType = new ServiceType
+                {
+                    ServiceName = model.ServiceName,
+                    ServiceDescription = model.Description,
+                    Pricing = model.Pricing
+                };
+
+                var existingServiceType = _serviceTypeRepository.ServiceTypes.FirstOrDefault(p => p.ServiceName == serviceType.ServiceName);
+
+                if (existingServiceType == null)
+                {
+                    await _serviceTypeRepository.AddServiceTypeAsync(serviceType);
+                    return RedirectToAction("ListServiceTypes", "Admin");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The Category already exists");
+                }
+
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditServiceTypeAsync(int id)
+        {
+            var serviceType = await _serviceTypeRepository.GetServiceTypeByIdAsync(id);
+            int _serviceTypeId = id;
+            if (serviceType == null)
+            {
+                ViewBag.ErrorMessage = $"User with category id ={id} cannot be found";
+                return View("NotFound");
+            }
+
+
+            var model = new EditServiceTypeViewModel
+            {
+                Id = serviceType.ServiceTypeId,
+                ServiceTypeName = serviceType.ServiceName,
+                Description = serviceType.ServiceDescription,
+                Pricing = serviceType.Pricing
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditServiceTypeAsync(EditServiceTypeViewModel model)
+        {
+            var serviceType = await _serviceTypeRepository.GetServiceTypeByIdAsync(model.Id);
+
+            if (serviceType == null)
+            {
+                ViewBag.ErrorMessage = $"User with user id ={model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                serviceType.ServiceName = model.ServiceTypeName;
+                serviceType.ServiceDescription = model.Description;
+                serviceType.Pricing = model.Pricing;
+
+                await _serviceTypeRepository.UpdateServiceTypeAsync(serviceType);
+                return RedirectToAction("ListServiceTypes", "Admin");
+
+            }
         }
 
     }

@@ -1,0 +1,100 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model COHApp.ViewModels.CreateODServiceRequestViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Submit Request</title>
+</head>
+<body>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Service Name: </th>
+                                <th> @ViewBag.ServiceName</th>
+                            </tr>
+
+                            <tr>
+                                <th>Service Cost: </th>
+                                <th> @ViewBag.servicePrice</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <form enctype="multipart/form-data" asp-controller="ODServiceRequest" asp-action="Create" method="post" class="mt-3">
+                    <div class="field">
+                        <label asp-for="FullName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="FullName" class="form-control" placeholder="Name" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="field">
+                        <label asp-for="Location" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="Location" class="form-control" placeholder="Full Address" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="field">
+                        <label asp-for="Image" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <div class="custom-file">
+                                <input asp-for="Image" class="form-control custom-file-input" />
+                                <label class="custom-file-label">Image of incident</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <input type="hidden" asp-for="ApplicantId" class="form-control custom-file-input" value="@UserManager.GetUserId(User)" />
+                    <input type="hidden" asp-for="ServiceTypeId" class="form-control custom-file-input" value="@ViewBag.serviceType" />
+
+
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                        </div>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        })
+    </script>
+}

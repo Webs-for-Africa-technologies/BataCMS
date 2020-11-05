@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201104051221_ODServiceLocation")]
+    partial class ODServiceLocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,31 +286,6 @@ namespace BataCMS.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.DispatchedService", b =>
-                {
-                    b.Property<int>("DispatchedServiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DispatchTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ServiceRequestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DispatchedServiceId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ServiceRequestId");
-
-                    b.ToTable("DispatchedServices");
-                });
-
             modelBuilder.Entity("COHApp.Data.Models.Image", b =>
                 {
                     b.Property<int>("ImageId")
@@ -366,9 +343,9 @@ namespace BataCMS.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.ServiceRequest", b =>
+            modelBuilder.Entity("COHApp.Data.Models.ODService", b =>
                 {
-                    b.Property<int>("ServiceRequestId")
+                    b.Property<int>("ODServiceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -401,11 +378,13 @@ namespace BataCMS.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ServiceRequestId");
+                    b.HasKey("ODServiceId");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ServiceRequests");
+                    b.HasIndex("ServiceTypeId");
+
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.ServiceType", b =>
@@ -654,19 +633,6 @@ namespace BataCMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.DispatchedService", b =>
-                {
-                    b.HasOne("BataCMS.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("COHApp.Data.Models.ServiceRequest", "ServiceRequest")
-                        .WithMany()
-                        .HasForeignKey("ServiceRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("COHApp.Data.Models.Image", b =>
                 {
                     b.HasOne("BataCMS.Data.Models.RentalAsset", null)
@@ -687,11 +653,17 @@ namespace BataCMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("COHApp.Data.Models.ServiceRequest", b =>
+            modelBuilder.Entity("COHApp.Data.Models.ODService", b =>
                 {
                     b.HasOne("BataCMS.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("COHApp.Data.Models.ServiceType", "ServiceType")
+                        .WithMany()
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("COHApp.Data.Models.VendorApplication", b =>

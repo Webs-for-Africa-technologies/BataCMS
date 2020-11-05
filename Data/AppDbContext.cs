@@ -39,6 +39,10 @@ namespace BataCMS.Data
         public DbSet<Image> Image { get; set; }
         public DbSet<ActiveLease> ActiveLeases { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<DispatchedService> DispatchedServices { get; set; }
+
 
 
     }

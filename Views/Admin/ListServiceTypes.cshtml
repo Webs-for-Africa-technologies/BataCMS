@@ -1,0 +1,67 @@
+﻿@model IEnumerable<COHApp.Data.Models.ServiceType>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage Services</title>
+</head>
+<body>
+    <div id="main">
+        <div id="container">
+            <div class="inner">
+                <h1>Manage Services</h1>
+
+                @if (Model.Any())
+                {
+                    <a asp-action="AddServiceType" asp-controller="Admin" class="btn btn-primary">Add a new Service</a>
+
+
+                    foreach (var item in Model)
+                    {
+                        <!-- Break -->
+
+                        <div class="table-wrapper">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Service Id: </th>
+                                        <th> @item.ServiceTypeId</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Service: </td>
+                                        <td>@item.ServiceName</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Description: </td>
+                                        <td> @item.ServiceDescription</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a asp-action="EditServiceType" asp-controller="Admin" asp-route-id="@item.ServiceTypeId" class="button">Manage Service</a>
+                    }
+
+                }
+                else
+                {
+                    <div class="card">
+                        <div class="header">
+                            No Services Created Yet!!
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Use the button below to create a new service
+                            </h5>
+                            <a class="btn btn-primary" asp-controller="Admin" asp-action="AddServiceType">Add a New Service</a>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

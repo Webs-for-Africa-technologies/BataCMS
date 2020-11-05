@@ -1,0 +1,60 @@
+﻿@model IEnumerable<COHApp.Data.Models.ServiceRequest>
+
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pending Requests</title>
+</head>
+
+<div id="main">
+    <div id="wrapper">
+        <div class="inner">
+            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Requests from...</button>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="hour">Last hour</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="day">Last Day...</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="week">Last Week...</a>
+                <a class="divider"></a>
+                <a class="dropdown-item" asp-controller="VendorApplication" asp-action="ListApplications" asp-route-filter="all">All</a>
+            </div>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Application ID</th>
+                        <th>Applicant Name</th>
+                        <th class="text-right">Application Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var line in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@line.ServiceRequestId</td>
+                                <td class="text-left">@line.ApplicantName</td>
+                                <td class="text-right">
+                                    @line.ApplicationDate)
+                                </td>
+                                <td class="text-center"><a class="btn btn-primary" asp-controller="ODServiceRequest" asp-action="ViewRequest" asp-route-requestId="@line.ServiceRequestId"> View</a></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-center">No Requests Made Yet</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

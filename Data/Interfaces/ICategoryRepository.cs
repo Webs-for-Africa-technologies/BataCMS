@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace COHApp.Data.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository 
     {
         IEnumerable<Category> Categories { get;}
 

@@ -1,0 +1,81 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model HomeViewModel
+<head>
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/animations.css" rel="stylesheet" />
+
+</head>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home</title>
+</head>
+<body>
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+    {
+        var user = UserManager.GetUserAsync(User).Result;
+        if (!UserManager.IsPhoneNumberConfirmedAsync(user).Result)
+        {
+            <div class="jumbotron">
+                <h1>Phone Number not verified</h1>
+                <p class="lead">Verify your phone number to enable text notifications on applicaiton updates.</p>
+                <a class="button" style="z-index: 999;" asp-action="ConfirmPhone" asp-controller="Account" asp-route-phoneNumber="@user.PhoneNumber" role="button">Verify</a>
+            </div>
+
+        }
+    }
+    <div id="wrapper">
+        <section id="banner" class="major">
+
+            <div class="inner">
+                <header class="major">
+
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <h1>
+                            Harare OnDemand
+                        </h1>
+                    }
+
+
+                </header>
+                <div class="content">
+
+                        <p>
+                            Look through the services we have on offer 
+                        </p>
+  
+                    <ul class="actions">
+                        <li><a href="#one" class="button next scrolly">Get Started</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <main role="main">
+            <!-- One -->
+            <section id="one" class="tiles">
+
+                @foreach (var item in Model.ServiceTypes)
+                {
+                    <article>
+                        <span class="image">
+                            <img src="images/pic09.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="Create" asp-controller="ODServiceRequest" asp-route-serviceType="@item.ServiceTypeId" class="link">@item.ServiceName</a></h3>
+                            <p>@item.ServiceDescription</p>
+                        </header>
+                    </article>
+
+                }
+
+            </section>
+
+
+        </main>
+    </div>
+</body>
+</html>

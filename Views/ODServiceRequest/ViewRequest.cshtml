@@ -1,0 +1,145 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model COHApp.ViewModels.ViewRequestViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View Request</title>
+</head>
+
+<body>
+    <div id="main">
+        @if (Model.RejectMessage != null)
+        {
+            <div class="card mb-3">
+                <div class="card-header">Rejection Message</div>
+                <div class="card-body">
+                    <h5 class="card-title text-danger">@Model.RejectMessage</h5>
+                </div>
+            </div>
+
+        }
+
+        <div id="wrapper">
+            <div class="inner">
+                <h2>Service Request</h2>
+                <br />
+                <h3>Request No: @Model.ServiceRequestId</h3>
+                <br />
+
+
+
+                <div class="card mb-3">
+                    <div class="card-header">Service</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.ServiceName</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Application Date</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.ApplicationDate</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Applicant Name</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.User.FirstName  @Model.User.LastName</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">ID Number</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.User.IDNumber </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">PhoneNumber</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.User.PhoneNumber </h5>
+                    </div>
+                </div>
+
+
+                <div class="card mb-3">
+                    <div class="card-header">Location</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Location </h5>
+                    </div>
+                </div>
+
+                <div class="6u 12u$(medium)">
+                    <h4>Image</h4>
+                    <span class="image fit"><img src="@Model.ImageUrl" alt="" /></span>
+                    <br>
+                </div>
+
+
+                @if (User.IsInRole("Employee"))
+                {
+
+                    <a class="button" asp-action="DispatchService" asp-route-requestId="@Model.ServiceRequestId" asp-route-userId="@UserManager.GetUserId(User)"> Dispactch Service</a>
+                    <button onclick="DisplayForm()" class="btn btn btn-danger">Decline Request</button>
+
+
+                    <form id="FormDecline" method="post" asp-action="DeclineRequest" asp-controller="ODServiceRequest">
+
+                        <input type="hidden" asp-for="ServiceRequestId" class="form-control custom-file-input" value=" @Model.ServiceRequestId" />
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label asp-for="RejectMessage" class="col-sm-2 col-form-label"></label>
+                                <textarea asp-for="RejectMessage" class="form-control"></textarea>
+                                <span asp-validation-for="RejectMessage" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn btn-danger">Decline Request</button>
+                    </form>
+
+                }
+                else if (User.IsInRole("User"))
+                {
+                    if (Model.Status != "Dispatched")
+                    {
+                        <a asp-action="Edit" asp-controller="ODServiceRequest" asp-route-requestId="@Model.ServiceRequestId" type="button" class="btn btn button">Edit</a>
+                    }
+
+                    if (Model.Status == "Pending")
+                    {
+                        <a asp-action="CancelRequest" asp-controller="ODServiceRequest" asp-route-requestId="@Model.ServiceRequestId" type="button" class="btn btn button">Cancel Request</a>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style>
+    #FormDecline {
+        display: none;
+    }
+</style>
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/jquery/jquery-ui.min.js"></script>
+@section Scripts{
+
+    <script>
+        function DisplayForm() {
+            $("#FormDecline").show();
+        }
+    </script>
+}
+
+
+
+

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<COHApp.Data.Models.ServiceRequest> 
+
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My Requests</title>
+</head>
+
+
+<div id="main">
+    <div id="wrapper">
+        <div class="inner">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Name</th>
+                        <th class="text-right">Date</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var line in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@line.ServiceRequestId</td>
+                                <td class="text-left">@line.ApplicantName</td>
+                                <td class="text-right">
+                                    @line.ApplicationDate)
+                                </td>
+                                <td class="text-left">@line.Status</td>
+                                <td class="text-center"><a class="btn btn-primary" asp-controller="ODServiceRequest" asp-action="ViewRequest" asp-route-requestId="@line.ServiceRequestId">View</a></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <div class="card">
+                                <div class="header">
+                                    No Service Requests Made Yet
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                       Have a look at the services we have on offer. 
+                                    </h5>
+                                    <a class="btn btn-primary" asp-controller="Home" asp-action="OnDemandIndex">Services</a>
+
+                                </div>
+                            </div>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/jquery.js"></script>
+
+@section Scripts{
+
+}
+

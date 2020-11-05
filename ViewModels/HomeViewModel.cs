@@ -9,6 +9,6 @@ namespace BataCMS.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<RentalAsset> HomeItems { get; set; }    
+        public IEnumerable<ServiceType> ServiceTypes { get; set; }    
     }
 }
