@@ -26,6 +26,8 @@ namespace COHApp.Data.Models
 
         public string Status { get; set; }
 
+        public ServiceType ServiceType { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
 
     }

@@ -123,6 +123,16 @@
 
                     <article>
                         <span class="image">
+                            <img src="images/pic10.jpg" alt="" />
+                        </span>
+                        <header class="major">
+                            <h3><a asp-action="List" asp-controller="DispatchedService" class="link">View Dispatched Services</a></h3>
+                            <p>View Booking information</p>
+                        </header>
+                    </article>
+
+                    <article>
+                        <span class="image">
                             <img src="images/pic03.jpg" alt="" />
                         </span>
                         <header class="major">
@@ -150,7 +160,7 @@
                             <img src="images/pic05.jpg" alt="" />
                         </span>
                         <header class="major">
-                            <h3><a asp-action="MyRequests" asp-controller="ODServiceRequest" asp-route-applicantId="@UserManager.GetUserId(User)" class="link">My Service Requests</a></h3>
+                            <h3><a asp-action="MyRequests" asp-controller="ServiceRequest" asp-route-applicantId="@UserManager.GetUserId(User)" class="link">My Service Requests</a></h3>
                             <p>View Current Status of your service requests</p>
                         </header>
                     </article>
@@ -205,7 +215,7 @@
                             <img src="images/pic09.jpg" alt="" />
                         </span>
                         <header class="major">
-                            <h3><a asp-action="ListRequests" asp-controller="ODServiceRequest" class="link">View Service Requests</a></h3>
+                            <h3><a asp-action="ListRequests" asp-controller="ServiceRequest" class="link">View Service Requests</a></h3>
                             <p>View Pending Service Requests</p>
                         </header>
                     </article>

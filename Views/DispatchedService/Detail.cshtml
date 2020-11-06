@@ -1,0 +1,64 @@
+﻿@model COHApp.Data.Models.DispatchedService
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dispatch Details</title>
+</head>
+
+<body>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <h2>Dispatch Details</h2>
+                <br />
+                <h3>Dispatch No: @Model.DispatchedServiceId</h3>
+                <br />
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Service </th>
+                            <th>Location</th>
+                            <th>Requested By</th>
+                            <th class="text-right">Dispatch Time</th>
+                            <th class="text-right">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">@Model.ServiceRequest.ServiceType.ServiceName</td>
+                            <td class="text-left">@Model.ServiceRequest.Location</td>
+                            <td class="text-right">@Model.ServiceRequest.ApplicantName</td>
+                            <td class="text-right">@Model.DispatchTime</td>
+                            <td class="text-right">@Model.ServiceRequest.ServiceType.Pricing</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <div class="card mb-3">
+                    <div class="card-header">Dispatched By:</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Dispacther Number</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.ApplicationUser.PhoneNumber </h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

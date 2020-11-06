@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace COHApp.Controllers
 {
-    public class ODServiceRequestController : Controller
+    public class ServiceRequestController : Controller
     {
 
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -26,7 +26,7 @@ namespace COHApp.Controllers
         private readonly IServiceRequestRepository _oDServiceRequestRepository;
         private readonly IDispatchedServiceRepository _dispatchedServiceRepository;
 
-        public ODServiceRequestController(IDispatchedServiceRepository dispatchedServiceRepository, IServiceRequestRepository oDServiceRequestRepository, IServiceTypeRepository serviceTypeRepository, IWebHostEnvironment webHostEnvironment, IVendorApplicaitonRepository vendorApplicaitonRepository, UserManager<ApplicationUser> userManager)
+        public ServiceRequestController(IDispatchedServiceRepository dispatchedServiceRepository, IServiceRequestRepository oDServiceRequestRepository, IServiceTypeRepository serviceTypeRepository, IWebHostEnvironment webHostEnvironment, IVendorApplicaitonRepository vendorApplicaitonRepository, UserManager<ApplicationUser> userManager)
         {
             _webHostEnvironment = webHostEnvironment;
             _vendorApplicationRepository = vendorApplicaitonRepository;

@@ -4,6 +4,7 @@
 <span class="image fit"><img src="@Model.ImageUrl" alt="" /></span>
 <div class="box alt">
     <h3>@Model.Location</h3>
+    <h3>@Model.Category.CategoryName</h3>
     <br>
     <a id="cartButton" asp-controller="RentalAsset" asp-action="View" asp-route-itemId="@Model.RentalAssetId" type="button" class="btn button">View</a>
 
@@ -29,8 +30,8 @@
     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") && Model.IsAvailable == false && DateTime.Now >= Model.BookTillDate)
     {
         <br /><a asp-action="EndBooking" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Invoice</a>
-        
-     }
+
+    }
 </div>
 
 

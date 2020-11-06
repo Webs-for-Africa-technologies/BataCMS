@@ -107,12 +107,12 @@
                 {
                     if (Model.Status != "Dispatched")
                     {
-                        <a asp-action="Edit" asp-controller="ODServiceRequest" asp-route-requestId="@Model.ServiceRequestId" type="button" class="btn btn button">Edit</a>
+                        <a asp-action="Edit" asp-controller="ServiceRequest" asp-route-requestId="@Model.ServiceRequestId" type="button" class="btn btn button">Edit</a>
                     }
 
                     if (Model.Status == "Pending")
                     {
-                        <a asp-action="CancelRequest" asp-controller="ODServiceRequest" asp-route-requestId="@Model.ServiceRequestId" type="button" class="btn btn button">Cancel Request</a>
+                        <a asp-action="CancelRequest" asp-controller="ServiceRequest" asp-route-requestId="@Model.ServiceRequestId" type="button" class="btn btn button">Cancel Request</a>
                     }
                 }
             </div>

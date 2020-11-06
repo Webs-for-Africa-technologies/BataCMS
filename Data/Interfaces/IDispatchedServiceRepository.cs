@@ -13,7 +13,7 @@ namespace COHApp.Data.Interfaces
 
         public Task<DispatchedService> AddDispatchedServiceAsync(DispatchedService dispatchedService);
 
-        Task<DispatchedService> GetServiceTypeByIdAsync(int id);
+        Task<DispatchedService> GetServiceByIdAsync(int id);
 
         Task UpdateServiceTypeAsync(DispatchedService dispatchedService);
 

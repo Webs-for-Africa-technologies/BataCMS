@@ -16,8 +16,8 @@ namespace COHApp.Data.Models
 
         public DateTime DispatchTime { get; set; }
 
-        public virtual ServiceRequest ServiceRequest { get; set; }
+        public ServiceRequest ServiceRequest { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

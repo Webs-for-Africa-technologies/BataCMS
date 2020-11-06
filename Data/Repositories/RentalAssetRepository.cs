@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using COHApp.Data.Interfaces;
 using COHApp.Data.Models;
 using COHApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BataCMS.Data.Repositories
 {
