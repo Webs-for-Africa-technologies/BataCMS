@@ -7,6 +7,7 @@
             <div class="inner">
                 <h3 class="text-center">Just one more step</h3>
                 <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+                    <input asp-for="ServerId" class="form-control" type="hidden" value="@UserManager.GetUserId(User)" placeholder="@UserManager.GetUserName(User)">
                     <div class="form-group">
                         <div class="col-md-3">
                             <input asp-for="LeaseId" class="form-control disabled" type="text" value="@ViewBag.leaseId">
@@ -35,15 +36,20 @@
                         </table>
                     </div>
 
-                    <div class="field half">
-                        <label asp-for="TransactionType" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-10">
-                            <select asp-for="TransactionType" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["paymentOptions"])">
-                                <option value="">Choose One</option>
-                            </select>
-                            <span asp-validation-for="TransactionType" class="text-danger"></span>
+                    @if (User.IsInRole("Vendor"))
+                    {
+                        <div class="field half">
+                            <label asp-for="TransactionType" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <select asp-for="TransactionType" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["paymentOptions"])">
+                                    <option value="">Choose One</option>
+                                </select>
+                                <span asp-validation-for="TransactionType" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
+
+                    }
+
 
                     <div class="field">
                         <div class="col-md-3">

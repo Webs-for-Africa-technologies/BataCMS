@@ -1,0 +1,88 @@
+﻿
+@model COHApp.ViewModels.AddWasteCollectionViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Water Availability</title>
+</head>
+<body>
+    <div id="main">
+        <div id="wrapper">
+            <div class="inner">
+                <form asp-controller="WaterAvailability" asp-action="Add" method="post" class="mt-3">
+
+                    <div class="field">
+                        <label asp-for="ServiceArea" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input asp-for="ServiceArea" class="form-control" placeholder="Title" />
+                            <span asp-validation-for="ServiceArea" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Mon" class="form-control">
+                            <label asp-for="Mon" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Tue" class="form-control">
+                            <label asp-for="Tue" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Wed" class="form-control">
+                            <label asp-for="Wed" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Thur" class="form-control">
+                            <label asp-for="Thur" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Fri" class="form-control">
+                            <label asp-for="Fri" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Sat" class="form-control">
+                            <label asp-for="Sat" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="6u 12u$(small)">
+                            <input type="checkbox" asp-for="Sun" class="form-control">
+                            <label asp-for="Sun" class="col-sm-2 col-form-label"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <ul class="actions">
+                            <li>
+                                <button type="submit" class="btn button special ">Add</button>
+                            </li>
+                            <li>
+                                <a asp-controller="Home" asp-action="BulletinIndex" class="btn button">Cancel</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

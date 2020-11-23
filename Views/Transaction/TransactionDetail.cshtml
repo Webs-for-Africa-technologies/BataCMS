@@ -39,12 +39,7 @@
                     </tbody>
                 </table>
 
-                <div class="card mb-3">
-                    <div class="card-header">Transaction Total</div>
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.Transaction.TransactionTotal</h5>
-                    </div>
-                </div>
+
 
                 <div class="card mb-3">
                     <div class="card-header">Vendor Name</div>
@@ -61,17 +56,37 @@
                 </div>
 
                 <div class="card mb-3">
+                    <div class="card-header">Server Name</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Server.FirstName @Model.Server.LastName </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Server ID</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Server.IDNumber </h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Notes</div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Transaction.TransactionNotes</h5>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
                     <div class="card-header">Transaction Date</div>
                     <div class="card-body">
                         <h5 class="card-title">@Model.Transaction.TransactionDate</h5>
                     </div>
                 </div>
 
-
                 <div class="card mb-3">
-                    <div class="card-header">Notes</div>
+                    <div class="card-header">Transaction Total</div>
                     <div class="card-body">
-                        <h5 class="card-title">@Model.Transaction.TransactionNotes</h5>
+                        <h5 class="card-title">@Model.Transaction.TransactionTotal</h5>
                     </div>
                 </div>
             </div>

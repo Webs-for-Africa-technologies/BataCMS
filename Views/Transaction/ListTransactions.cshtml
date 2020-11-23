@@ -25,11 +25,20 @@
                 <a class="dropdown-item" asp-controller="Transaction" asp-action="ListTransactions" asp-route-filter="all">All</a>
             </div>
 
+            <a type="button" class="button" asp-controller="Transaction" asp-action="ListTransactions" asp-route-type="cash">Cash Transactions</a>
+
+            <a type="button" class="button" asp-controller="Transaction" asp-action="ListTransactions" asp-route-type="ecocash">EcoCash Transactions</a>
+
+            <a type="button" class="button" asp-controller="Transaction" asp-action="ListTransactions" asp-route-type="swipe">DebitCard Transactions</a>
+
+            </br>
+            </br>
+
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>Transaction ID</th>
-                        <th>Vendor Name</th>
+                        <th>Transaction Type</th>
                         <th class="text-right">Booking Date</th>
                         <th></th>
                     </tr>
@@ -41,7 +50,7 @@
                         {
                             <tr>
                                 <td class="text-center">@line.TransactionId</td>
-                                <td class="text-left">@line.ServerName</td>
+                                <td class="text-left">@line.TransactionType</td>
                                 <td class="text-right">
                                     @line.TransactionDate)
                                 </td>

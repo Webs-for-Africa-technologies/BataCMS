@@ -24,16 +24,19 @@ namespace COHApp.Controllers
         private readonly ITransactionRepository _transactionRepository;
         private readonly IActiveLeaseRepository _activeLeaseRepository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<VendorUser> _vendorUserManager;
 
 
 
-        public TransactionController(ILeaseRepository leaseRepository, UserManager<ApplicationUser> userManager, IRentalAssetRepository rentalAssetRepository, ITransactionRepository transactionRepository, IActiveLeaseRepository activeLeaseRepository)
+
+        public TransactionController(UserManager<VendorUser> vendorUserManager, ILeaseRepository leaseRepository, UserManager<ApplicationUser> userManager, IRentalAssetRepository rentalAssetRepository, ITransactionRepository transactionRepository, IActiveLeaseRepository activeLeaseRepository)
         {
             _leaseRepository = leaseRepository;
             _rentalAssetRepository = rentalAssetRepository;
             _userManager = userManager;
             _transactionRepository = transactionRepository;
             _activeLeaseRepository = activeLeaseRepository;
+            _vendorUserManager = vendorUserManager;
         }
 
         [Authorize]
@@ -43,7 +46,6 @@ namespace COHApp.Controllers
             List<SelectListItem> paymentOptions = new List<SelectListItem>
             {
                 new SelectListItem() { Text = "Debit Card", Value = "swipe" },
-                new SelectListItem() { Text = "Cash", Value = "cash" },
                 new SelectListItem() { Text = "Eco Cash", Value = "ecocash" }
             };
 
@@ -67,30 +69,41 @@ namespace COHApp.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult ListTransactions(string filter)
+        public IActionResult ListTransactions(string filter, string type)
         {
             IEnumerable<Transaction> transactions = null;
             decimal totalSales = 0M;
 
-            if (String.IsNullOrEmpty(filter) || filter == "all")
+            if (!string.IsNullOrEmpty(type))
             {
-                transactions = _transactionRepository.Transactions;
+                transactions = _transactionRepository.Transactions.Where((p => p.TransactionType == type));
+
             }
             else
             {
-                if (filter == "hour")
+                if (String.IsNullOrEmpty(filter) || filter == "all")
                 {
-                    transactions = _transactionRepository.Transactions.Where((p => p.TransactionDate >= (DateTime.Now.AddHours(-1))));
+                    transactions = _transactionRepository.Transactions;
                 }
-                if (filter == "day")
+                else
                 {
-                    transactions = _transactionRepository.Transactions.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-1))));
+                    if (filter == "hour")
+                    {
+                        transactions = _transactionRepository.Transactions.Where((p => p.TransactionDate >= (DateTime.Now.AddHours(-1))));
+                    }
+                    if (filter == "day")
+                    {
+                        transactions = _transactionRepository.Transactions.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-1))));
+                    }
+                    if (filter == "week")
+                    {
+                        transactions = _transactionRepository.Transactions.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-7))));
+                    }
                 }
-                if (filter == "week")
-                {
-                    transactions = _transactionRepository.Transactions.Where((p => p.TransactionDate >= (DateTime.Now.AddDays(-7))));
-                }
+
             }
+
+
 
             foreach (var item in transactions)
             {
@@ -111,8 +124,16 @@ namespace COHApp.Controllers
             Lease lease = await _leaseRepository.GetLeaseById(model.LeaseId);
             RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(lease.RentalAssetId);
 
-            //get the vendorUserId 
-            ApplicationUser user = await _userManager.FindByIdAsync(lease.UserId);
+            string transactionType;
+
+            if (lease.UserId == model.ServerId && model.TransactionType != null)
+            {
+                transactionType = model.TransactionType;
+            }
+            else
+            {
+                transactionType = "Cash";
+            }
 
             var totalDays = (lease.leaseTo - lease.leaseFrom).TotalDays;
             decimal transactionTotal = rentalAsset.Price * (decimal)totalDays;
@@ -122,12 +143,12 @@ namespace COHApp.Controllers
                 var transaction = new Transaction
                 {
                     TransactionTotal = transactionTotal,
-                    ServerName = user.FirstName + user.LastName,
+                    ServerId = model.ServerId,
                     TransactionDate = DateTime.Now,
                     TransactionNotes = model.TransactionNotes,
-                    TransactionType = model.TransactionType,
+                    TransactionType = transactionType,
                     LeaseId = lease.LeaseId,
-                    VendorUserId = user.Id,
+                    VendorUserId = lease.UserId,
                 };
 
                 var ActiveLease = new ActiveLease
@@ -185,7 +206,7 @@ namespace COHApp.Controllers
                 {
                     workSheet.Cells[index + 1, 1].Value = myTranscations[index - 1].TransactionId;
                     workSheet.Cells[index + 1, 2].Value = myTranscations[index - 1].TransactionDate;
-                    workSheet.Cells[index + 1, 3].Value = myTranscations[index - 1].ServerName;
+                    workSheet.Cells[index + 1, 3].Value = myTranscations[index - 1].ServerId;
                     workSheet.Cells[index + 1, 4].Value = myTranscations[index - 1].TransactionTotal;
                     workSheet.Cells[index + 1, 5].Value = myTranscations[index - 1].TransactionType;
                 }
@@ -209,13 +230,17 @@ namespace COHApp.Controllers
 
             RentalAsset rentalAsset = await _rentalAssetRepository.GetItemByIdAsync(lease.RentalAssetId);
 
-            ApplicationUser user = await _userManager.FindByIdAsync(lease.UserId);
+            VendorUser vendor = await _vendorUserManager.FindByIdAsync(lease.UserId);
+
+            ApplicationUser server = await _userManager.FindByIdAsync(transaction.ServerId);
+
 
             var vm = new TransactionDetailViewModel
             {
                 RentalAsset = rentalAsset,
                 Transaction = transaction,
-                VendorUser = user,
+                VendorUser = vendor,
+                Server = server,
                 Lease = lease 
             };
 
@@ -229,6 +254,29 @@ namespace COHApp.Controllers
             ViewBag.CheckkoutComplete = "The purchase has been made";
             return View();
         }
+
+
+        private string ProcessPhoneNumber(string phoneNumber)
+        {
+            string processedNumber = null;
+            string extension = "+263";
+
+            if (phoneNumber != null)
+            {
+                string startingNum = phoneNumber.Substring(0, 1);
+
+                //not in E.164 format
+                if (startingNum != "+")
+                {
+                    if (startingNum == "0")
+                    {
+                        processedNumber = extension + phoneNumber.Substring(1);
+                    }
+                }
+            }
+            return processedNumber;
+        }
+
 
 
     }

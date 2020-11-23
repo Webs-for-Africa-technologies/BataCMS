@@ -19,6 +19,10 @@
     {
 
         <br /><a asp-action="Edit" asp-controller="RentalAsset" asp-route-id="@Model.RentalAssetId" type="button" class="btn button">Edit</a>
+
+        <ul class="actions">
+            <li><br /><a asp-action="CashBooking" asp-controller="Lease" asp-route-rentalAssetId="@Model.RentalAssetId" type="button" class="btn button special"> Cash Booking</a></li>
+        </ul>
     }
 
     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin") && Model.IsAvailable == false && !(DateTime.Now >= Model.BookTillDate))

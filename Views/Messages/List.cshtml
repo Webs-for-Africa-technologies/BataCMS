@@ -1,0 +1,76 @@
+﻿@model IEnumerable<COHApp.Data.Models.Message>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Announcements</title>
+</head>
+<body>
+    <div id="main">
+        <div id="container">
+            <div class="inner">
+                <h1>Announcements</h1>
+
+                @if (Model.Any())
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Add" asp-controller="Messages" class="btn btn-primary">Add Message</a>
+
+                    }
+
+                    foreach (var item in Model)
+                    {
+                        <!-- Break -->
+
+                        <div class="table-wrapper">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Message Title: </th>
+                                        <th> @item.MessageTitle</th>
+
+                                        <th>Date Added: </th>
+                                        <th> @item.DateModified</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Message: </td>
+                                        <td>@item.MessageContent</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-controller="Messages" asp-route-id="@item.MessageId" class="button">Edit Message</a>
+                            <form asp-action="Delete" asp-route-id="@item.MessageId" method="post">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the message: @item.MessageTitle')">Delete Message</button>
+                            </form>
+                        }
+
+                        <!-- Break -->
+                    }
+
+                }
+                else
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Add" asp-controller="Messages" class="btn btn-primary">Add Message</a>
+
+                    }
+
+                    <div class="card">
+                        <div class="header">
+                            No Messages from the City of Harare at the moment
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -79,12 +79,16 @@
             <!-- One -->
             <section id="one" class="tiles">
 
+                <article>
+                    <header class="major">
+                        <h3><a asp-action="BulletinIndex" asp-controller="Home" class="link">Bulletin Board</a></h3>
+                        <p>View Information and Announcements from the City Of Harare</p>
+                    </header>
+                </article>
+
                 @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                 {
                     <article>
-                        <span class="image">
-                            <img src="images/pic01.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="ListUsers" asp-controller="Admin" class="link">User Management</a></h3>
                             <p>Manage your appliction Users</p>
@@ -92,9 +96,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic05.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="ListCategories" asp-controller="Admin" class="link">Category Management</a></h3>
                             <p>Manage the available categories</p>
@@ -102,9 +103,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic05.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="ListServiceTypes" asp-controller="Admin" class="link">Service Management</a></h3>
                             <p>Manage the available categories</p>
@@ -112,9 +110,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic02.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="BookedList" asp-controller="RentalAsset" class="link">View Booked Assets</a></h3>
                             <p>Manage the Rental Assets</p>
@@ -122,9 +117,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic10.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="List" asp-controller="DispatchedService" class="link">View Dispatched Services</a></h3>
                             <p>View Booking information</p>
@@ -132,9 +124,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic03.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="ListTransactions" asp-controller="Transaction" class="link">Bookings</a></h3>
                             <p>View Booking information</p>
@@ -146,9 +135,6 @@
                 @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
                 {
                     <article>
-                        <span class="image">
-                            <img src="images/pic09.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="MyApplications" asp-controller="VendorApplication" asp-route-applicantId="@UserManager.GetUserId(User)" class="link">My Applications</a></h3>
                             <p>View Current Status of Your Applications</p>
@@ -156,9 +142,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic05.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="MyRequests" asp-controller="ServiceRequest" asp-route-applicantId="@UserManager.GetUserId(User)" class="link">My Service Requests</a></h3>
                             <p>View Current Status of your service requests</p>
@@ -167,9 +150,6 @@
 
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic02.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-controller="VendorApplication" asp-action="create" class="link">Vendor Application</a></h3>
                             <p>feugiat amet tempus</p>
@@ -177,9 +157,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic03.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="OnDemandIndex" asp-controller="Home" class="link">On Demand Services</a></h3>
                             <p>Request for personal services</p>
@@ -187,9 +164,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic04.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a href="#" class="link">Book Venue Application</a></h3>
                             <p>Nisl sed aliquam</p>
@@ -201,9 +175,6 @@
                 @if (signInManager.IsSignedIn(User) && User.IsInRole("Employee"))
                 {
                     <article>
-                        <span class="image">
-                            <img src="images/pic09.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="ListApplications" asp-controller="VendorApplication" class="link">View Applications</a></h3>
                             <p>View Applications</p>
@@ -211,9 +182,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic09.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="ListRequests" asp-controller="ServiceRequest" class="link">View Service Requests</a></h3>
                             <p>View Pending Service Requests</p>
@@ -221,18 +189,13 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic10.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="BookedList" asp-controller="RentalAsset" class="link">View Booked Assets</a></h3>
                             <p>Manage the Rental Assets</p>
                         </header>
                     </article>
                     <article>
-                        <span class="image">
-                            <img src="images/pic10.jpg" alt="" />
-                        </span>
+
                         <header class="major">
                             <h3><a asp-action="List" asp-controller="RentalAsset" class="link">View Rental Assets</a></h3>
                             <p>Manage the Rental Assets</p>
@@ -245,9 +208,6 @@
                 @if (signInManager.IsSignedIn(User) && User.IsInRole("Vendor"))
                 {
                     <article>
-                        <span class="image">
-                            <img src="images/pic10.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="List" asp-controller="RentalAsset" class="link">View Rental Assets</a></h3>
                             <p>Manage the Rental Assets</p>
@@ -255,9 +215,6 @@
                     </article>
 
                     <article>
-                        <span class="image">
-                            <img src="images/pic02.jpg" alt="" />
-                        </span>
                         <header class="major">
                             <h3><a asp-action="List" asp-controller="Invoice" asp-route-userId="@UserManager.GetUserId(User)" class="link">My Invoices</a></h3>
                             <p>View Invoices of previous bookings</p>

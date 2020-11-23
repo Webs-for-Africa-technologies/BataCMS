@@ -21,7 +21,7 @@ namespace BataCMS.Data.Models
 
         [Required(ErrorMessage = "Please enter your first name")]
         [StringLength(50)]
-        public string ServerName { get; set; }
+        public string ServerId { get; set; }
 
 
         public int LeaseId { get; set; }

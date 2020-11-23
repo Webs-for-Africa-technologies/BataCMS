@@ -1,0 +1,137 @@
+﻿@model IEnumerable<COHApp.Data.Models.WasteCollection>
+
+
+@{
+    Layout = "~/Views/Shared/_SearchBarLayout.cshtml";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Waste Collection</title>
+</head>
+
+<div id="main">
+    <div id="wrapper">
+        <div class="inner">
+            <header class="major">
+                <h1>@ViewBag.SearchString</h1>
+            </header>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        <tr class="text-center"><a class="btn btn-primary" asp-controller="WasteCollection" asp-action="Add">Add Collection Information</a></tr>
+
+                    }
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var line in Model)
+                        {
+                            <!-- Break -->
+                            <tr>
+                                <td>Service Area: </td>
+                                <td>@line.ServiceArea</td>
+                            </tr>
+
+                            <tr>
+                                <td>Date Modified </td>
+                                <td> @line.DateModified</td>
+                            </tr>
+
+                            <tr>
+                                <td>Collection Days</td>
+                                @if (line.Mon == true)
+                                {
+                                    <td>Monday</td>
+                                }
+                            </tr>
+
+
+                            @if (line.Tue == true)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>Tuesday </td>
+                                </tr>
+                            }
+
+                            @if (line.Wed == true)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>Wednesday </td>
+                                </tr>
+                            }
+
+                            @if (line.Thur == true)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>Thursday </td>
+                                </tr>
+                            }
+
+                            @if (line.Fri == true)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>Friday </td>
+                                </tr>
+
+                            }
+
+                            @if (line.Sat == true)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>Saturday </td>
+                                </tr>
+                            }
+
+                            @if (line.Sun == true)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>Sunday </td>
+                                </tr>
+                            }
+
+
+                            <tr>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <td class="text-center"><a class="btn btn-primary" asp-controller="WasteCollection" asp-action="Edit" asp-route-Id="@line.WasteCollectionId"> Edit</a></td>
+                                }
+                            </tr>
+
+                            <tr></tr>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-center">No Collection days to display</td>
+                        </tr>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+
+                            <tr class="text-center"><a class="btn btn-primary" asp-controller="WasteCollection" asp-action="Add">Add Collection Information</a></tr>
+
+                        }
+
+                    }
+                </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+

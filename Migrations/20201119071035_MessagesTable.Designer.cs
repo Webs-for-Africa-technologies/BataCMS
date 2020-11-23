@@ -4,14 +4,16 @@ using BataCMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BataCMS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201119071035_MessagesTable")]
+    partial class MessagesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -489,84 +491,6 @@ namespace BataCMS.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("VendorApplications");
-                });
-
-            modelBuilder.Entity("COHApp.Data.Models.WasteCollection", b =>
-                {
-                    b.Property<int>("WasteCollectionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Fri")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Mon")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Sat")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ServiceArea")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Sun")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Thur")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Tue")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Wed")
-                        .HasColumnType("bit");
-
-                    b.HasKey("WasteCollectionId");
-
-                    b.ToTable("WasteCollections");
-                });
-
-            modelBuilder.Entity("COHApp.Data.Models.WaterAvailability", b =>
-                {
-                    b.Property<int>("WaterAvailabilityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Fri")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Mon")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Sat")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ServiceArea")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Sun")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Thur")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Tue")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Wed")
-                        .HasColumnType("bit");
-
-                    b.HasKey("WaterAvailabilityId");
-
-                    b.ToTable("WaterAvailabilities");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

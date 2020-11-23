@@ -42,8 +42,9 @@ namespace BataCMS.Data
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<DispatchedService> DispatchedServices { get; set; }
-
-
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<WasteCollection> WasteCollections { get; set; }
+        public DbSet<WaterAvailability> WaterAvailabilities { get; set; }
 
     }
 }

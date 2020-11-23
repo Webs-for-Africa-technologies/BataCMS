@@ -8,9 +8,8 @@ namespace COHApp.ViewModels
 {
     public class TransactionCheckoutViewModel
     {
-        [Required]
         public string TransactionType { get; set; }
-
+        public string ServerId { get; set; }
         public int LeaseId { get; set; }
         public string TransactionNotes { get; set; }
         public decimal TransactionTotal { get; set; }

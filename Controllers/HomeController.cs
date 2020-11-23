@@ -45,5 +45,11 @@ namespace BataCMS.Controllers
             return View(homeViewModel);
         }
 
+        public ViewResult BulletinIndex()
+        {
+            return View();
+        }
+
+
     }
 }

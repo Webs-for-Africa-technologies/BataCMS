@@ -11,6 +11,7 @@ namespace COHApp.ViewModels
         public Transaction Transaction { get; set; }
         public RentalAsset RentalAsset { get; set; }
         public ApplicationUser VendorUser { get; set; }
+        public ApplicationUser Server { get; set; }
         public Lease Lease { get; set; }
 
     }

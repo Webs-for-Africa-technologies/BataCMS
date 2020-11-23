@@ -1,4 +1,5 @@
 ﻿using BataCMS.Data.Models;
+using COHApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,11 @@ namespace COHApp.Data
     public static class ExtensionMethods
     {
         public static async Task<ApplicationUser> FindByPhoneNumber(this UserManager<ApplicationUser> um, string number)
+        {
+            return await um?.Users?.SingleOrDefaultAsync(x => x.PhoneNumber == number);
+        }
+
+        public static async Task<VendorUser> FindByPhoneNumber(this UserManager<VendorUser> um, string number)
         {
             return await um?.Users?.SingleOrDefaultAsync(x => x.PhoneNumber == number);
         }

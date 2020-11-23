@@ -1,0 +1,102 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@model HomeViewModel
+<head>
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/animations.css" rel="stylesheet" />
+
+</head>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bulletin Board</title>
+</head>
+<body>
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("User"))
+    {
+        var user = UserManager.GetUserAsync(User).Result;
+        if (!UserManager.IsPhoneNumberConfirmedAsync(user).Result)
+        {
+            <div class="jumbotron">
+                <h1>Phone Number not verified</h1>
+                <p class="lead">Verify your phone number to enable text notifications on applicaiton updates.</p>
+                <a class="button" style="z-index: 999;" asp-action="ConfirmPhone" asp-controller="Account" asp-route-phoneNumber="@user.PhoneNumber" role="button">Verify</a>
+            </div>
+
+        }
+    }
+    <div id="wrapper">
+        <section id="banner" class="major">
+
+            <div class="inner">
+                <header class="major">
+                    <h1>
+                        Bulletin Board
+                    </h1>
+
+                </header>
+                <div class="content">
+
+                    @if (!signInManager.IsSignedIn(User))
+                    {
+                        <p>
+                            Sign Up To recieve notifications on updates from the City of Harare
+                        </p>
+
+                        <a asp-controller="Account" asp-action="Register" class="button">Register</a>
+
+                    }
+                    else
+                    {
+                        <p>
+                            View Announcents and Information from the City of Harare
+                        </p>
+                    }
+
+
+
+                </div>
+            </div>
+        </section>
+
+        <main role="main">
+            <!-- One -->
+            <section id="one" class="tiles">
+
+                <article>
+                    <span class="image">
+                        <img src="images/pic09.jpg" alt="" />
+                    </span>
+                    <header class="major">
+                        <h3><a asp-action="List" asp-controller="Messages" class="link">Announcements</a></h3>
+                        <p>Messages from the City of Harare</p>
+                    </header>
+                </article>
+
+                <article>
+                    <span class="image">
+                        <img src="images/pic09.jpg" alt="" />
+                    </span>
+                    <header class="major">
+                        <h3><a asp-action="List" asp-controller="WasteCollection" class="link">Garbage Collection</a></h3>
+                        <p>Information on waste management</p>
+                    </header>
+                </article>
+
+                <article>
+                    <span class="image">
+                        <img src="images/pic09.jpg" alt="" />
+                    </span>
+                    <header class="major">
+                        <h3><a asp-action="List" asp-controller="WaterAvailability" class="link">Water Availability</a></h3>
+                        <p>Information on water availability</p>
+                    </header>
+                </article>
+
+            </section>
+
+        </main>
+    </div>
+</body>
+</html>
