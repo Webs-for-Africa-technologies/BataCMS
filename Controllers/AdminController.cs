@@ -379,7 +379,7 @@ namespace COHApp.Controllers
 
         private string ProcessPhoneNumber(string phoneNumber)
         {
-            string processedNumber = null;
+            string processedNumber = phoneNumber;
             string extension = "+263";
 
             if (phoneNumber != null)

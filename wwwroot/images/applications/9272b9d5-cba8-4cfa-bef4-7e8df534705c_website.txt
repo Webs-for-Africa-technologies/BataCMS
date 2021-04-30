@@ -1,0 +1,127 @@
+[2020/12/08, 15:14] Cecilia: Website Notes:
+
+1. Remove products and consumables tabs at the top. (Done)
+2. Remove Cargo cards, we have no authority (done)
+3. Datacard printers pictures are not clear (same images) 
+
+Note: Says order SD460 on the add the SD360 page
+Note: Says order SD460 on the add the CE840 page
+
+4. Remove the Nexgo G3 mini (removed)
+5. Add Nexgo N5(added)
+
+6. Software:
+- QR Switch, add info (added but the information spec sheet downloads checkpoint information instead)
+
+- M360 platform, add info (not added) 
+
+- Security, add info (checkpoint products added) 
+
+7. Remove Thabani on Team (removed) 
+
+8. Include Cecilia, Administrator (included)
+
+9. Include Technical Support form(not added)
+
+10. Correct spelling under Sales department, from sells to sales (corrected) 
+
+more findings on the website content. 
+
+ID CARD PRINTERS
+-REMOVE FOR LOCAL MEDICAL AID (removed) 
+
+*UNDER ORDER SD260 ON SD160 PAGE (fixed) 
+
+*REPETITION AT THE END OF ID CARD PRINTER PAGES SD160 260 AND 360 (resolved) 
+
+
+*END OF 460  PRINTER PAGE YOU HAVE CE840 PRINTER (resolved) 
+
+*CE840 MISSING ITEM ON THIRD BULLET POINT UNDER EMBOSSING ITEM NO 3 (resolved) 
+
+*UNDER SPEED Magstripe is one word(addressed) 
+
+*FARGO DTC 5000, NISCA PRINTERS
+REMOVE THREE YEAR WARRANTY ON COMPLETION OF ONLINE PRINTER REGISTRATION THIS IS NOT APPLICABLE TO US.(addressed) 
+
+*NEED TO PUT CONSUMABLES LIST ON ALL ID card PRINTERS. Phil aware of thi. (not resolved) 
+
+*ID CARD SOFTWARE SHOWS CS SOFTWARE (addressed) 
+
+*PRODUCTS DROP DOWN LIST
+CAN WE PLEASE HAVE NEXGO POS AS THE LAST ITEM ON THE LIST NOT IN BETWEEN CARD HARDWARE SOFTWARE AND CONSUMABLES (done) 
+
+*NOTHING HAPPENS WHEN YOU CLICK PLAIN PVC CARDS (resolved)
+
+*PRE PRINTED CARDS
+FINANCIAL CARDS, Visa cards, GIFT CARDS NEED TO BE PUT IN THEIR RESPECTIVE FOLDERS NOT MIXED UP. (card still under the list of preprinted cards) 
+
+*ID CARD ACCESSORIES PLEASE REMOVE MASTERCARD PICTURE
+ID BADGE LAYNARDS - WRONG SPELLING IT SHOULD READ LANYARDS (resolved) 
+
+
+Homepage:
+
+-Sample video has to be replaced 
+-Remove card printing services tab 
+-Card pictures should be generic (done)
+-Under vision remove the word "card" (done)
+-Remove partners on homepage, create a tab for them in the menu bar at the top (done) 
+-Remove the Visa or Mastercards tab under, just list and state cards under the Card printing tab (edit the wording) (done) 
+-Edit the size of the Software tab to be uniform with other tabs (done)
+
+Bottom quick links 
+- remove the POS Machines listing (not done) 
+
+Contact tab page:
+- remove "trusted by" and add it to the clients page just before the testimonials (done)
+- remove the T next to the phone numbers and replace them with M (done)
+Support - create a support form, have an active chat (not done)
+ 
+Products:
+
+All description small texts under the the product names should be removed (done)
+
+Entrust Datacard
+- Order tab needs to corrected to SD160 (done) 
+- Wrong specs download on SD260 (done)
+- On SD360 wrong picture (SD460 pic), correction of the order tab to SD360(done)
+- Correct the order tab on SD460 (done)
+
+ID Card Software 
+-Add information for the drop down links (done)
+
+Cards
+- Remove hotel keycards (done)
+- Remove all card pictures (no authority to use) (edited)
+-Preprinted and membership cards should lead to their specific pages not on one page (done) 
+
+Note: Spelling error on title of membership cards page. (CLud cards) 
+
+ID card accessories - Lanyards link doesn't direct you to anything (resolved)
+
+Nexgo
+N5 - add one with a finger print reader(not done)
+N6 downloading the wrong data sheet (done)
+
+Under G2 - add the gas approval certificate (not done)
+
+Software 
+
+Add UMI, WhatsApp Banking,    OTG (not added) 
+On General software development put OTG (not added) 
+
+NB We need separate pages for the vendors, they should not be on one page
+Add logos for the vendors and Webs.
+(not done) 
+
+Team
+-Add Cecilia and Tafadzwa (Added Ceceilia no Tafadzwa)
+-Remove Thomas(Thomas not removed) 
+
+In house notes:
+
+-Paul to get intouch with Phil on Friday for access to edit website 
+- Paul to submit English qualification
+- To register for Google my Business 
+- Cecilia to get new clients testimonials.

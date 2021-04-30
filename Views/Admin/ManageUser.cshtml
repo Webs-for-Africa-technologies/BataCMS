@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="field first half">
-                        <label asp-for="AddedRole" class="col-sm-2 col-form-label"></label>
+                        <label asp-for="AddedRole" class=" col-form-label"></label>
                         <div class="col-sm-10">
                             <select asp-for="AddedRole" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["availableRoles"])">
                                 <option value="">Roles</option>
@@ -72,7 +72,7 @@
 
 
                     <div class="field half">
-                        <label asp-for="RemovedRole" class="col-sm-2 col-form-label"></label>
+                        <label asp-for="RemovedRole" class="col-form-label"></label>
                         <div class="col-sm-10">
                             <select asp-for="RemovedRole" class="custom-select mr-sm-2" placeholder="Category" asp-items="@((List<SelectListItem>)ViewData["currentRoles"])">
                                 <option value="">Roles</option>
@@ -109,10 +109,6 @@
                             <h5 class="card-title">User has no Roles Assigned</h5>
                         }
                     </div>
-                    <div class="card-footer">
-                        <a asp-action="ListRoles" asp-controller="Admin" class="btn button">Manage Roles</a>
-                    </div>
-
                 </div>
             </div>
         </div>

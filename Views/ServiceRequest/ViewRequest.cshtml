@@ -45,26 +45,31 @@
                     </div>
                 </div>
 
-                <div class="card mb-3">
-                    <div class="card-header">Applicant Name</div>
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.User.FirstName  @Model.User.LastName</h5>
+                @if (Model.User != null)
+                {
+                    <div class="card mb-3">
+                        <div class="card-header">Applicant Name</div>
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.User.FirstName  @Model.User.LastName</h5>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card mb-3">
-                    <div class="card-header">ID Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.User.IDNumber </h5>
+                    <div class="card mb-3">
+                        <div class="card-header">ID Number</div>
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.User.IDNumber </h5>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card mb-3">
-                    <div class="card-header">PhoneNumber</div>
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.User.PhoneNumber </h5>
+                    <div class="card mb-3">
+                        <div class="card-header">PhoneNumber</div>
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.User.PhoneNumber </h5>
+                        </div>
                     </div>
-                </div>
+
+
+                }
 
 
                 <div class="card mb-3">
@@ -88,7 +93,7 @@
                     <button onclick="DisplayForm()" class="btn btn btn-danger">Decline Request</button>
 
 
-                    <form id="FormDecline" method="post" asp-action="DeclineRequest" asp-controller="ODServiceRequest">
+                    <form id="FormDecline" method="post" asp-action="DeclineRequest" asp-controller="ServiceRequest">
 
                         <input type="hidden" asp-for="ServiceRequestId" class="form-control custom-file-input" value=" @Model.ServiceRequestId" />
 

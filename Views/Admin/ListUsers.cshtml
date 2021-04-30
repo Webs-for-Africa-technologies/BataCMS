@@ -19,6 +19,7 @@
                 {
                     <a class="btn btn-primary" asp-controller="Account" asp-action="Register"> Add a new user</a>
                     <a asp-action="ListRoles" asp-controller="Admin" class="btn btn-primary">Manage User Roles</a>
+
                     <div class="dropdown-menu">
                         @if (Model.Roles.Any())
                         {
